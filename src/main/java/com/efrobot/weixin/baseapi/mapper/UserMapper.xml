@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efrobot.weixin.baseapi.UserMapper">
+    <resultMap type="com.efrobot.weixin.baseapi.pojo.User" id="userMap">
+		<id property="id" column="ID" jdbcType="CHAR"/>
+		<result property="age" column="AGE" jdbcType="INTEGER"/>
+		<result property="gender" column="GENDER" jdbcType="INTEGER"/>
+		<result property="realName" column="REAL_NAME" jdbcType="VARCHAR"/>
+		<result property="memberGrade" column="MEMBER_GRADE" jdbcType="INTEGER"/>
+		<result property="email" column="EMAIL" jdbcType="VARCHAR"/>
+		<result property="phone" column="PHONE" jdbcType="VARCHAR"/>
+		<result property="openid" column="OPENID" jdbcType="VARCHAR"/>
+		<result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
+		<result property="referrerId" column="REFERRER_ID" jdbcType="VARCHAR"/>
+		<result property="weiXinHao" column="WEIXINHAO" jdbcType="VARCHAR"/>
+		<result property="userGender" column="userGender" jdbcType="VARCHAR"/>
+		<result property="source" column="SOURCE" jdbcType="INTEGER"/>
+		<result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+		<result property="addDate" column="ADD_DATE" jdbcType="TIMESTAMP"/>
+		<result property="isSubscribe" column="IS_SUBSCRIBE" jdbcType="VARCHAR"/>
+	</resultMap>
+
+   <select id="queryUser" resultMap="userMap">
+        select * from user where 1=1
+        <if test="id != null" >
+        	AND ID= #{id,jdbcType=VARCHAR}
+        </if>
+        <if test="openid != null" >
+        	AND OPENID= #{openid,jdbcType=VARCHAR}
+        </if>
+        <if test="realName != null" >
+        	AND REAL_NAME= #{realName,jdbcType=VARCHAR}
+        </if>
+        <if test="phone != null" >
+        	AND PHONE= #{phone,jdbcType=VARCHAR}
+        </if>
+        <if test="isSubscribe != null" >
+        	AND IS_SUBSCRIBE= #{isSubscribe,jdbcType=VARCHAR}
+        </if>
+    </select>
+    
+    <update id="updateUser" parameterType="com.efrobot.weixin.baseapi.pojo.User" >
+	    update user
+	    set age = #{age,jdbcType=VARCHAR},
+	        gender = #{gender,jdbcType=VARCHAR},
+	        MEMBER_GRADE = #{memberGrade,jdbcType=VARCHAR},
+	        REFERRER_ID = #{referrerId,jdbcType=VARCHAR}
+	    where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    
+    <update id="updateUserByOpenid" parameterType="com.efrobot.weixin.baseapi.pojo.User" >
+	    update user
+	    set  
+		     <if test="realName != null" >
+	        	REAL_NAME = #{realName,jdbcType=VARCHAR},
+	        </if>
+	         IS_SUBSCRIBE = #{isSubscribe,jdbcType=VARCHAR}
+	    where OPENID = #{openid,jdbcType=VARCHAR}
+    </update>
+    
+    <insert id="saveUser" parameterType="com.efrobot.weixin.baseapi.pojo.User" >
+    insert into user
+		(ID, 
+		AGE, 
+		GENDER,  
+		REAL_NAME,  
+		MEMBER_GRADE,  
+		EMAIL,  
+		PHONE,  
+		OPENID,  
+		PASSWORD,  
+		REFERRER_ID,  
+		WEIXINHAO,  
+		userGender,  
+		SOURCE,  
+		REMARK,  
+		ADD_DATE,
+		IS_SUBSCRIBE)
+    values 
+    	(#{id,jdbcType=VARCHAR},
+    	 #{age,jdbcType=INTEGER}, 
+    	 #{gender,jdbcType=INTEGER}, 
+    	 #{realName,jdbcType=VARCHAR}, 
+    	 #{memberGrade,jdbcType=VARCHAR}, 
+    	 #{email,jdbcType=VARCHAR}, 
+    	 #{phone,jdbcType=VARCHAR}, 
+    	 #{openid,jdbcType=VARCHAR}, 
+    	 #{password,jdbcType=VARCHAR}, 
+    	 #{referrerId,jdbcType=VARCHAR}, 
+    	 #{weiXinHao,jdbcType=VARCHAR}, 
+    	 #{userGender,jdbcType=VARCHAR}, 
+    	 #{source,jdbcType=INTEGER}, 
+    	 #{remark,jdbcType=VARCHAR}, 
+         #{addDate,jdbcType=TIMESTAMP},
+         #{isSubscribe,jdbcType=VARCHAR})
+  </insert>
+</mapper>

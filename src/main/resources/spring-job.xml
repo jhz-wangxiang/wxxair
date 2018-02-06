@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- 获取微信access作业 -->
+	<bean id="getWXAccessJob" class="com.efrobot.weixin.job.GetWXAccessJob" />
+	
+	<bean id="getWXAccessJobMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="getWXAccessJob" />
+		</property>
+		<!-- 要执行的方法名称 -->
+		<property name="targetMethod">  
+			<value>execute</value>
+		</property>
+	</bean>
+	<!-- ======================== 调度触发器 ======================== -->
+	<bean id="CronTriggerBean1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getWXAccessJobMethod"></property>
+		<!--每隔10秒同步一次 -->
+		<property name="cronExpression" value="/4 * * * * ?"></property>
+	</bean>
+
+	<!-- ======================== 调度工厂 ======================== -->
+	<bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+		<property name="triggers">
+			<list>
+				<!--wx access -->
+				<ref bean="CronTriggerBean1" />
+			</list>
+		</property>
+	</bean>	
+</beans>
