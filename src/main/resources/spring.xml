@@ -12,7 +12,7 @@
 	<!-- 自动扫描(自动注入)，扫描service这个包以及它的子包的所有使用@Service注解标注的类 -->
 	<context:component-scan base-package="com.efrobot.*.*.service"/>
 
-    <import resource="classpath:spring-job.xml" />    
+   <!--  <import resource="classpath:spring-job.xml" />     -->
 
     <!-- mybatis配置引入 -->
     <import resource="classpath:spring-mybatis.xml" />  
