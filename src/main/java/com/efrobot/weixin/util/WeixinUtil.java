@@ -66,9 +66,7 @@ import com.efrobot.toolkit.util.string.StringUtils;
 import com.efrobot.toolkit.util.weixin.GenerateRequestXml;
 import com.efrobot.toolkit.util.weixin.Signature;
 import com.efrobot.toolkit.util.weixin.bean.CashRedPacketRequestXmlBean;
-import com.efrobot.toolkit.util.weixin.bean.EnterprisePayRequestXmlBean;
 import com.efrobot.toolkit.util.weixin.bean.PayRequestXmlBean;
-import com.efrobot.toolkit.util.weixin.bean.QrCodePayInfoRequestXmlBean;
 import com.efrobot.toolkit.util.xml.XMLParser;
 import com.efrobot.weixin.collect.bean.WxPay;
 import com.efrobot.weixin.job.GetWXAccessJob;
@@ -494,57 +492,7 @@ public class WeixinUtil {
 		return finaPackage;
 	}
 
-	/**
-	 * 获取微信扫码支付二维码连接
-	 * 
-	 * @param tpWxPay
-	 * @param notifyurl
-	 * @return
-	 */
-	public static String getCodeurl(WxPay tpWxPay, String notifyurl) {
-
-		// 1 参数
-		// 订单号
-		String orderId = tpWxPay.getOrderId();
-		// 附加数据 原样返回
-		String attach = tpWxPay.getAttach();
-		// 总金额以分为单位，不带小数点
-		String totalFee = getMoney(tpWxPay.getTotalFee());
-		String appid = WXKeys.WX_APPID;
-		// 订单生成的机器 IP
-		String spbill_create_ip = tpWxPay.getSpbillCreateIp();
-		// 这里notify_url是 支付完成后微信发给该链接信息，可以判断会员是否支付成功，改变订单状态等。
-		String notify_url = notifyurl;
-		String trade_type = "NATIVE";
-		// 商户号
-		String mch_id = WXKeys.WX_PARTNER;
-		// 随机字符串
-		String nonce_str = StringUtil.getNonceStr();
-		// 商品描述根据情况修改
-		String body = tpWxPay.getBody();
-		// 商户订单号
-		String out_trade_no = orderId;
-		String code_url = "";
-		try {
-			QrCodePayInfoRequestXmlBean qrCodePayInfoRequestXmlBean = GenerateRequestXml.generateQrCodePayInfo(appid,
-					mch_id, body, attach, totalFee, spbill_create_ip, trade_type, notify_url, out_trade_no, nonce_str,
-					WXKeys.WX_PARTNERKEY);
-			System.out.println("二维码生成签名" + qrCodePayInfoRequestXmlBean.getSign());
-			System.out.println("二维码生成签名" + qrCodePayInfoRequestXmlBean);
-			String createOrderURL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-			String xmlString = restTemplate.postForObject(createOrderURL, qrCodePayInfoRequestXmlBean, String.class);
-			Map<String, String> mapString = XMLParser.getMapFromXML(xmlString);
-			code_url = mapString.get("code_url");
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		}
-		return code_url;
-	}
-
+	
 	/**
 	 * 查询订单
 	 * 
@@ -1019,54 +967,6 @@ public class WeixinUtil {
 		return nickname;
 	}
 
-	/**
-	 * 企业支付
-	 * 
-	 * @param openid
-	 * @param amount
-	 * @param desc
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public static Map<String, String> sendEnterprisePayment(String openid, String amount, String desc) {
-		Map<String, String> XmlMap = new HashMap<String, String>();
-		String url = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
-		try {
-			String nonce_str = System.currentTimeMillis() + "";
-			Date date = new Date();
-			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-			String dateStr = format.format(date);
-			String partner_trade_no = WXKeys.WX_PARTNER + dateStr + StringUtils.getRandomStringNumByLength(10);
-			String mchid = WXKeys.WX_PARTNER;
-			String mch_appid = WXKeys.WX_APPID;
-			String spbill_create_ip = "127.0.0.1";
-
-			EnterprisePayRequestXmlBean enterprisePayRequestXmlBean = GenerateRequestXml.generateQrCodePayInfo(
-					mch_appid, mchid, nonce_str, partner_trade_no, openid, "NO_CHECK", amount, desc, spbill_create_ip,
-					WXKeys.WX_PARTNERKEY);
-
-			HttpsRequest4WX htttpcliect = new HttpsRequest4WX(
-					WeixinUtil.class.getResource(WXKeys.WX_CERTPATH).getPath(), WXKeys.WX_PARTNER);
-
-			String xmlstr = htttpcliect.sendPost(url, enterprisePayRequestXmlBean);
-			XmlMap = XMLParser.getMapFromXML(xmlstr);
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (UnrecoverableKeyException e1) {
-			e1.printStackTrace();
-		} catch (KeyManagementException e1) {
-			e1.printStackTrace();
-		} catch (NoSuchAlgorithmException e1) {
-			e1.printStackTrace();
-		} catch (KeyStoreException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		return XmlMap;
-	}
 
 	/**
 	 * @desc ：微信上传素材的请求方法
