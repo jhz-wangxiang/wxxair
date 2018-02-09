@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efrobot.weixin.baseapi.FlightNumMapper">
+	<resultMap id="BaseResultMap"
+		type="com.efrobot.weixin.baseapi.pojo.FlightNum">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="flight_num" property="flightNum" jdbcType="VARCHAR" />
+		<result column="compay" property="compay" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="cteate_date" property="cteateDate" jdbcType="TIMESTAMP" />
+		<result column="exp1" property="exp1" jdbcType="VARCHAR" />
+		<result column="exp2" property="exp2" jdbcType="VARCHAR" />
+
+		<result column="start_hour" property="startHour" jdbcType="VARCHAR" />
+		<result column="end_hour" property="endHour" jdbcType="VARCHAR" />
+		<result column="start_place" property="startPlace" jdbcType="VARCHAR" />
+		<result column="end_place" property="endPlace" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, flight_num, compay, start_time, end_time, status, cteate_date, exp1,
+		exp2,start_hour,end_hour,start_place,end_place
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from flight_num
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from flight_num
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert"
+		parameterType="com.efrobot.weixin.baseapi.pojo.FlightNum">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into flight_num (flight_num, compay,
+		start_time, end_time, status,
+		cteate_date, exp1, exp2
+		)
+		values (#{flightNum,jdbcType=VARCHAR}, #{compay,jdbcType=VARCHAR},
+		#{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+		#{status,jdbcType=VARCHAR},
+		#{cteateDate,jdbcType=TIMESTAMP}, #{exp1,jdbcType=VARCHAR}, #{exp2,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.efrobot.weixin.baseapi.pojo.FlightNum">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into flight_num
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="flightNum != null">
+				flight_num,
+			</if>
+			<if test="compay != null">
+				compay,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="cteateDate != null">
+				cteate_date,
+			</if>
+			<if test="exp1 != null">
+				exp1,
+			</if>
+			<if test="exp2 != null">
+				exp2,
+			</if>
+			<if test="startHour != null">
+				start_hour,
+			</if>
+			<if test="endHour != null">
+				end_hour,
+			</if>
+			<if test="startPlace != null">
+				start_place,
+			</if>
+			<if test="endPlace != null">
+				end_place,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="flightNum != null">
+				#{flightNum,jdbcType=VARCHAR},
+			</if>
+			<if test="compay != null">
+				#{compay,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="cteateDate != null">
+				#{cteateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="exp1 != null">
+				#{exp1,jdbcType=VARCHAR},
+			</if>
+			<if test="exp2 != null">
+				#{exp2,jdbcType=VARCHAR},
+			</if>
+			<if test="startHour != null">
+				#{startHour,jdbcType=VARCHAR},
+			</if>
+			<if test="endHour != null">
+				#{endHour,jdbcType=VARCHAR},
+			</if>
+			<if test="startPlace != null">
+				#{startPlace,jdbcType=VARCHAR},
+			</if>
+			<if test="endPlace != null">
+				#{endPlace,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.efrobot.weixin.baseapi.pojo.FlightNum">
+		update flight_num
+		<set>
+			<if test="flightNum != null">
+				flight_num = #{flightNum,jdbcType=VARCHAR},
+			</if>
+			<if test="compay != null">
+				compay = #{compay,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="cteateDate != null">
+				cteate_date = #{cteateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="exp1 != null">
+				exp1 = #{exp1,jdbcType=VARCHAR},
+			</if>
+			<if test="exp2 != null">
+				exp2 = #{exp2,jdbcType=VARCHAR},
+			</if>
+			<if test="startHour != null">
+				start_hour=#{startHour,jdbcType=VARCHAR},
+			</if>
+			<if test="endHour != null">
+				end_hour=#{endHour,jdbcType=VARCHAR},
+			</if>
+			<if test="startPlace != null">
+				start_place=#{startPlace,jdbcType=VARCHAR},
+			</if>
+			<if test="endPlace != null">
+				end_place=#{endPlace,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.efrobot.weixin.baseapi.pojo.FlightNum">
+		update flight_num
+		set flight_num = #{flightNum,jdbcType=VARCHAR},
+		compay = #{compay,jdbcType=VARCHAR},
+		start_time = #{startTime,jdbcType=TIMESTAMP},
+		end_time = #{endTime,jdbcType=TIMESTAMP},
+		status = #{status,jdbcType=VARCHAR},
+		cteate_date = #{cteateDate,jdbcType=TIMESTAMP},
+		exp1 = #{exp1,jdbcType=VARCHAR},
+		exp2 = #{exp2,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="getFlightNum" resultMap="BaseResultMap"
+		parameterType="com.efrobot.weixin.baseapi.pojo.FlightNum">
+		select
+		<include refid="Base_Column_List" />
+		from flight_num
+	</select>
+	<select id="selectByParms" resultMap="BaseResultMap"
+		parameterType="com.efrobot.weixin.baseapi.pojo.FlightNum">
+		select
+		<include refid="Base_Column_List" />
+		from flight_num
+		where 1=1
+		<if test="flightNum != null and !flightNum.isEmpty() and flightNum != ''">
+			and flight_num = #{flightNum,jdbcType=VARCHAR}
+		</if>
+		<if test="compay != null and !compay.isEmpty() and compay != ''">
+			and compay = #{compay,jdbcType=VARCHAR}
+		</if>
+	</select>
+</mapper>
