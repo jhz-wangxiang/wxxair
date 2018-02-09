@@ -70,7 +70,7 @@
     </form>
   </section>
 
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript"></script>
+<script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>
 <script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>
 <script>
   $(function () {
@@ -89,39 +89,7 @@
           }
       })
   })
-    wx.config({
-        debug: false,
-        appId: "${appid}",
-        timestamp: "${timestamp}",
-        nonceStr: "${nonceStr}",
-        signature: "${signature}",
-        jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone']
-    });
-    wx.ready(function(){
-        wx.onMenuShareTimeline({
-            title: "好奇心害死猫，快来看看你的2018升级关键词是什么？",
-            link: "${WX}",
-            imgUrl: "<%=basePath%>resources/chest/css/img/share.jpg"
-        });
-        wx.onMenuShareAppMessage({
-            title: "好奇心害死猫，快来看看你的2018升级关键词是什么？",
-            desc: "真是万万妹想到！",
-            link: "${WX}",
-            imgUrl: "<%=basePath%>resources/chest/css/img/share.jpg"
-        });
-        wx.onMenuShareQQ({
-            title: "好奇心害死猫，快来看看你的2018升级关键词是什么？",
-            desc: "真是万万妹想到！",
-            link: '${WX}',
-            imgUrl: '<%=basePath%>resources/chest/css/img/share.jpg',
-        });
-        wx.onMenuShareQZone({
-            title: "好奇心害死猫，快来看看你的2018升级关键词是什么？",
-            desc: "真是万万妹想到！",
-            link: '${WX}',
-            imgUrl: '<%=basePath%>resources/chest/css/img/share.jpg',
-        });
-    });
 </script>
 </body>
 </html>
+
