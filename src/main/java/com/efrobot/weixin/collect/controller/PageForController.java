@@ -70,4 +70,14 @@ public class PageForController {
 		request.setAttribute("navName", "渠道管理");
 		return "channelList";
 	}
+	@RequestMapping(value = "/orderStepOne")
+	public String orderStepOne(HttpServletRequest request) {
+		request.setAttribute("navName", "下单第一步");
+		return "orderStepOne";
+	}
+	@RequestMapping(value = "/orderDeal")
+	public String orderDeal(HttpServletRequest request) {
+		request.setAttribute("navName", "下单");
+		return "orderDeal";
+	}
 }
