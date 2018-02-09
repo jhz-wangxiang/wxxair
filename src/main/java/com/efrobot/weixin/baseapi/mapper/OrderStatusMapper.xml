@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efrobot.weixin.baseapi.OrderStatusMapper" >
+  <resultMap id="BaseResultMap" type="com.efrobot.weixin.baseapi.pojo.OrderStatus" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+    <result column="button" property="button" jdbcType="VARCHAR" />
+    <result column="exp1" property="exp1" jdbcType="VARCHAR" />
+    <result column="exp2" property="exp2" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, status, describe, button, exp1, exp2
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_status
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order_status
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.efrobot.weixin.baseapi.pojo.OrderStatus" >
+  <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order_status (status, describe, 
+      button, exp1, exp2)
+    values (#{status,jdbcType=INTEGER}, #{describe,jdbcType=VARCHAR}, 
+      #{button,jdbcType=VARCHAR}, #{exp1,jdbcType=VARCHAR}, #{exp2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efrobot.weixin.baseapi.pojo.OrderStatus" >
+  <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order_status
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="describe != null" >
+        describe,
+      </if>
+      <if test="button != null" >
+        button,
+      </if>
+      <if test="exp1 != null" >
+        exp1,
+      </if>
+      <if test="exp2 != null" >
+        exp2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="describe != null" >
+        #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="button != null" >
+        #{button,jdbcType=VARCHAR},
+      </if>
+      <if test="exp1 != null" >
+        #{exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="exp2 != null" >
+        #{exp2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+ 
+  <update id="updateByPrimaryKeySelective" parameterType="com.efrobot.weixin.baseapi.pojo.OrderStatus" >
+    update order_status
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="describe != null" >
+        describe = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="button != null" >
+        button = #{button,jdbcType=VARCHAR},
+      </if>
+      <if test="exp1 != null" >
+        exp1 = #{exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="exp2 != null" >
+        exp2 = #{exp2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efrobot.weixin.baseapi.pojo.OrderStatus" >
+    update order_status
+    set status = #{status,jdbcType=INTEGER},
+      describe = #{describe,jdbcType=VARCHAR},
+      button = #{button,jdbcType=VARCHAR},
+      exp1 = #{exp1,jdbcType=VARCHAR},
+      exp2 = #{exp2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectSelectList" resultMap="BaseResultMap" resultType="com.efrobot.weixin.baseapi.pojo.OrderStatus">
+		SELECT 
+              *
+		FROM order_status
+		WHERE 
+		 1=1
+		 and id IN
+		<foreach collection="list" index="index" open="(" close=")" separator="," item="id">
+			#{id,jdbcType=INTEGER}
+		</foreach>
+	</select>
+  <select id="selectAll" resultMap="BaseResultMap" resultType="com.efrobot.weixin.baseapi.pojo.OrderStatus">
+		SELECT 
+              *
+		FROM order_status
+	</select>
+</mapper>

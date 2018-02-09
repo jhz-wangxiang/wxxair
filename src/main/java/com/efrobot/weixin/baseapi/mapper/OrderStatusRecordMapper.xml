@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efrobot.weixin.baseapi.OrderStatusRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.efrobot.weixin.baseapi.pojo.OrderStatusRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="exp1" property="exp1" jdbcType="VARCHAR" />
+    <result column="exp2" property="exp2" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, status, remark, user_id, role_id, create_date, exp1, exp2
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_status_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByparms" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    o.remark,
+    o.create_date,
+    o.status,
+    o.exp1,
+    o.exp2,
+    s.USERNAME,
+    r.ROLE_NAME
+    from order_status_record o
+    LEFT JOIN sys_user s ON s.id = o.user_id
+    LEFT JOIN sys_role r ON r.id = o.role_id
+    where o.exp1 = #{exp1,jdbcType=VARCHAR}
+    ORDER BY
+	o.create_date desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order_status_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.efrobot.weixin.baseapi.pojo.OrderStatusRecord" >
+  <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order_status_record (status, remark, 
+      user_id, role_id, create_date, 
+      exp1, exp2)
+    values (#{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{exp1,jdbcType=VARCHAR}, #{exp2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efrobot.weixin.baseapi.pojo.OrderStatusRecord" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order_status_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="exp1 != null" >
+        exp1,
+      </if>
+      <if test="exp2 != null" >
+        exp2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exp1 != null" >
+        #{exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="exp2 != null" >
+        #{exp2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.efrobot.weixin.baseapi.pojo.OrderStatusRecord" >
+    update order_status_record
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exp1 != null" >
+        exp1 = #{exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="exp2 != null" >
+        exp2 = #{exp2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efrobot.weixin.baseapi.pojo.OrderStatusRecord" >
+    update order_status_record
+    set status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      exp1 = #{exp1,jdbcType=VARCHAR},
+      exp2 = #{exp2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

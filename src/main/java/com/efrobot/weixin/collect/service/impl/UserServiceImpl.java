@@ -2,47 +2,37 @@ package com.efrobot.weixin.collect.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
+import com.efrobot.weixin.baseapi.OrderMapper;
 import com.efrobot.weixin.baseapi.UserMapper;
 import com.efrobot.weixin.baseapi.pojo.User;
 import com.efrobot.weixin.collect.service.UserService;
 
-@Service("userService")
+
+@Service
 public class UserServiceImpl implements UserService {
+	@Resource
+	private UserMapper userMapper;
+	@Resource
+	private OrderMapper orderMapper;
 
-	@Autowired
-    private UserMapper userMapper;
-	public int queryUserCount(User user) { 
-		List<User> userlist=userMapper.queryUser(user);
-		if(userlist.size()==0){
-			return 0;
-		}
-		return 1;
+	@Override
+	public List<User> selectByUser(User record) {
+		return userMapper.selectByUser(record);
 	}
 	
-	public User findUserByParams(User user){ 
-		List<User> userlist=userMapper.queryUser(user);
-		if(userlist.size()!=0){
-			return userlist.get(0);
-		}
-		return null;
-	}
-	
-	public List<User> findUserByParamsList(User user){ 
-		return userMapper.queryUser(user);
+	@Override
+	public int insertSelective(User record) {
+		return userMapper.insertSelective(record);
 	}
 
-	public int saveUser(User user) { 
-		return userMapper.saveUser(user);
-	}
-	public int updateUser(User user) { 
-		return userMapper.updateUser(user);
+	@Override
+	public int updateByPrimaryKeySelective(User record) {
+		return userMapper.updateByPrimaryKeySelective(record);
 	}
 	
-	public int updateUserByOpenid(User user) { 
-		return userMapper.updateUserByOpenid(user);
-	}
 
 }

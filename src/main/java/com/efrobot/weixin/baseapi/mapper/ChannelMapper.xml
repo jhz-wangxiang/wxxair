@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efrobot.weixin.baseapi.ChannelMapper">
+	<resultMap id="BaseResultMap"
+		type="com.efrobot.weixin.baseapi.pojo.Channel">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="channel" property="channel" jdbcType="VARCHAR" />
+		<result column="discount" property="discount" jdbcType="DECIMAL" />
+		<result column="exp1" property="exp1" jdbcType="VARCHAR" />
+		<result column="exp2" property="exp2" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, channel, discount, exp1, exp2
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from channel
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from channel
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.efrobot.weixin.baseapi.pojo.Channel">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into channel (channel, discount,
+		exp1, exp2)
+		values (#{channel,jdbcType=VARCHAR}, #{discount,jdbcType=DECIMAL},
+		#{exp1,jdbcType=VARCHAR}, #{exp2,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.efrobot.weixin.baseapi.pojo.Channel">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="channel != null">
+				channel,
+			</if>
+			<if test="discount != null">
+				discount,
+			</if>
+			<if test="exp1 != null">
+				exp1,
+			</if>
+			<if test="exp2 != null">
+				exp2,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="channel != null">
+				#{channel,jdbcType=VARCHAR},
+			</if>
+			<if test="discount != null">
+				#{discount,jdbcType=DECIMAL},
+			</if>
+			<if test="exp1 != null">
+				#{exp1,jdbcType=VARCHAR},
+			</if>
+			<if test="exp2 != null">
+				#{exp2,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.efrobot.weixin.baseapi.pojo.Channel">
+		update channel
+		<set>
+			<if test="channel != null">
+				channel = #{channel,jdbcType=VARCHAR},
+			</if>
+			<if test="discount != null">
+				discount = #{discount,jdbcType=DECIMAL},
+			</if>
+			<if test="exp1 != null">
+				exp1 = #{exp1,jdbcType=VARCHAR},
+			</if>
+			<if test="exp2 != null">
+				exp2 = #{exp2,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.efrobot.weixin.baseapi.pojo.Channel">
+		update channel
+		set channel = #{channel,jdbcType=VARCHAR},
+		discount = #{discount,jdbcType=DECIMAL},
+		exp1 = #{exp1,jdbcType=VARCHAR},
+		exp2 = #{exp2,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="getChannel" resultMap="BaseResultMap"
+		parameterType="com.efrobot.weixin.baseapi.pojo.Channel">
+		select
+		<include refid="Base_Column_List" />
+		from channel
+		where 1=1
+		<if test="channel != null and !channel.isEmpty() and channel != ''">
+			and channel = #{channel,jdbcType=VARCHAR}
+		</if>
+		<if test="exp1 != null and !exp1.isEmpty() and exp1 != ''">
+			and exp1 = #{exp1,jdbcType=VARCHAR}
+		</if>
+		<if test="id != null">
+			and id = #{id,jdbcType=INTEGER}
+		</if>
+		ORDER BY
+		exp1 desc
+	</select>
+
+</mapper>

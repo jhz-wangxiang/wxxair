@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efrobot.weixin.baseapi.OrderMapper">
+	<resultMap id="BaseResultMap"
+		type="com.efrobot.weixin.baseapi.pojo.Order">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="flight_num" property="flightNum" jdbcType="VARCHAR" />
+		<result column="now_time" property="nowTime" jdbcType="TIMESTAMP" />
+		<result column="baggage_num" property="baggageNum" jdbcType="VARCHAR" />
+		<result column="baggage" property="baggage" jdbcType="VARCHAR" />
+		<result column="register_name" property="registerName"
+			jdbcType="VARCHAR" />
+		<result column="register_phone" property="registerPhone"
+			jdbcType="VARCHAR" />
+		<result column="channel_id" property="channelId" jdbcType="INTEGER" />
+		<result column="channel" property="channel" jdbcType="VARCHAR" />
+		<result column="consignee" property="consignee" jdbcType="VARCHAR" />
+		<result column="consignee_phone" property="consigneePhone"
+			jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="area_id" property="areaId" jdbcType="INTEGER" />
+		<result column="mileage" property="mileage" jdbcType="INTEGER" />
+		<result column="basic_fee" property="basicFee" jdbcType="DECIMAL" />
+		<result column="discount" property="discount" jdbcType="DECIMAL" />
+		<result column="additional_fee" property="additionalFee"
+			jdbcType="DECIMAL" />
+		<result column="pay_cost" property="payCost" jdbcType="DECIMAL" />
+		<result column="refund_fee" property="refundFee" jdbcType="DECIMAL" />
+		<result column="paid_fee" property="paidFee" jdbcType="DECIMAL" />
+		<result column="exp_fee" property="expFee" jdbcType="DECIMAL" />
+		<result column="total_fee" property="totalFee" jdbcType="DECIMAL" />
+		<result column="pay_type" property="payType" jdbcType="VARCHAR" />
+		<result column="pay_status" property="payStatus" jdbcType="VARCHAR" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="order_wx_no" property="orderWxNo" jdbcType="VARCHAR" />
+		<result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+		<result column="abnormal_status" property="abnormalStatus"
+			jdbcType="VARCHAR" />
+		<result column="abnorma_reason" property="abnormaReason"
+			jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="refund_reason" property="refundReason"
+			jdbcType="VARCHAR" />
+		<result column="cancel_reason" property="cancelReason"
+			jdbcType="VARCHAR" />
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="describe" property="describe" jdbcType="VARCHAR" />
+		<result column="button" property="button" jdbcType="VARCHAR" />
+		<result column="single_way" property="singleWay" jdbcType="VARCHAR" />
+		<result column="baggage_no" property="baggageNo" jdbcType="VARCHAR" />
+
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="area" property="area" jdbcType="VARCHAR" />
+		<result column="exp1" property="exp1" jdbcType="VARCHAR" />
+		<result column="exp2" property="exp2" jdbcType="VARCHAR" />
+
+		<result column="delivery_time" property="deliveryTime"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, user_id, flight_num, now_time, baggage_num, baggage, register_name,
+		register_phone, channel_id,
+		consignee, consignee_phone, address, area_id, mileage, basic_fee, discount,
+		additional_fee,
+		pay_cost, refund_fee, total_fee, pay_type, pay_status, order_no, order_wx_no,
+		order_status,
+		abnormal_status, abnorma_reason, remark, refund_reason, cancel_reason, operator,
+		create_date,
+		update_date,paid_fee,exp_fee,single_way,baggage_no,province,city,area,exp1,exp2,delivery_time
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from orders
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="com.efrobot.weixin.baseapi.pojo.Order">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into orders (user_id, flight_num,
+		now_time, baggage_num, baggage,
+		register_name, register_phone, channel_id,
+		consignee, consignee_phone, address,
+		area_id, mileage, basic_fee,
+		discount, additional_fee, pay_cost,
+		refund_fee, total_fee, pay_type,
+		pay_status, order_no, order_wx_no,
+		order_status, abnormal_status, abnorma_reason,
+		remark, refund_reason, cancel_reason,
+		operator, create_date,
+		update_date,paid_fee,exp_fee,single_way,baggage_no,province,city,area,exp1,exp2
+		)
+		values (#{userId,jdbcType=INTEGER}, #{flightNum,jdbcType=VARCHAR},
+		#{nowTime,jdbcType=TIMESTAMP}, #{baggageNum,jdbcType=VARCHAR},
+		#{baggage,jdbcType=VARCHAR},
+		#{registerName,jdbcType=VARCHAR}, #{registerPhone,jdbcType=VARCHAR}, #{channelId,jdbcType=INTEGER},
+		#{consignee,jdbcType=VARCHAR}, #{consigneePhone,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{areaId,jdbcType=INTEGER}, #{mileage,jdbcType=INTEGER}, #{basicFee,jdbcType=DECIMAL},
+		#{discount,jdbcType=DECIMAL}, #{additionalFee,jdbcType=DECIMAL},
+		#{payCost,jdbcType=DECIMAL},
+		#{refundFee,jdbcType=DECIMAL}, #{totalFee,jdbcType=DECIMAL}, #{payType,jdbcType=VARCHAR},
+		#{payStatus,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR},
+		#{orderWxNo,jdbcType=VARCHAR},
+		#{orderStatus,jdbcType=INTEGER}, #{abnormalStatus,jdbcType=VARCHAR},
+		#{abnormaReason,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{refundReason,jdbcType=VARCHAR}, #{cancelReason,jdbcType=VARCHAR},
+		#{operator,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+		#{updateDate,jdbcType=TIMESTAMP},
+		#{paidFee,jdbcType=DECIMAL}, #{expFee,jdbcType=DECIMAL}, #{singleWay,jdbcType=VARCHAR},
+		#{baggageNo,jdbcType=VARCHAR},
+		#{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR},
+		#{exp1,jdbcType=VARCHAR}, #{exp2,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.efrobot.weixin.baseapi.pojo.Order">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into orders
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="flightNum != null">
+				flight_num,
+			</if>
+			<if test="nowTime != null">
+				now_time,
+			</if>
+			<if test="baggageNum != null">
+				baggage_num,
+			</if>
+			<if test="baggage != null">
+				baggage,
+			</if>
+			<if test="registerName != null">
+				register_name,
+			</if>
+			<if test="registerPhone != null">
+				register_phone,
+			</if>
+			<if test="channelId != null">
+				channel_id,
+			</if>
+			<if test="consignee != null">
+				consignee,
+			</if>
+			<if test="consigneePhone != null">
+				consignee_phone,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="areaId != null">
+				area_id,
+			</if>
+			<if test="mileage != null">
+				mileage,
+			</if>
+			<if test="basicFee != null">
+				basic_fee,
+			</if>
+			<if test="discount != null">
+				discount,
+			</if>
+			<if test="additionalFee != null">
+				additional_fee,
+			</if>
+			<if test="payCost != null">
+				pay_cost,
+			</if>
+			<if test="refundFee != null">
+				refund_fee,
+			</if>
+			<if test="totalFee != null">
+				total_fee,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="payStatus != null">
+				pay_status,
+			</if>
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="orderWxNo != null">
+				order_wx_no,
+			</if>
+			<if test="orderStatus != null">
+				order_status,
+			</if>
+			<if test="abnormalStatus != null">
+				abnormal_status,
+			</if>
+			<if test="abnormaReason != null">
+				abnorma_reason,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="refundReason != null">
+				refund_reason,
+			</if>
+			<if test="cancelReason != null">
+				cancel_reason,
+			</if>
+			<if test="operator != null">
+				operator,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="updateDate != null">
+				paid_fee,
+			</if>
+			<if test="updateDate != null">
+				exp_fee,
+			</if>
+			<if test="singleWay != null">
+				single_way,
+			</if>
+			<if test="baggageNo != null">
+				baggage_no,
+			</if>
+
+			<if test="province != null">
+				province,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="area != null">
+				area,
+			</if>
+			<if test="exp1 != null">
+				exp1,
+			</if>
+			<if test="exp2 != null">
+				exp2,
+			</if>
+			<if test="deliveryTime != null">
+				delivery_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="flightNum != null">
+				#{flightNum,jdbcType=VARCHAR},
+			</if>
+			<if test="nowTime != null">
+				#{nowTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="baggageNum != null">
+				#{baggageNum,jdbcType=VARCHAR},
+			</if>
+			<if test="baggage != null">
+				#{baggage,jdbcType=VARCHAR},
+			</if>
+			<if test="registerName != null">
+				#{registerName,jdbcType=VARCHAR},
+			</if>
+			<if test="registerPhone != null">
+				#{registerPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="channelId != null">
+				#{channelId,jdbcType=INTEGER},
+			</if>
+			<if test="consignee != null">
+				#{consignee,jdbcType=VARCHAR},
+			</if>
+			<if test="consigneePhone != null">
+				#{consigneePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="areaId != null">
+				#{areaId,jdbcType=INTEGER},
+			</if>
+			<if test="mileage != null">
+				#{mileage,jdbcType=INTEGER},
+			</if>
+			<if test="basicFee != null">
+				#{basicFee,jdbcType=DECIMAL},
+			</if>
+			<if test="discount != null">
+				#{discount,jdbcType=DECIMAL},
+			</if>
+			<if test="additionalFee != null">
+				#{additionalFee,jdbcType=DECIMAL},
+			</if>
+			<if test="payCost != null">
+				#{payCost,jdbcType=DECIMAL},
+			</if>
+			<if test="refundFee != null">
+				#{refundFee,jdbcType=DECIMAL},
+			</if>
+			<if test="totalFee != null">
+				#{totalFee,jdbcType=DECIMAL},
+			</if>
+			<if test="payType != null">
+				#{payType,jdbcType=VARCHAR},
+			</if>
+			<if test="payStatus != null">
+				#{payStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderWxNo != null">
+				#{orderWxNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				#{orderStatus,jdbcType=INTEGER},
+			</if>
+			<if test="abnormalStatus != null">
+				#{abnormalStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="abnormaReason != null">
+				#{abnormaReason,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="refundReason != null">
+				#{refundReason,jdbcType=VARCHAR},
+			</if>
+			<if test="cancelReason != null">
+				#{cancelReason,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				#{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payCost != null">
+				#{paidFee,jdbcType=DECIMAL},
+			</if>
+			<if test="payCost != null">
+				#{expFee,jdbcType=DECIMAL},
+			</if>
+			<if test="singleWay != null">
+				#{singleWay,jdbcType=VARCHAR},
+			</if>
+			<if test="baggageNo != null">
+				#{baggageNo,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				#{area,jdbcType=VARCHAR},
+			</if>
+			<if test="exp1 != null">
+				#{exp1,jdbcType=VARCHAR},
+			</if>
+			<if test="exp2 != null">
+				#{exp2,jdbcType=VARCHAR},
+			</if>
+			<if test="deliveryTime != null">
+				#{deliveryTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.efrobot.weixin.baseapi.pojo.Order">
+		update orders
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="flightNum != null">
+				flight_num = #{flightNum,jdbcType=VARCHAR},
+			</if>
+			<if test="nowTime != null">
+				now_time = #{nowTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="baggageNum != null">
+				baggage_num = #{baggageNum,jdbcType=VARCHAR},
+			</if>
+			<if test="baggage != null">
+				baggage = #{baggage,jdbcType=VARCHAR},
+			</if>
+			<if test="registerName != null">
+				register_name = #{registerName,jdbcType=VARCHAR},
+			</if>
+			<if test="registerPhone != null">
+				register_phone = #{registerPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="channelId != null">
+				channel_id = #{channelId,jdbcType=INTEGER},
+			</if>
+			<if test="consignee != null">
+				consignee = #{consignee,jdbcType=VARCHAR},
+			</if>
+			<if test="consigneePhone != null">
+				consignee_phone = #{consigneePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="areaId != null">
+				area_id = #{areaId,jdbcType=INTEGER},
+			</if>
+			<if test="mileage != null">
+				mileage = #{mileage,jdbcType=INTEGER},
+			</if>
+			<if test="basicFee != null">
+				basic_fee = #{basicFee,jdbcType=DECIMAL},
+			</if>
+			<if test="discount != null">
+				discount = #{discount,jdbcType=DECIMAL},
+			</if>
+			<if test="additionalFee != null">
+				additional_fee = #{additionalFee,jdbcType=DECIMAL},
+			</if>
+			<if test="payCost != null">
+				pay_cost = #{payCost,jdbcType=DECIMAL},
+			</if>
+			<if test="refundFee != null">
+				refund_fee = #{refundFee,jdbcType=DECIMAL},
+			</if>
+			<if test="paidFee != null">
+				paid_fee = #{paidFee,jdbcType=DECIMAL},
+			</if>
+			<if test="expFee != null">
+				exp_fee = #{expFee,jdbcType=DECIMAL},
+			</if>
+			<if test="totalFee != null">
+				total_fee = #{totalFee,jdbcType=DECIMAL},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType,jdbcType=VARCHAR},
+			</if>
+			<if test="payStatus != null">
+				pay_status = #{payStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNo != null">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderWxNo != null">
+				order_wx_no = #{orderWxNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus,jdbcType=INTEGER},
+			</if>
+			<if test="abnormalStatus != null">
+				abnormal_status = #{abnormalStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="abnormaReason != null">
+				abnorma_reason = #{abnormaReason,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="refundReason != null">
+				refund_reason = #{refundReason,jdbcType=VARCHAR},
+			</if>
+			<if test="cancelReason != null">
+				cancel_reason = #{cancelReason,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				operator = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="singleWay != null">
+				single_way = #{singleWay,jdbcType=VARCHAR},
+			</if>
+			<if test="baggageNo != null">
+				baggage_no = #{baggageNo,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				area = #{area,jdbcType=VARCHAR},
+			</if>
+			<if test="exp1 != null">
+				exp1 = #{exp1,jdbcType=VARCHAR},
+			</if>
+			<if test="exp2 != null">
+				exp2 = #{exp2,jdbcType=VARCHAR},
+			</if>
+			<if test="deliveryTime != null">
+				delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.efrobot.weixin.baseapi.pojo.Order">
+		update orders
+		set user_id = #{userId,jdbcType=INTEGER},
+		flight_num = #{flightNum,jdbcType=VARCHAR},
+		now_time = #{nowTime,jdbcType=TIMESTAMP},
+		baggage_num = #{baggageNum,jdbcType=VARCHAR},
+		baggage = #{baggage,jdbcType=VARCHAR},
+		register_name = #{registerName,jdbcType=VARCHAR},
+		register_phone = #{registerPhone,jdbcType=VARCHAR},
+		channel_id = #{channelId,jdbcType=INTEGER},
+		consignee = #{consignee,jdbcType=VARCHAR},
+		consignee_phone = #{consigneePhone,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		area_id = #{areaId,jdbcType=INTEGER},
+		mileage = #{mileage,jdbcType=INTEGER},
+		basic_fee = #{basicFee,jdbcType=DECIMAL},
+		discount = #{discount,jdbcType=DECIMAL},
+		additional_fee = #{additionalFee,jdbcType=DECIMAL},
+		pay_cost = #{payCost,jdbcType=DECIMAL},
+		paid_fee = #{paidFee,jdbcType=DECIMAL},
+		exp_fee = #{expFee,jdbcType=DECIMAL},
+		refund_fee = #{refundFee,jdbcType=DECIMAL},
+		total_fee = #{totalFee,jdbcType=DECIMAL},
+		pay_type = #{payType,jdbcType=VARCHAR},
+		pay_status = #{payStatus,jdbcType=VARCHAR},
+		order_no = #{orderNo,jdbcType=VARCHAR},
+		order_wx_no = #{orderWxNo,jdbcType=VARCHAR},
+		order_status = #{orderStatus,jdbcType=INTEGER},
+		abnormal_status = #{abnormalStatus,jdbcType=VARCHAR},
+		abnorma_reason = #{abnormaReason,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		refund_reason = #{refundReason,jdbcType=VARCHAR},
+		cancel_reason = #{cancelReason,jdbcType=VARCHAR},
+		operator = #{operator,jdbcType=VARCHAR},
+		update_date = #{updateDate,jdbcType=TIMESTAMP},
+		single_way = #{singleWay,jdbcType=VARCHAR},
+		baggage_no = #{baggageNo,jdbcType=VARCHAR},
+		province = #{province,jdbcType=VARCHAR},
+		city = #{city,jdbcType=VARCHAR},
+		area = #{area,jdbcType=VARCHAR},
+		exp1 = #{exp1,jdbcType=VARCHAR},
+		exp2 = #{exp2,jdbcType=VARCHAR},
+		delivery_time = #{deliveryTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="selectByParms" resultMap="BaseResultMap"
+		parameterType="com.efrobot.weixin.baseapi.pojo.Order">
+		SELECT
+		o.*,
+		u.name,
+		u.phone,
+		c.channel,
+		s.describe,
+		s.button
+		FROM
+		orders o
+		LEFT JOIN channel c ON o.channel_id = c.id
+		LEFT JOIN USER u ON o.user_id = u.id
+		LEFT JOIN order_status s ON o.order_status = s.status
+		where 1=1
+		<if test="id != null">
+			AND o.id=#{id,jdbcType=INTEGER}
+		</if>
+		<if test="orderNo != null and !orderNo.isEmpty() and orderNo != ''">
+			AND o.order_no = #{orderNo,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null and !name.isEmpty() and name != ''">
+			AND u.name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="phone != null and !phone.isEmpty() and name != ''">
+			AND u.phone = #{phone,jdbcType=VARCHAR}
+		</if>
+		<if test="flightNum != null and !flightNum.isEmpty() and name != ''">
+			AND o.flightNum = #{flightNum,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null">
+			AND o.user_id = #{userId,jdbcType=INTEGER}
+		</if>
+		<if test="channelId != null">
+			AND o.channel_id = #{channelId,jdbcType=INTEGER}
+		</if>
+		<if
+			test="abnormalStatus != null and !abnormalStatus.isEmpty() and abnormalStatus != ''">
+			AND o.abnormal_status = #{abnormalStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="orderStatus != null">
+			AND o.order_status = #{orderStatus,jdbcType=INTEGER}
+		</if>
+		<if test="payStatus != null and !payStatus.isEmpty() and payStatus != ''">
+			AND o.pay_status = #{payStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="nowTimeEnd != null and nowTimeEnd != ''">
+			  <![CDATA[
+             and now_time <= DATE_FORMAT(#{nowTimeEnd}, '%Y/%m/%d %H:%i:%S')
+              ]]>
+		</if>
+		<if test="nowTimeStart != null and nowTimeStart != ''">
+			  <![CDATA[
+             and now_time >= DATE_FORMAT(#{nowTimeStart}, '%Y/%m/%d')
+            ]]>
+		</if>
+		<if test="list != null">
+			and o.id IN
+			<foreach collection="list" index="index" open="(" close=")"
+				separator="," item="snss">
+				#{snss,jdbcType=INTEGER}
+			</foreach>
+		</if>
+		<if test="listStatus != null">
+			and o.order_status IN
+			<foreach collection="listStatus" index="index" open="(" close=")"
+				separator="," item="snss">
+				#{snss,jdbcType=INTEGER}
+			</foreach>
+		</if>
+		ORDER BY
+		o.create_date desc
+	</select>
+</mapper>

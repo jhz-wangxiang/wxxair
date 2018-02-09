@@ -4,18 +4,12 @@ import java.util.List;
 
 import com.efrobot.weixin.baseapi.pojo.User;
 
+
 public interface UserService {
+	public  List<User> selectByUser(User record);	
+	
+	public int insertSelective(User record);
 
-	public int queryUserCount(User user);
+	public int updateByPrimaryKeySelective(User record);
 	
-	public User findUserByParams(User user);
-	
-	public List<User> findUserByParamsList(User user);
-	
-	public int saveUser(User user);
-	
-	public int updateUser(User user);
-	
-	public int updateUserByOpenid(User user);
-
 }

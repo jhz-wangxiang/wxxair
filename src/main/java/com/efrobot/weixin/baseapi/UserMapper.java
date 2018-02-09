@@ -6,11 +6,19 @@ import com.efrobot.weixin.baseapi.pojo.User;
 
 public interface UserMapper {
 
-	List<User> queryUser(User user);
+    int deleteByPrimaryKey(Integer id);
 
-	int saveUser(User user);
-	
-	int updateUserByOpenid(User user);
-	
-	int updateUser(User user);
+    int insert(User record);
+
+    int insertSelective(User record);
+
+    User selectByPrimaryKey(Integer id);
+    
+    List<User> selectByUser(User record);
+
+    int updateByPrimaryKeySelective(User record);
+
+    int updateByPrimaryKey(User record);
+    
+    List<User> selectByParms(User record);
 }
