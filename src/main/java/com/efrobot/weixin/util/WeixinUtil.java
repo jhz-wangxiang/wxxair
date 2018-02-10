@@ -66,6 +66,7 @@ import com.efrobot.toolkit.util.string.StringUtils;
 import com.efrobot.toolkit.util.weixin.GenerateRequestXml;
 import com.efrobot.toolkit.util.weixin.Signature;
 import com.efrobot.toolkit.util.weixin.bean.CashRedPacketRequestXmlBean;
+import com.efrobot.toolkit.util.weixin.bean.EnterprisePayRequestXmlBean;
 import com.efrobot.toolkit.util.weixin.bean.PayRequestXmlBean;
 import com.efrobot.toolkit.util.xml.XMLParser;
 import com.efrobot.weixin.collect.bean.WxPay;
@@ -1099,7 +1100,55 @@ public class WeixinUtil {
 		}
 		return XmlMap;
 	}
-
+	/**
+	 * 退款
+	 */
+	@SuppressWarnings("unchecked")
+	public static Map<String, String> Refund(String mch_id, String nonce_str,String out_trade_no,
+			String out_refund_no, Integer total_fee, Integer refund_fee) {
+		Map<String, String> XmlMap = new HashMap<String, String>();
+		String url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
+		try {
+			RefundRequestXmlBean enterprisePayRequestXmlBean = generateRefundInfo(WXKeys.WX_APPID,WXKeys.WX_PARTNERKEY, WXKeys.WX_PARTNER,  nonce_str, out_trade_no,
+					 out_refund_no,  total_fee,  refund_fee);
+			HttpsRequest4WX htttpcliect = new HttpsRequest4WX(
+					WeixinUtil.class.getResource(WXKeys.WX_CERTPATH).getPath(), WXKeys.WX_PARTNER);
+			String xmlstr = htttpcliect.sendPost(url, enterprisePayRequestXmlBean);
+			XmlMap = XMLParser.getMapFromXML(xmlstr);
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (UnrecoverableKeyException e1) {
+			e1.printStackTrace();
+		} catch (KeyManagementException e1) {
+			e1.printStackTrace();
+		} catch (NoSuchAlgorithmException e1) {
+			e1.printStackTrace();
+		} catch (KeyStoreException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		return XmlMap;
+	}
+	//退款
+	public static RefundRequestXmlBean generateRefundInfo(String appid, String partnerKey,String mch_id, String nonce_str,String out_trade_no,
+			String out_refund_no, Integer total_fee, Integer refund_fee) {
+		Map<String, String> packageParams = new HashMap<String, String>();
+		packageParams.put("appid", appid);// 公众账号appid
+		packageParams.put("mchid", mch_id);// 商户号
+		packageParams.put("nonce_str", nonce_str);// 随机字符串
+		packageParams.put("out_trade_no", out_trade_no);// 商户订单号
+		packageParams.put("out_refund_no", out_refund_no);// 用户openid
+		packageParams.put("total_fee", total_fee.toString());// 校验用户姓名选项 NO_CHECK：不校验真实姓名 FORCE_CHECK：强校验真实姓名
+		packageParams.put("refund_fee", refund_fee.toString());// 企业付款金额，单位为分
+		Signature.initKey(partnerKey);
+		String sign = Signature.getSign(packageParams);
+		RefundRequestXmlBean xmlBean = new RefundRequestXmlBean( appid,  mch_id,  nonce_str,  sign,  out_trade_no,
+				 out_refund_no,  total_fee,  refund_fee);
+		return xmlBean;
+	}
 	/**
 	 * 发送mqtt消息
 	 * 
