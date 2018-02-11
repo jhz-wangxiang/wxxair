@@ -177,8 +177,13 @@ public class PageForController {
 
 	@RequestMapping(value = "/insertOrder", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertOrder(Order record) throws Exception {
+	public Map<String, Object> insertOrder(Order record,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		int result = -1;
+		String openid = (String) session.getAttribute("openid");
+		User user = new User();
+		user.setOpenid(openid);
+		List<User> listuser = userService.selectByUser(user);
+		record.setUserId(listuser.get(0).getId());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat mmdd = new SimpleDateFormat("MMdd");
 		String datestr = sdf.format(new Date());
@@ -204,7 +209,13 @@ public class PageForController {
 		// 校验航班时间
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 
-		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + ":00";
+		String endHour="";
+		if (flightNum.getEndHour().length() == 2) {
+			endHour= flightNum.getEndHour() + ":00:00";
+		} else {
+			endHour= flightNum.getEndHour() + ":00";
+		}
+		String time = sdf.format(record.getNowTime()) + " " + endHour;
 
 		Date t = sdf2.parse(time);
 		Date n = new Date();

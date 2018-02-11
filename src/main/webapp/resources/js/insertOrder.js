@@ -47,16 +47,16 @@ var Insert = function(){
     			Common.alter('请填写正确的手机号码！');
     			return false;
     		}
-    		$('.step-one').css("display","none");
-			$('.step-two').css("display","block");
     		$.ajax({
     			type:"post",
     			url:rootPath+'v1/page/insertUser?'+Math.random(),
     			data:{"name":name,"phone":phone},
     			success:function(res){
-    				if(res.resultCode==='SUCCESS'){
+    				if(res.resultCode=='SUCCESS'){
     					$('.step-one').css("display","none");
     					$('.step-two').css("display","block");
+    					json.name = name;
+    					json.phone = phone;
     				}else{
     					Common.alter(res.msg);
     				}
@@ -102,9 +102,15 @@ var Insert = function(){
 				data:{"flightNum":flightNum,"nowTimeStr":nowTime.replace(/\-/g,'/'),"baggageNum":baggageNum},
 				success:function(res){
 					if(res.resultCode=="SUCCESS"){
-					json.baggageNum = baggageNum;
+						json.baggageNum = baggageNum;
 						$('.step-two').css("display","none");
 						$('.step-three').css("display","block");
+						json.flightNum = flightNum;
+						json.nowTimeStr = nowTime.replace(/\-/g,'/');
+						//核对订单
+						$('#sFNum').html(flightNum);
+						$('#sFDate').html(nowTime.replace(/\-/g,'/'));
+						$('#sFBag').html(baggageNum);
 					}else{
 						Common.alter(res.msg);
 					}
@@ -156,7 +162,10 @@ var Insert = function(){
 			url:rootPath+'v1/page/getPrice?'+Math.random(),
 			data:{"areaId":id,"baggageNum":json.baggageNum},
 			success:function(res){
-				console.lg(res)
+				$('#free').html(res.paid+'元');
+				//json.paid = res.paid;
+				//核对订单
+				$('#sCost').html(res.paid+'元');
 			}
 		})
 	}
@@ -191,16 +200,56 @@ var Insert = function(){
 				Common.alter('请填写收货详细的收获地址。');
 				return false;
 			}
+			json.consignee = consignee;
+			json.consigneePhone = consigneePhone;
+			json.areaId = areaId;
+			json.province = province;
+			json.city = city;
+			json.area = area;
+			json.address = address;
+			//核对订单
+			$('#sName').html(consignee);
+			$('#sphone').html(consigneePhone);
+			$('#sAddress').html(province+city+area+address);
 			
+			$('.step-three').css("display","none");
+			$('.order-body').css("display","block");
+			
+			
+			return false;
+		});
+	}
+	function cancelSuccess() {
+	      var html = [];
+	      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">恭喜您已下单成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip">您需要抵达机场后，将行李小票在行李柜台递交给工作人员，并支付费用</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
+	      $('body').append(html.join(''));
+	      $('.modal-footer0211>a').eq(0).click(function () {
+	          $('#modal').remove();
+	          window.location.href = rootPath+ "v1/page/orderList"
+	      })
+	  }
+
+	var lastStep  =function(){
+		$('#lastStep').bind('click',function(event){
+			event.stopPropagation();
 			$.ajax({
 				type:"post",
-				url:rootPath+''
+				url:rootPath+'v1/page/insertOrder?'+Math.random(),
+				data:json,
+				success:function(res){
+					if(res.resultCode=='SUCCESS'){
+						cancelSuccess();
+					}else{
+						Common.alter(res.msg);
+					}
+					
+				},
+				error:function(){
+					Common.alter('服务器异常，请稍后再试！');
+				}
 			})
 			return false;
 		});
-		
-		
-		
 		
 	}
 	return {
@@ -210,6 +259,7 @@ var Insert = function(){
 			stepTwo();//填写第二步信息
 			stepThree();//填写第三部
 			initArea();//初识话地址栏
+			lastStep();//最后一步
 		}
 	}
 }();

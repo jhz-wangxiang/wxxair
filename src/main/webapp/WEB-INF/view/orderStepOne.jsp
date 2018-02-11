@@ -102,12 +102,28 @@
                 </div>
             </div>
             <div class="input-box"><label for="phone">详细地址</label><input type="text" id="address" name="address"></div>
-            <div class="fee-box"><span class="label">服务费：</span><span class="content">40元</span></div>
+            <div class="fee-box"><span class="label">服务费：</span><span class="content" id="free">40元</span></div>
             <a href="javascript:;" class="btn btn-lg" id="sure">确认</a>
         </div>
     </form>
 </section>
-
+<section class="order-body" style="display:none">
+  <h3 class="order-deal-header">行李信息</h3>
+  <div class="order-deal-box">
+    <div class="order-deal-item"><span class="label">航班号：</span><span class="content" id="sFNum">CA1987</span></div>
+    <div class="order-deal-item"><span class="label">日期：</span><span class="content" id="sFDate">2017.09.18</span></div>
+    <div class="order-deal-item"><span class="label">行李数量：</span><span class="content" id="sFBag">2</span></div>
+    <div class="order-deal-item"><span class="tip">行李内无贵重、易碎、违禁物品</span></div>
+  </div>
+  <h3 class="order-deal-header">收货地址</h3>
+  <div class="order-deal-box">
+    <div class="order-deal-item"><span class="label">收件人：</span><span class="content" id="sName">麻花藤</span></div>
+    <div class="order-deal-item"><span class="label">联系方式：</span><span class="content" id="sphone">15645552321</span></div>
+    <div class="order-deal-item"><span class="label">详细地址：</span><span class="content" id="sAddress">北京市海淀区西三环北路紫金大厦19号5单元1111</span></div>
+  </div>
+  <div class="fee-box"><span class="label">服务费：</span><span class="content" id="sCost">0元</span></div>
+  <a href="javascript:;" class="btn btn-lg" id="lastStep">立即下单</a>
+</section>
 <script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>
 <script src="<%=basePath%>resources/js/common.js" type="text/javascript"></script>
 <script src="<%=basePath%>resources/js/insertOrder.js" type="text/javascript"></script>
