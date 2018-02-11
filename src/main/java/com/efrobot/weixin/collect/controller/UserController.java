@@ -97,7 +97,6 @@ public class UserController {
 	@ResponseBody
 	public Map<String, Object> insertUser(User record, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		int result = -1;
-		request.setAttribute("navName", "下单第一步");
 		String openid = (String) session.getAttribute("openid");
 		openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
 		session.setAttribute("openid", openid);
@@ -109,10 +108,11 @@ public class UserController {
 			session.setAttribute("openid", openid);
 		}
 		User user2=new User();
-		user2.setPhone(record.getPhone());
+		user2.setOpenid(openid);
 		List<User> list=userService.selectByUser(user2);
 		record.setOpenid(openid);
 		if(list.size()!=0){
+			record.setId(list.get(0).getId());
 			result = userService.updateByPrimaryKeySelective(record);
 		}else{
 			if(record.getName()!=null&&!"".equals(record.getName())){

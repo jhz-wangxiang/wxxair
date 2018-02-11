@@ -81,10 +81,11 @@ public class PageForController {
 		int result = -1;
 		String openid = (String) session.getAttribute("openid");
 		User user2=new User();
-		user2.setPhone(record.getPhone());
+		user2.setOpenid(openid);
 		List<User> list=userService.selectByUser(user2);
 		record.setOpenid(openid);
 		if(list.size()!=0){
+			record.setId(list.get(0).getId());
 			result = userService.updateByPrimaryKeySelective(record);
 		}else{
 			if(record.getName()!=null&&!"".equals(record.getName())){
