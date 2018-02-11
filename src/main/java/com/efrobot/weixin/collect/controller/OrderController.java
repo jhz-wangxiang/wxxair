@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ import com.efrobot.weixin.collect.service.OrderService;
 import com.efrobot.weixin.collect.service.UserService;
 import com.efrobot.weixin.util.CommonUtil;
 import com.efrobot.weixin.util.SerialNum;
+import com.efrobot.weixin.util.WeixinUtil;
 
 @RequestMapping("/v1/order")
 @RestController
@@ -70,10 +73,18 @@ public class OrderController {
 	 */
 	@RequestMapping(path = "/micro/getOrderList")
 	@ResponseBody
-	public Map<String, Object> getOrderList(HttpSession session) throws Exception {
+	public Map<String, Object> getOrderList(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		// log.info("微信获取订单列表");
-
 		String openid = (String) session.getAttribute("openid");
+		// openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
+		session.setAttribute("openid", openid);
+		if (null == openid || "".equals(openid)) {
+			openid = WeixinUtil.getopenidAction(request);// 获得openid
+			if (null == openid || "".equals(openid)) {
+				throw new RuntimeException("数据异常");
+			}
+			session.setAttribute("openid", openid);
+		}
 
 		Map<String, Object> result = CommonUtil.resultMsg("SUCCESS", "查询成功!");
 
@@ -86,6 +97,7 @@ public class OrderController {
 			List<Order> orderList = orderService.selectByParms(record);
 			result.put("orderList", orderList);
 		}
+		WeixinUtil.wxConfig(request, response);
 		return result;
 	}
 
