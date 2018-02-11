@@ -47,7 +47,7 @@ public class PageForController {
 	public String orderStepOne(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.setAttribute("navName", "下单第一步");
 		String openid = (String) session.getAttribute("openid");
-		 openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
+		openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
 		session.setAttribute("openid", openid);
 		if (null == openid || "".equals(openid)) {
 			openid = WeixinUtil.getopenidAction(request);// 获得openid
@@ -60,7 +60,12 @@ public class PageForController {
 		record.setOpenid(openid);
 		List<User> list = userService.selectByUser(record);
 		if (list.size() != 0) {
-			request.setAttribute("user", list.get(0));
+//			request.setAttribute("user", list.get(0));
+			request.setAttribute("name", list.get(0).getName());
+			request.setAttribute("user", list.get(0).getPhone());
+		}else{
+			request.setAttribute("name", "");
+			request.setAttribute("user", "");
 		}
 		// 微信分享 modify by king ---start
 		WeixinUtil.wxConfig(request, response);
