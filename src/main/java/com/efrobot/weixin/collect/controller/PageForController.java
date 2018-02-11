@@ -20,4 +20,19 @@ public class PageForController {
 		request.setAttribute("navName", "下单");
 		return "orderDeal";
 	}
+	@RequestMapping(value = "/userInfo")
+	public String userInfo(HttpServletRequest request) {
+		request.setAttribute("navName", "个人信息");
+		return "userInfo";
+	}
+	@RequestMapping(value = "/orderList")
+	public String orderList(HttpServletRequest request) {
+		request.setAttribute("navName", "订单列表");
+		return "orderList";
+	}
+	@RequestMapping(value = "/orderDetail")
+	public String orderDetail(HttpServletRequest request) {
+		request.setAttribute("navName", "订单详情");
+		return "orderDetail";
+	}
 }
