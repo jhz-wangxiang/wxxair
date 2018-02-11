@@ -39,5 +39,5 @@ var Common ={
 				}
 			}
 			return theRequest;
-		},
+		}
 };

@@ -118,17 +118,53 @@ public class AddressController {
 		}
 	}
 	
-	@RequestMapping(value = "/getAddress", method = RequestMethod.POST)
-	@ResponseBody
-	public List<Address> getAddress(Address record) throws Exception {
-		List<Address> list=addressService.getAddress(record);
-		return list;
-	}
 	
 	@RequestMapping(value = "/getAddressDetail", method = RequestMethod.POST)
 	@ResponseBody
 	public Address getAddressDetail(Integer id) throws Exception {
 		Address adderss=addressService.selectByPrimaryKey(id);
 		return adderss;
+	}
+	
+	@RequestMapping(value = "/getAddress", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getAddress(Address record, HttpServletRequest request, HttpServletResponse response,
+			HttpSession session) throws Exception {
+		Map<String, Object> map = CommonUtil.resultMsg("SUCCESS", "查询!");
+		String openid = (String) session.getAttribute("openid");
+		User user = new User();
+		user.setOpenid(openid);
+		List<User> list2 = userService.selectByUser(user);
+		if (list2.size() != 0) {
+			record.setUserid(list2.get(0).getId());
+		}
+		record.setStatus(1);
+
+		List<Address> list = addressService.getAddress(record);
+		if (list.size() != 0) {
+			map.put("address", list.get(0));
+		}
+		return map;
+	}
+
+	@RequestMapping(value = "/getAddressAll", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getAddressAll(Address record, HttpServletRequest request, HttpServletResponse response,
+			HttpSession session) throws Exception {
+		Map<String, Object> map = CommonUtil.resultMsg("SUCCESS", "查询!");
+		String openid = (String) session.getAttribute("openid");
+		User user = new User();
+		user.setOpenid(openid);
+		List<User> list2 = userService.selectByUser(user);
+		if (list2.size() != 0) {
+			record.setUserid(list2.get(0).getId());
+		}
+		record.setStatus(1);
+
+		List<Address> list = addressService.getAddress(record);
+		if (list.size() != 0) {
+			map.put("addressList", list);
+		}
+		return map;
 	}
 }

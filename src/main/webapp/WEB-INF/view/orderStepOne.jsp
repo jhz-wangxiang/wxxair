@@ -65,7 +65,7 @@
             <div class="tip-box">温馨提示：为避免损失，贵重物品、易碎物品请勿托运</div>
             <a href="javascript:;" class="btn btn-lg" id="stepTwo">下一步</a>
         </div>
-        <div class="step-three" >
+        <div class="step-three" style="display:none">
             <div class="step-box">
                 <div class="number">3</div>
                 <div class="title-box">
@@ -73,39 +73,41 @@
                     <p class="sub-title" >请填写或选择您的收货地址</p>
                 </div>
             </div>
-            <div class="input-box"><label for="name">收货人</label><input type="text" id="name" name="name"></div>
-            <div class="input-box"><label for="phone">联系电话</label><input type="text" id="phone" name="phone"></div>
+            <div class="input-box"><label for="consignee">收货人</label><input type="text" id="consignee" name="consignee"></div>
+            <div class="input-box"><label for="consigneePhone">联系电话</label><input type="text" id="consigneePhone" name="consigneePhone"></div>
             <div class="order-address-select-box">
                 <div class="order-address-select-item">
-                    <span>北京市</span>
+                    <span id="province">北京市</span>
                     <ul>
                         <li>省</li>
                         <li>北京市</li>
                     </ul>
                 </div>
                 <div class="order-address-select-item">
-                    <span>北京市</span>
+                    <span id="city">北京市</span>
                     <ul>
                         <li>市</li>
                         <li>北京市</li>
                     </ul>
                 </div>
-                <div class="order-address-select-item" id="">
-                    <span>区</span>
-                    <ul>
-                        <li>区</li>
+                <div class="order-address-select-item" id="area">
+                    <span id="areaH">区</span>
+                    <input type="hidden" id="areaId"/>
+                    <ul id='areaUl'>
+                        <!-- <li>区</li>
                         <li>海淀区</li>
                         <li>昌平区</li>
-                        <li>朝阳区</li>
+                        <li>朝阳区</li> -->
                     </ul>
                 </div>
             </div>
             <div class="input-box"><label for="phone">详细地址</label><input type="text" id="address" name="address"></div>
             <div class="fee-box"><span class="label">服务费：</span><span class="content">40元</span></div>
-            <a href="javascript:;" class="btn btn-lg">确认</a>
+            <a href="javascript:;" class="btn btn-lg" id="sure">确认</a>
         </div>
     </form>
 </section>
+
 <script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>
 <script src="<%=basePath%>resources/js/common.js" type="text/javascript"></script>
 <script src="<%=basePath%>resources/js/insertOrder.js" type="text/javascript"></script>

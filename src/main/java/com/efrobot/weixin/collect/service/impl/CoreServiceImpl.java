@@ -54,7 +54,7 @@ public class CoreServiceImpl implements CoreService {
 
 		if (msgType.equals(WXKeys.REQ_MESSAGE_TYPE_TEXT)) {
 			log.info("设置回复用户文本消息");
-			 respContent = "设置回复用户文本消息！";
+			 respContent = "欢迎关注行李到家！不方便携带大包小包的、着急有事儿等不了行李提取的旅客，您可以轻松离开，我们为您服务到家！同时，我们也提供您出行中有用的资讯和其它便捷服务。希望您的出行更舒适和便捷。";
 		} else if (msgType.equals(WXKeys.REQ_MESSAGE_TYPE_IMAGE)) {
 			log.info("设置回复用图片消息");
 			 respContent = "您发送的是图片消息！";
@@ -76,7 +76,7 @@ public class CoreServiceImpl implements CoreService {
 			// 订阅
 			if (eventType.equals(WXKeys.EVENT_TYPE_SUBSCRIBE)) {
 				log.info("===================关注>>>>>>>>>>>>>>>" + scene_id);
-				respContent = "哎呀主人，小胖终于把您盼来了！了解小胖机器人请戳菜单“胖粉中心”，想购买小胖您可以1.点击屏幕右下方菜单中的“商城”2.登陆官方网站www.efrobot.com3.登录京东：小胖机器人官方旗舰店、天猫：小胖机器人旗舰店进行购买，任何问题可以拨打客服热线：400-008-9869（热线时间周一至周日早9晚9） ";
+				respContent = "欢迎关注行李到家！不方便携带大包小包的、着急有事儿等不了行李提取的旅客，您可以轻松离开，我们为您服务到家！同时，我们也提供您出行中有用的资讯和其它便捷服务。希望您的出行更舒适和便捷。";
 			} else if (eventType.equals(WXKeys.EVENT_TYPE_UNSUBSCRIBE)) {
 				log.info("===================取消关注");
 			} else if (eventType.equals(WXKeys.EVENT_TYPE_SCAN)) {
