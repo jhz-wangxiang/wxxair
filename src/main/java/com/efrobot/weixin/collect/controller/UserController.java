@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +23,7 @@ import com.efrobot.weixin.collect.service.AddressService;
 import com.efrobot.weixin.collect.service.OrderService;
 import com.efrobot.weixin.collect.service.UserService;
 import com.efrobot.weixin.util.CommonUtil;
+import com.efrobot.weixin.util.WeixinUtil;
 
 @RequestMapping("/v1/user")
 @RestController
@@ -88,32 +93,6 @@ public class UserController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> insertUser(User record) throws Exception {
-		int result = -1;
-		User user2=new User();
-		user2.setPhone(record.getPhone());
-		List<User> list=userService.selectByUser(user2);
-		if(list.size()>0){
-			return CommonUtil.resultMsg("FAIL", "用户信息已经存在!!!");
-		}
-		if(record.getName()!=null&&!"".equals(record.getName())){
-			record.setExp1("是");
-		}else{
-			record.setExp1("未");
-		}
-		result = userService.insertSelective(record);
-		if (result == 0) {
-			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
-		} else if (result == 1){
-			return CommonUtil.resultMsg("SUCCESS", "信息插入功");
-		}else {
-			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
-		}
-		
-	}
-	
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> updateUser(User record ) throws Exception {
@@ -164,5 +143,41 @@ public class UserController {
 		}
 		return us;
 	}
-	
+	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertUser(User record, HttpSession session) throws Exception {
+		int result = -1;
+		String openid = (String) session.getAttribute("openid");
+		User user2=new User();
+		user2.setOpenid(openid);
+		List<User> list=userService.selectByUser(user2);
+		record.setOpenid(openid);
+		if(list.size()!=0){
+			record.setId(list.get(0).getId());
+			result = userService.updateByPrimaryKeySelective(record);
+		}else{
+			User user3=new User();
+			user3.setPhone(record.getPhone());
+			List<User> list3=userService.selectByUser(user3);
+			if(list3.size()!=0){
+				record.setId(list.get(0).getId());
+				result = userService.updateByPrimaryKeySelective(record);
+			}else{
+				if(record.getName()!=null&&!"".equals(record.getName())){
+					record.setExp1("是");
+				}else{
+					record.setExp1("未");
+				}
+				result = userService.insertSelective(record);
+			}
+		}
+		if (result == 0) {
+			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
+		} else if (result == 1){
+			return CommonUtil.resultMsg("SUCCESS", "信息插入功");
+		}else {
+			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
+		}
+		
+	}
 }
