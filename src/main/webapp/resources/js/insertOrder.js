@@ -1,4 +1,5 @@
 var Insert = function(){
+	var json = {};//存储最后需要提交时的数据
 	//第一步是否阅读协议
 	var selXieYi = function(){
 		$('#protocol-radio').change(function () {
@@ -48,7 +49,7 @@ var Insert = function(){
     		}
     		$('.step-one').css("display","none");
 			$('.step-two').css("display","block");
-    		/*$.ajax({
+    		$.ajax({
     			type:"post",
     			url:rootPath+'v1/page/insertUser?'+Math.random(),
     			data:{"name":name,"phone":phone},
@@ -63,7 +64,7 @@ var Insert = function(){
     			error:function(){
     				Common.alter('服务器异常，请稍后再试！');
     			}
-    		})*/
+    		});
     		return false;
     	})
 	}
@@ -95,14 +96,13 @@ var Insert = function(){
 				Common.alter('请勾选行李内是否有贵，易碎，违禁物品。');
 				return false;
 			}
-			$('.step-two').css("display","none");
-			$('.step-three').css("display","block");
-			/*$.ajax({
+			$.ajax({
 				type:"post",
 				url:rootPath+'v1/page/checkflightNum?'+Math.random(),
-				data:{"flightNum":flightNum,"nowTime":nowTime,"baggageNum":baggageNum},
+				data:{"flightNum":flightNum,"nowTimeStr":nowTime.replace(/\-/g,'/'),"baggageNum":baggageNum},
 				success:function(res){
 					if(res.resultCode=="SUCCESS"){
+					json.baggageNum = baggageNum;
 						$('.step-two').css("display","none");
 						$('.step-three').css("display","block");
 					}else{
@@ -112,7 +112,7 @@ var Insert = function(){
 				error:function(){
 					Common.alter('服务器异常，请稍后再试。');
 				}
-			});*/
+			});
 			
 			return false;
 		});
@@ -121,16 +121,86 @@ var Insert = function(){
 	/**
 	 * 选择区
 	 */
+	function initArea(){
+		$.ajax({
+			type:"post",
+			url:rootPath+'v1/area/getArea?'+Math.random(),
+			success:function(res){
+				var html = [];
+				for(var i = 0;i<res.length;i++){
+					html.push('<li id="'+res[i].id+'">'+res[i].area+'</li>');
+				}
+				$('#areaUl').append(html.join(''));
+				selAddressFn();
+			}
+		})
+	}
 	var selAddressFn = function(){
 		$('#area>span').click(function () {
-		      $(this).next('ul').toggle();
-		    })
+			$('#areaUl').toggle()
+		      //$(this).next('ul').toggle();
+		})
 		    $('#area>ul>li').click(function () {
 		      $(this).parents('#area').children('span').html($(this).html());
+		      $('#areaId').val($(this).attr('id'));
 		      $('#area>ul').hide();
+		      getPriceByAreaId($(this).attr('id'));
 		    })
 	}
+	/**
+	 * 根据选择的区域获取对应的价格
+	 */
+	var getPriceByAreaId = function(id){
+		$.ajax({
+			type:"post",
+			url:rootPath+'v1/page/getPrice?'+Math.random(),
+			data:{"areaId":id,"baggageNum":json.baggageNum},
+			success:function(res){
+				console.lg(res)
+			}
+		})
+	}
 	var stepThree = function(){
+		$('#sure').bind('click',function(event){
+			event.stopPropagation();
+			var consignee = $('#consignee').val(),
+			consigneePhone = $('#consigneePhone').val(),
+			areaId = $('#areaId').val(),
+			province = $('#province').html(),
+			city = $('#city').html(),
+			area = $('#areaH').html(),
+			address = $('#address').val();
+			if(Common.isNull(consignee)){
+				Common.alter('请填写收货人的姓名。');
+				return false;
+			}
+			if(Common.isNull(consigneePhone)){
+				Common.alter('请填写收货人的电话。');
+				return false;
+			}
+			if(consigneePhone.length!=11){
+				Common.alter('请填写正确的收货人的11位的手机号。');
+				return false;
+			}
+			console.log(areaId)
+			if(!areaId){
+				Common.alter('请填写收货区域。');
+				return false;
+			}
+			if(Common.isNull(address)){
+				Common.alter('请填写收货详细的收获地址。');
+				return false;
+			}
+			
+			$.ajax({
+				type:"post",
+				url:rootPath+''
+			})
+			return false;
+		});
+		
+		
+		
 		
 	}
 	return {
@@ -139,7 +209,7 @@ var Insert = function(){
 			stepOne();//填写第一步信息
 			stepTwo();//填写第二步信息
 			stepThree();//填写第三部
-			selAddressFn();
+			initArea();//初识话地址栏
 		}
 	}
 }();
