@@ -5,6 +5,9 @@ var Common ={
 		isNull: function (str) {
 	        return (str == "" || typeof str != "string");
 	    },
+	    ltrim:function (text){
+			return (text || "").replace(/^\s+/g,"").replace(/\s+$/g,"");
+		},
 	    //正整数
 	    isNumCross:function(str){
 	    	console.log(validateReg.isNumCross)

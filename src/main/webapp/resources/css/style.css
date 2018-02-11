@@ -70,9 +70,9 @@ a:active{-webkit-tap-highlight-color: transparent;-webkit-touch-callout: none;-w
 .order-deal-item .label{ color: #aaaaaa; flex: 3; text-align: right; }
 .order-deal-item .content{ flex: 9; }
 .order-deal-item .tip{ color: #aaaaaa; }
-.user-info-header{ color: #3974bb; font-size: .38rem; font-weight: normal; }
-.user-info-header .avator{ width: 28px; height: .38px; background: url("../image/user-info-avator.png") no-repeat; background-size: contain;}
-
+.user-info-header{ color: #3974bb; font-size: .38rem; font-weight: normal; position:relative; padding-left:.4rem; background: url("../image/user-info-avator.png") left center no-repeat; background-size: contain; line-height:".5rem"}
+.user-info-address{ display: flex; display: -webkit-flex; justify-content: space-between; font-size: .28rem; margin-bottom:15px;}
+.user-info-address p{ font-size: .28rem; line-height:.3rem; padding:5px; color:#666666;}
 .order-detail-tip{color: #aaaaaa; font-size: .28rem; padding: .1rem; }
 .order-info-box{ text-align: center; }
 .order-info-box .order-info-title{ font-size: .42rem; padding: .2rem; }
