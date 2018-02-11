@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.efrobot.weixin.baseapi.pojo.Address;
 import com.efrobot.weixin.baseapi.pojo.Area;
 import com.efrobot.weixin.baseapi.pojo.Channel;
 import com.efrobot.weixin.baseapi.pojo.FlightNum;
 import com.efrobot.weixin.baseapi.pojo.Order;
 import com.efrobot.weixin.baseapi.pojo.OrderStatusRecord;
 import com.efrobot.weixin.baseapi.pojo.User;
+import com.efrobot.weixin.collect.service.AddressService;
 import com.efrobot.weixin.collect.service.AreaService;
 import com.efrobot.weixin.collect.service.FlightNumService;
 import com.efrobot.weixin.collect.service.OrderService;
@@ -40,6 +42,8 @@ public class PageForController {
 	private OrderService orderService;
 	@Autowired
 	private AreaService areaService;
+	@Autowired
+	private AddressService addressService;
 
 	@Autowired
 	private FlightNumService flightNumService;
@@ -262,6 +266,26 @@ public class PageForController {
 		return result;
 
 	}
+	@RequestMapping(value = "/getAddress", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getAddress(Address record,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		Map<String,Object> map = CommonUtil.resultMsg("SUCCESS", "查询!");
+		String openid = (String) session.getAttribute("openid");
+		User user = new User();
+		user.setOpenid(openid);
+		List<User> list2 = userService.selectByUser(user);
+		if (list2.size() != 0) {
+			record.setUserid(list2.get(0).getId());
+		}
+		record.setStatus(1);
+		
+		List<Address> list=addressService.getAddress(record);
+		if(list.size()!=0){
+			map.put("address", list.get(0));
+		}
+		return map;
+	}
+	
 	@RequestMapping(value = "/orderDeal")
 	public String orderDeal(HttpServletRequest request) {
 		request.setAttribute("navName", "下单");

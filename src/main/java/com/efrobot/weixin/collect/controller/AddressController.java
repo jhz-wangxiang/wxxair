@@ -3,6 +3,10 @@ package com.efrobot.weixin.collect.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,20 +14,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.efrobot.weixin.baseapi.pojo.Address;
+import com.efrobot.weixin.baseapi.pojo.User;
 import com.efrobot.weixin.collect.service.AddressService;
+import com.efrobot.weixin.collect.service.UserService;
 import com.efrobot.weixin.util.CommonUtil;
+import com.efrobot.weixin.util.WeixinUtil;
 
 @RequestMapping("/v1/address")
 @RestController
 public class AddressController {
 	@Autowired
 	private AddressService addressService;
-	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value = "/insertAddress", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertAddress(Address record) throws Exception {
+	public Map<String, Object> insertAddress(Address record,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		int result = -1;
+		String openid = (String) session.getAttribute("openid");
+		
+		User user = new User();
+		user.setOpenid(openid);
+		List<User> list2 = userService.selectByUser(user);
+		if (list2.size() != 0) {
+			record.setUserid(list2.get(0).getId());
+		}
 		if(null==record.getUserid()){
 			return CommonUtil.resultMsg("FAIL", "用户信息不存在!");
 		}
