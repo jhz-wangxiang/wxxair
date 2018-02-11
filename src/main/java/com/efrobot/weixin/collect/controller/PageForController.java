@@ -128,7 +128,7 @@ public class PageForController {
 		} else {
 			endHour= flightNum.getEndHour() + ":00";
 		}
-		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + endHour;
+		String time = sdf.format(record.getNowTime()) + " " + endHour;
 
 		Date t = sdf2.parse(time);
 		Date n = new Date();
