@@ -81,7 +81,7 @@ public class PageForController {
 		int result = -1;
 		String openid = (String) session.getAttribute("openid");
 		User user2=new User();
-		user2.setOpenid(openid);
+		user2.setPhone(record.getPhone());
 		List<User> list=userService.selectByUser(user2);
 		record.setOpenid(openid);
 		if(list.size()!=0){
