@@ -139,7 +139,6 @@ public class AddressController {
 			record.setUserid(list2.get(0).getId());
 		}
 		record.setStatus(1);
-
 		List<Address> list = addressService.getAddress(record);
 		if (list.size() != 0) {
 			map.put("address", list.get(0));
