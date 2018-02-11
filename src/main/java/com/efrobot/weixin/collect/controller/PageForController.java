@@ -285,6 +285,25 @@ public class PageForController {
 		}
 		return map;
 	}
+	@RequestMapping(value = "/getAddressAll", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getAddressAll(Address record,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		Map<String,Object> map = CommonUtil.resultMsg("SUCCESS", "查询!");
+		String openid = (String) session.getAttribute("openid");
+		User user = new User();
+		user.setOpenid(openid);
+		List<User> list2 = userService.selectByUser(user);
+		if (list2.size() != 0) {
+			record.setUserid(list2.get(0).getId());
+		}
+		record.setStatus(1);
+		
+		List<Address> list=addressService.getAddress(record);
+		if(list.size()!=0){
+			map.put("addressList", list);
+		}
+		return map;
+	}
 	
 	@RequestMapping(value = "/orderDeal")
 	public String orderDeal(HttpServletRequest request) {
