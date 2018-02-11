@@ -75,14 +75,14 @@
               html.push('</div>')
               html.push('</div>')
               if(res.orderStatus == 1){
-                html.push('<a href="javascript:;" class="btn btn-lg" style="margin-top: .2rem;margin-bottom: .5rem;" onclick="cancleOrder('+res.id+')">取消订单</a>');
+                html.push('<a href="javascript:;" class="btn btn-lg" style="margin-top: .2rem;margin-bottom: .5rem;" onclick="cancelOrder('+res.id+')">取消订单</a>');
               }
               html.push('</section>')
               $('#order-detail').html(html.join(''));
           }
       })
   })
-  function cancleOrder(id) {
+  function cancelOrder(id) {
       var html = [];
       html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><p style="font-size: .38rem; color: #3974bb; text-align: center;">确认取消订单</p></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm" style="width: 40%;display: inline-block; margin-right: .6rem;">确认</a><a href="JavaScript:;" class="btn btn-nm" style="width: 40%;display: inline-block; background: #999999;">取消</a></div></div></div>')
       $('body').append(html.join(''));
@@ -93,7 +93,8 @@
               type: "POST",
               success: function (res) {
                   if (res.resultCode == "SUCCESS") {
-                    window.location.href = "<%=basePath %>v1/page/orderList"
+                      $('#modal').remove();
+                      cancelSuccess();
                   }else{
                     Common.alter(res.msg);
                   }
@@ -103,7 +104,15 @@
       $('.modal-footer0211>a').eq(1).click(function () {
           $('#modal').remove();
       });
-
+  }
+  function cancelSuccess() {
+      var html = [];
+      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-cancle"><img src="<%=basePath%>resources/image/order-cancle.png" alt=""><p class="order-info-title">您的订单已取消！</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
+      $('body').append(html.join(''));
+      $('.modal-footer0211>a').eq(0).click(function () {
+          $('#modal').remove();
+          window.location.href = "<%=basePath %>v1/page/orderList"
+      })
   }
 </script>
 </body>
