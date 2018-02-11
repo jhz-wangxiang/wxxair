@@ -122,7 +122,7 @@ public class OrderController {
 		}
 
 		FlightNum flightNum = list.get(0);
-		if (record.getNowTime().getTime() < flightNum.getEndTime().getTime()
+		if (record.getNowTime().getTime() <= flightNum.getEndTime().getTime()
 				&& record.getNowTime().getTime() >= flightNum.getStartTime().getTime()) {
 		} else {
 			return CommonUtil.resultMsg("FAIL", "对不起，你航班的目的地还未开通此项服务。 ");
