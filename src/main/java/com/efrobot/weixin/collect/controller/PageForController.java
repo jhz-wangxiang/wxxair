@@ -129,7 +129,7 @@ public class PageForController {
 		// 校验航班时间
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 
-		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + ":00:00";
+		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + ":00";
 
 		Date t = sdf2.parse(time);
 		Date n = new Date();
@@ -204,7 +204,7 @@ public class PageForController {
 		// 校验航班时间
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 
-		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + ":00:00";
+		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + ":00";
 
 		Date t = sdf2.parse(time);
 		Date n = new Date();
