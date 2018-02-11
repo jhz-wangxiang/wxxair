@@ -17,99 +17,95 @@
   <link rel="stylesheet" href="<%=basePath%>resources/css/style.css">
   <link rel="stylesheet" href="<%=basePath%>resources/css/orderList.css">
   <script type="text/javascript" src="<%=basePath%>resources/js/rem.js"></script>
+  <script type="text/javascript" src="<%=basePath%>resources/js/common.js"></script>
 </head>
 <body>
-  <div class="wrapper">
-    <section class="order-item">
-     <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
-      <div class="order-detail0209">
-        <div class="detail-item0209">
-          <em>收件人:</em><em>马化腾</em>
-        </div>
-        <div class="detail-item0209">
-          <em>详细地址:</em><em>北京市海淀区北三环西路19号院xxxxx小区xxx号楼xxxx单元sssss说的是顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶</em>
-        </div>
-        <div class="detail-item0209">
-          <em>预计送达时间:</em><em>2017-02-07 10:20</em>
-        </div>
+<div class="order-body" style="padding: 0;" id="order-detail">
+  <section class="order-item">
+    <p class="order-no0209" style="display: flex; display: -webkit-flex; justify-content: space-between;"><span>订单编号：<em>201709093123</em></span><span>订单状态：<em class="orange">已支付</em></span></p>
+    <div class="order-detail0209">
+      <p class="order-detail-tip">请前往XXXXX处提交行李小票，办理托运业务</p>
+      <h3 class="order-deal-header">行李信息</h3>
+      <div class="order-deal-box" style="border: 0;">
+        <div class="order-deal-item"><span class="label">航班号：</span><span class="content">CA1987</span></div>
+        <div class="order-deal-item"><span class="label">日期：</span><span class="content">2017.09.18</span></div>
+        <div class="order-deal-item"><span class="label">行李数量：</span><span class="content">2</span></div>
+        <div class="order-deal-item"><span class="tip">行李内无贵重、易碎、违禁物品</span></div>
       </div>
-      <p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">待支付状态</em></span><a href="javascript:;">查看详情></a></p>
-    </section>
-    <section class="order-item">
-      <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
-      <div class="order-detail0209">
-        <div class="detail-item0209">
-          <em>收件人:</em><em>马化腾</em>
-        </div>
-        <div class="detail-item0209">
-          <em>详细地址:</em><em>北京市海淀区北三环西路19号院xxxxx小区xxx号楼xxxx单元sssss</em>
-        </div>
-        <div class="detail-item0209">
-          <em>预计送达时间:</em><em>2017-02-07 10:20</em>
-        </div>
+      <h3 class="order-deal-header">收货地址</h3>
+      <div class="order-deal-box" style="border: 0; margin-bottom: 0;">
+        <div class="order-deal-item"><span class="label">收件人：</span><span class="content">麻花藤</span></div>
+        <div class="order-deal-item"><span class="label">联系方式：</span><span class="content">15645552321</span></div>
+        <div class="order-deal-item"><span class="label">详细地址：</span><span class="content">北京市海淀区西三环北路紫金大厦19号5单元1111</span></div>
       </div>
-      <p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">待支付状态</em></span><a href="javascript:;">查看详情></a></p>
-    </section>
-    <section class="order-item">
-     <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
-      <div class="order-detail0209">
-        <div class="detail-item0209">
-          <em>收件人:</em><em>马化腾</em>
-        </div>
-        <div class="detail-item0209">
-          <em>详细地址:</em><em>北京市海淀区北三环西路19号院xxxxx小区xxx号楼xxxx单元sssss</em>
-        </div>
-        <div class="detail-item0209">
-          <em>预计送达时间:</em><em>2017-02-07 10:20</em>
-        </div>
-      </div>
-      <p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">待支付状态</em></span><a href="javascript:;">查看详情></a></p>
-    </section>
-    <section class="order-item">
-     <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
-      <div class="order-detail0209">
-        <div class="detail-item0209">
-          <em>收件人:</em><em>马化腾</em>
-        </div>
-        <div class="detail-item0209">
-          <em>详细地址:</em><em>北京市海淀区北三环西路19号院xxxxx小区xxx号楼xxxx单元sssss</em>
-        </div>
-        <div class="detail-item0209">
-          <em>预计送达时间:</em><em>2017-02-07 10:20</em>
-        </div>
-      </div>
-      <p class="order-no0209 flex-p0209"><span>订单状态:<em class="warn">未交行李</em></span><a href="javascript:;">查看详情></a></p>
-    </section>
-    <section class="order-item">
-     <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
-      <div class="order-detail0209">
-        <div class="detail-item0209">
-          <em>收件人:</em><em>马化腾</em>
-        </div>
-        <div class="detail-item0209">
-          <em>详细地址:</em><em>北京市海淀区北三环西路19号院xxxxx小区xxx号楼xxxx单元sssss</em>
-        </div>
-        <div class="detail-item0209">
-          <em>预计送达时间:</em><em>2017-02-07 10:20</em>
-        </div>
-      </div>
-      <p class="order-no0209 flex-p0209"><span>订单状态:<em class="success">支付成功</em></span><a href="javascript:;">查看详情></a></p>
-    </section>
-  </div>
-<div id="modal">
-  <div class="cover"></div>
-  <div class="modal">
-    <div class="modal-title0211">
-      <h2>使用说明</h2>
     </div>
-    <div class="modal-cont0211">
-      <p>说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明</p>
-    </div>
-    <div class="modal-footer0211">
-      <a href="JavaScript:;" class="btn btn-nm">关闭</a>
-    </div>
-  </div>
+    <a href="javascript:;" class="btn btn-lg" style="margin-top: .2rem;margin-bottom: .5rem;">取消订单</a>
+  </section>
 </div>
+<script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>
+<script>
+    var basePath = "<%=basePath %>";
+  $(function () {
+
+      var id = Common.GetUrlRequest()['id'];
+      $.ajax({
+          url: basePath + 'v1/order/getOrderDetail',
+          data: {"id":id},
+          type: "POST",
+          success: function (res) {
+              console.log(res);
+              var html = [];
+              html.push('<section class="order-item">')
+              html.push('<p class="order-no0209"><span>订单编号：<em>'+res.orderNo+'</em></span></p>')
+              html.push('<p class="order-no0209"><span>订单状态：<em class="orange">'+res.describe+'</em></span></p>')
+              html.push('<div class="order-detail0209">')
+              html.push('<p class="order-detail-tip">请前往XXXXX处提交行李小票，办理托运业务</p>')
+              html.push('<h3 class="order-deal-header">行李信息</h3>')
+              html.push('<div class="order-deal-box" style="border: 0;">')
+              html.push('<div class="order-deal-item"><span class="label">航班号：</span><span class="content">'+res.flightNum+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">日期：</span><span class="content">'+res.nowTime+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">行李数量：</span><span class="content">'+res.baggageNum+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="tip">行李内无贵重、易碎、违禁物品</span></div>')
+              html.push('</div>')
+              html.push('<h3 class="order-deal-header">收货地址</h3>')
+              html.push('<div class="order-deal-box" style="border: 0; margin-bottom: 0;">')
+              html.push('<div class="order-deal-item"><span class="label">收件人：</span><span class="content">'+res.consignee+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">联系方式：</span><span class="content">'+res.consigneePhone+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">详细地址：</span><span class="content">'+res.province+''+res.city+''+res.area+''+res.address+'</span></div>')
+              html.push('</div>')
+              html.push('</div>')
+              if(res.orderStatus == 1){
+                html.push('<a href="javascript:;" class="btn btn-lg" style="margin-top: .2rem;margin-bottom: .5rem;" onclick="cancleOrder('+res.id+')">取消订单</a>');
+              }
+              html.push('</section>')
+              $('#order-detail').html(html.join(''));
+          }
+      })
+  })
+  function cancleOrder(id) {
+      var html = [];
+      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><p style="font-size: .38rem; color: #3974bb; text-align: center;">确认取消订单</p></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm" style="width: 40%;display: inline-block; margin-right: .6rem;">确认</a><a href="JavaScript:;" class="btn btn-nm" style="width: 40%;display: inline-block; background: #999999;">取消</a></div></div></div>')
+      $('body').append(html.join(''));
+      $('.modal-footer0211>a').eq(0).click(function () {
+          $.ajax({
+              url: basePath + 'v1/order/updateOrderCancel',
+              data: {"id": id},
+              type: "POST",
+              success: function (res) {
+                  if (res.resultCode == "SUCCESS") {
+                    window.location.href = "<%=basePath %>v1/page/orderList"
+                  }else{
+                    Common.alter(res.msg);
+                  }
+              }
+          });
+      });
+      $('.modal-footer0211>a').eq(1).click(function () {
+          $('#modal').remove();
+      });
+
+  }
+</script>
 </body>
 </html>
 

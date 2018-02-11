@@ -80,7 +80,6 @@ public class PageForController {
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> insertUser(User record, HttpSession session) throws Exception {
-		int result = -1;
 		String openid = (String) session.getAttribute("openid");
 		User user2 = new User();
 		user2.setOpenid(openid);
@@ -92,15 +91,9 @@ public class PageForController {
 			} else {
 				record.setExp1("未");
 			}
-			result = userService.insertSelective(record);
+			userService.insertSelective(record);
 		}
-		if (result == 0) {
-			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
-		} else if (result == 1) {
 			return CommonUtil.resultMsg("SUCCESS", "信息插入功");
-		} else {
-			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
-		}
 
 	}
 
@@ -129,8 +122,13 @@ public class PageForController {
 		}
 		// 校验航班时间
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
-
-		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + ":00";
+		String endHour="";
+		if (flightNum.getEndHour().length() == 2) {
+			endHour= flightNum.getEndHour() + ":00:00";
+		} else {
+			endHour= flightNum.getEndHour() + ":00";
+		}
+		String time = sdf.format(record.getNowTime()) + " " + endHour;
 
 		Date t = sdf2.parse(time);
 		Date n = new Date();
@@ -270,47 +268,6 @@ public class PageForController {
 
 	}
 
-	@RequestMapping(value = "/getAddress", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> getAddress(Address record, HttpServletRequest request, HttpServletResponse response,
-			HttpSession session) throws Exception {
-		Map<String, Object> map = CommonUtil.resultMsg("SUCCESS", "查询!");
-		String openid = (String) session.getAttribute("openid");
-		User user = new User();
-		user.setOpenid(openid);
-		List<User> list2 = userService.selectByUser(user);
-		if (list2.size() != 0) {
-			record.setUserid(list2.get(0).getId());
-		}
-		record.setStatus(1);
-
-		List<Address> list = addressService.getAddress(record);
-		if (list.size() != 0) {
-			map.put("address", list.get(0));
-		}
-		return map;
-	}
-
-	@RequestMapping(value = "/getAddressAll", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> getAddressAll(Address record, HttpServletRequest request, HttpServletResponse response,
-			HttpSession session) throws Exception {
-		Map<String, Object> map = CommonUtil.resultMsg("SUCCESS", "查询!");
-		String openid = (String) session.getAttribute("openid");
-		User user = new User();
-		user.setOpenid(openid);
-		List<User> list2 = userService.selectByUser(user);
-		if (list2.size() != 0) {
-			record.setUserid(list2.get(0).getId());
-		}
-		record.setStatus(1);
-
-		List<Address> list = addressService.getAddress(record);
-		if (list.size() != 0) {
-			map.put("addressList", list);
-		}
-		return map;
-	}
 
 	@RequestMapping(value = "/orderDeal")
 	public String orderDeal(HttpServletRequest request) {
