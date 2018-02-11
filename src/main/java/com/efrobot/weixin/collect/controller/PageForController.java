@@ -1,5 +1,7 @@
 package com.efrobot.weixin.collect.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.efrobot.weixin.baseapi.pojo.FlightNum;
+import com.efrobot.weixin.baseapi.pojo.Order;
 import com.efrobot.weixin.baseapi.pojo.User;
+import com.efrobot.weixin.collect.service.AreaService;
+import com.efrobot.weixin.collect.service.FlightNumService;
 import com.efrobot.weixin.collect.service.OrderService;
 import com.efrobot.weixin.collect.service.UserService;
 import com.efrobot.weixin.util.CommonUtil;
@@ -26,7 +32,11 @@ public class PageForController {
 	private UserService userService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private AreaService areaService;
 
+	@Autowired
+	private FlightNumService flightNumService;
 	@RequestMapping(value = "/orderStepOne")
 	public String orderStepOne(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.setAttribute("navName", "下单第一步");
@@ -77,6 +87,41 @@ public class PageForController {
 			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
 		}
 		
+	}
+	@RequestMapping(value = "/checkflightNum", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> checkflightNum(Order record) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		if ("".equals(record.getNowTimeStr()) || null == record.getNowTimeStr()) {
+			return CommonUtil.resultMsg("FAIL", "航班日期不能为空 ");
+		}
+		if ("".equals(record.getFlightNum()) || null == record.getFlightNum()) {
+			return CommonUtil.resultMsg("FAIL", "航班号不能为空 ");
+		}
+		FlightNum f = new FlightNum();
+		f.setFlightNum(record.getFlightNum());
+		List<FlightNum> list = flightNumService.selectByParms(f);
+		if (list.size() == 0) {
+			return CommonUtil.resultMsg("FAIL", "对不起，你航班的目的地还未开通此项服务。 ");
+		}
+
+		FlightNum flightNum = list.get(0);
+		if (record.getNowTime().getTime() < flightNum.getEndTime().getTime()
+				&& record.getNowTime().getTime() >= flightNum.getStartTime().getTime()) {
+		} else {
+			return CommonUtil.resultMsg("FAIL", "对不起，你航班的目的地还未开通此项服务。 ");
+		}
+		// 校验航班时间
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+
+		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + ":00:00";
+
+		Date t = sdf2.parse(time);
+		Date n = new Date();
+		if (!CommonUtil.jisuan(n, t)) {
+			return CommonUtil.resultMsg("FAIL", "航班未开放，请于落地前 24 小时内下单");//
+		}
+		return CommonUtil.resultMsg("SUCCESS", "校验成功");
 	}
 	@RequestMapping(value = "/orderDeal")
 	public String orderDeal(HttpServletRequest request) {

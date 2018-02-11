@@ -256,42 +256,6 @@ public class OrderController {
 		return map;
 	}
 
-	@RequestMapping(value = "/checkflightNum", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> checkflightNum(Order record) throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		if ("".equals(record.getNowTimeStr()) || null == record.getNowTimeStr()) {
-			return CommonUtil.resultMsg("FAIL", "航班日期不能为空 ");
-		}
-		if ("".equals(record.getFlightNum()) || null == record.getFlightNum()) {
-			return CommonUtil.resultMsg("FAIL", "航班号不能为空 ");
-		}
-		FlightNum f = new FlightNum();
-		f.setFlightNum(record.getFlightNum());
-		List<FlightNum> list = flightNumService.selectByParms(f);
-		if (list.size() == 0) {
-			return CommonUtil.resultMsg("FAIL", "对不起，你航班的目的地还未开通此项服务。 ");
-		}
-
-		FlightNum flightNum = list.get(0);
-		if (record.getNowTime().getTime() < flightNum.getEndTime().getTime()
-				&& record.getNowTime().getTime() >= flightNum.getStartTime().getTime()) {
-		} else {
-			return CommonUtil.resultMsg("FAIL", "对不起，你航班的目的地还未开通此项服务。 ");
-		}
-		// 校验航班时间
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
-
-		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + ":00:00";
-
-		Date t = sdf2.parse(time);
-		Date n = new Date();
-		if (!CommonUtil.jisuan(n, t)) {
-			return CommonUtil.resultMsg("FAIL", "航班未开放，请于落地前 24 小时内下单");//
-		}
-		return CommonUtil.resultMsg("SUCCESS", "校验成功");
-	}
-
 	public static void main(String[] args) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
