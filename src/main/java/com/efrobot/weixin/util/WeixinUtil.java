@@ -352,40 +352,34 @@ public class WeixinUtil {
 		return openid;
 	}
 
-	/**
-	 * 获取微信jsAPi配置信息
-	 * 
-	 * @param request
-	 * 
-	 * @return
-	 */
-	public static void wxConfig(HttpServletRequest request, HttpSession session) {
+	// 获取微信jsAPi配置信息
+		public static void wxConfig(HttpServletRequest request, HttpServletResponse response) {
 
-		StringBuffer homeUrl = request.getRequestURL();
-		String queryString = request.getQueryString();
-		if (!org.springframework.util.StringUtils.isEmpty(queryString)) {
-			homeUrl.append("?").append(queryString);
+			StringBuffer homeUrl = request.getRequestURL();
+			String queryString = request.getQueryString();
+			if (!StringUtil.isNullOrEmpty(queryString)) {
+				homeUrl.append("?").append(queryString);
+			}
+			long timestamp = System.currentTimeMillis() / 1000;
+
+			String nonceStr = UUID.randomUUID().toString();
+
+			String signature = null;
+			try {
+
+				signature = getSignature(GetWXAccessJob.getJsTicket(), nonceStr, timestamp, homeUrl.toString());
+				request.setAttribute("appid", WXKeys.WX_APPID);
+				request.setAttribute("timestamp", timestamp);
+				request.setAttribute("nonceStr", nonceStr);
+				request.setAttribute("signature", signature);
+//				session.setAttribute("appid", WXKeys.WX_APPID);
+//				session.setAttribute("timestamp", timestamp);
+//				session.setAttribute("nonceStr", nonceStr);
+//				session.setAttribute("signature", signature);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		long timestamp = System.currentTimeMillis() / 1000;
-
-		String nonceStr = UUID.randomUUID().toString();
-
-		String signature = null;
-		try {
-			String appid = WeixinConfig.getProperty("appid");
-			signature = getSignature(GetWXAccessJob.getJsTicket(), nonceStr, timestamp, homeUrl.toString());
-			request.setAttribute("appid", appid);
-			request.setAttribute("timestamp", timestamp);
-			request.setAttribute("nonceStr", nonceStr);
-			request.setAttribute("signature", signature);
-			session.setAttribute("appid", appid);
-			session.setAttribute("timestamp", timestamp);
-			session.setAttribute("nonceStr", nonceStr);
-			session.setAttribute("signature", signature);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * 获取签名
@@ -921,52 +915,6 @@ public class WeixinUtil {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * 微信客服消息转发（七陌客服对接）
-	 * 
-	 * @param open_id
-	 * @param content
-	 * @param type
-	 * @return
-	 * @throws ParseException
-	 */
-	public static String sendCustomerMsg(String open_id, String content, String type) throws Exception {
-		String nickname = "";
-		try {
-			MultiValueMap<String, String> requestEntity = new LinkedMultiValueMap<String, String>();
-			JSONObject postJsonParam = new JSONObject();
-			JSONObject userJson = WeixinUtil.getWXUserInfo(open_id);// 获取用户信息
-			if (userJson == null) {
-				nickname = "昵称异常";// 得到昵称
-			} else {
-				nickname = userJson.getString("nickname");// 得到昵称
-			}
-			String timestamp = String.valueOf(System.currentTimeMillis());
-			String nonce = StringUtils.getRandomStringNumByLength(6);
-			// 要签名
-			// System.out.println("MOOR7_TOKEN>>>>>>>>>"+WXKeys.MOOR7_TOKEN);
-			String msg_signature = StringUtil.getSHA1(WXKeys.MOOR7_TOKEN, timestamp, nonce, open_id);
-			postJsonParam.put("app_id", WXKeys.WX_APPID);
-			postJsonParam.put("open_id", open_id);
-			postJsonParam.put("nick_name", userJson == null ? open_id : nickname);
-			if (type.equals("text")) {
-				postJsonParam.put("msgType", "text");
-				postJsonParam.put("content", content);
-			} else {
-				postJsonParam.put("msgType", "image");
-				postJsonParam.put("picUrl", content);
-			}
-			postJsonParam.put("timestamp", timestamp);
-			postJsonParam.put("nonce", nonce);
-			postJsonParam.put("msg_signature", msg_signature);
-			restTemplate.postForObject(WXKeys.WEIXIN_CUSTOMER_SERVER_URL, postJsonParam.toString(), String.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return nickname;
-	}
-
 
 	/**
 	 * @desc ：微信上传素材的请求方法

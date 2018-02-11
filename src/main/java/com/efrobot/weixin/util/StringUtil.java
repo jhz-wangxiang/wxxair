@@ -1,15 +1,10 @@
 package com.efrobot.weixin.util;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
 
 
 
@@ -22,6 +17,56 @@ public class StringUtil {
 		    'W', 'X', 'Y', 'Z', 
 		    '0', '1', '2', '3', '4',
 		    '5', '6', '7', '8', '9' }; 
+		private static char[] batchCode={
+			'0', '1', '2', '3', '4',
+			'5', '6', '7', '8', '9' }; 
+		
+	public boolean isValid(String str){
+		if(null!=str&&str.length()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public static String encodeStr(String str) {  
+        try {  
+            return new String(str.getBytes("ISO-8859-1"), "UTF-8");  
+        } catch (UnsupportedEncodingException e) {  
+            e.printStackTrace();  
+            return null;  
+        }  
+    } 
+	/**
+	 * 
+	 * 生成固定位数随机数
+	 * @param length
+	 * @return
+	 */
+	public static String getRandomCode(int length){
+		StringBuilder sb = new StringBuilder();
+		Random random=new Random(); 
+		for(int i=0; i<length; i++){
+			sb.append(batchCode[random.nextInt(10)]);
+		}
+		return sb.toString();
+	}
+	/**
+	 * 获取一定长度的随机字符串(数字)
+	 * 
+	 * @param length
+	 *            指定字符串长度
+	 * @return 一定长度的字符串
+	 */
+	public static String getRandomStringNumByLength(int length) {
+		String base = "0123456789";
+		Random random = new Random();
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			int number = random.nextInt(base.length());
+			sb.append(base.charAt(number));
+		}
+		return sb.toString();
+	}
 	/** 
      * 将字节数组转换为十六进制字符串 
      *  
@@ -66,32 +111,17 @@ public class StringUtil {
 		}
 		return sb.toString();
 	}
-	/**
-	 * 
-	 * @Description
-	 *
-	 * @param date
-	 *            鏃ユ湡
-	 * @param format
-	 *            鏃ユ湡鏍煎紡(鍙互浣跨敤DateUtil.DateStyle鎻愪緵鐨勬灇涓惧��),濡傛灉浼爊ull鍊兼垨鑰�""鍒欓粯璁yyy-MM-dd HH:mm:ss
-	 * @return
-	 * @throws Exception
-	 */
-	public static String date2String(Date date, String format) throws Exception {
-		SimpleDateFormat sdf;
-		if (StringUtils.isEmpty(format)) {
-			sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		} else {
-			sdf = new SimpleDateFormat(format);
-		}
-		return sdf.format(date);
-	}
-	/**
-	 * 获取TimeStamp
-	 * @return
-	 */
+	
 	public static String getTimeStamp() {
 		return String.valueOf(System.currentTimeMillis() / 1000);
+	}
+	
+	public static boolean isNullOrEmpty(String str) {
+		if (str == null || str.length() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	/**
 	 * 获取随机字符串
@@ -101,26 +131,39 @@ public class StringUtil {
 		Random rand = new Random();
 		return "wx"+System.currentTimeMillis()+""+rand.nextInt(1000000);
 	}
-	/**
-	 * 获取随机字符串
-	 * @return
-	 */
-	public static String getRobotNonceStr() {
-		Random rand = new Random();
-		return "cz"+System.currentTimeMillis()+""+rand.nextInt(1000000);
-	}
-	/**
-	 * 判断字符串都是数字
-	 * @return
-	 */
-	public static boolean isNumeric(String str) {
-		Pattern pattern = Pattern.compile("[0-9]*");
-		Matcher isNum = pattern.matcher(str);
-		if (!isNum.matches()) {
-			return false;
-		}
-		return true;
-	}
+	
+	/** 
+     * 验证签名 
+     *  
+     * @param signature 
+     * @param timestamp 
+     * @param nonce 
+     * @return 
+     */  
+    public static boolean checkSignature(String signature, String timestamp, String nonce) {  
+        String[] arr = new String[] { WXKeys.WX_TOKEN, timestamp, nonce };  
+        // 将token、timestamp、nonce三个参数进行字典序排序  
+        Arrays.sort(arr);  
+        StringBuilder content = new StringBuilder();  
+        for (int i = 0; i < arr.length; i++) {
+            content.append(arr[i]);  
+        }
+        MessageDigest md = null;  	
+        String tmpStr = null;  
+  
+        try {  
+            md = MessageDigest.getInstance("SHA-1");  
+            // 将三个参数字符串拼接成一个字符串进行sha1加密  
+            byte[] digest = md.digest(content.toString().getBytes());  
+            tmpStr = byteToStr(digest);  
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();  
+        }  
+  
+        content = null;  
+        // 将sha1加密后的字符串可与signature对比，标识该请求来源于微信  
+        return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;  
+    }
     /**
      * 检测是否有emoji字符
      * @param source
@@ -195,74 +238,5 @@ public class StringUtil {
             }
         }
         
-    }
-    /**
-	 * 用SHA1算法生成安全签名
-	 * @param token 票据
-	 * @param timestamp 时间戳
-	 * @param nonce 随机字符串
-	 * @param encrypt 密文
-	 * @return 安全签名
-	 * @throws AesException 
-	 */
-	public static String getSHA1(String token, String timestamp, String nonce, String open_id){
-		StringBuffer hexstr = new StringBuffer();
-		try {
-			String[] array = new String[] { token, timestamp, nonce, open_id };
-			StringBuffer sb = new StringBuffer();
-			// 字符串排序
-			Arrays.sort(array);
-			for (int i = 0; i < 4; i++) {
-				sb.append(array[i]);
-			}
-			String str = sb.toString();
-			// SHA1签名生成
-			MessageDigest md = MessageDigest.getInstance("SHA-1");
-			md.update(str.getBytes());
-			byte[] digest = md.digest();
-			String shaHex = "";
-			for (int i = 0; i < digest.length; i++) {
-				shaHex = Integer.toHexString(digest[i] & 0xFF);
-				if (shaHex.length() < 2) {
-					hexstr.append(0);
-				}
-				hexstr.append(shaHex);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();//return "sha加密生成签名失败";
-		}
-		return hexstr.toString();
-	}
-	/** 
-     * 验证签名 
-     *  
-     * @param signature 
-     * @param timestamp 
-     * @param nonce 
-     * @return 
-     */  
-    public static boolean checkSignature(String signature, String timestamp, String nonce) {  
-        String[] arr = new String[] { WXKeys.WX_TOKEN, timestamp, nonce };  
-        // 将token、timestamp、nonce三个参数进行字典序排序  
-        Arrays.sort(arr);  
-        StringBuilder content = new StringBuilder();  
-        for (int i = 0; i < arr.length; i++) {
-            content.append(arr[i]);  
-        }
-        MessageDigest md = null;  	
-        String tmpStr = null;  
-  
-        try {  
-            md = MessageDigest.getInstance("SHA-1");  
-            // 将三个参数字符串拼接成一个字符串进行sha1加密  
-            byte[] digest = md.digest(content.toString().getBytes());  
-            tmpStr = byteToStr(digest);  
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();  
-        }  
-  
-        content = null;  
-        // 将sha1加密后的字符串可与signature对比，标识该请求来源于微信  
-        return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;  
     }
 }
