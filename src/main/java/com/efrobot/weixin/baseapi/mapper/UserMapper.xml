@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.efrobot.robotstore.baseapi.manager.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.efrobot.robotstore.baseapi.manager.pojo.User" >
+<mapper namespace="com.efrobot.weixin.baseapi.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.efrobot.weixin.baseapi.pojo.User" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <id column="channel_id" property="channelId" jdbcType="INTEGER" />
     <result column="openid" property="openid" jdbcType="VARCHAR" />
@@ -27,7 +27,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="selectByUser" resultMap="BaseResultMap" parameterType="com.efrobot.robotstore.baseapi.manager.pojo.User" >
+  <select id="selectByUser" resultMap="BaseResultMap" parameterType="com.efrobot.weixin.baseapi.pojo.User" >
     select 
     <include refid="Base_Column_List" />
     from user
@@ -50,7 +50,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
  
-  <insert id="insert" parameterType="com.efrobot.robotstore.baseapi.manager.pojo.User" >
+  <insert id="insert" parameterType="com.efrobot.weixin.baseapi.pojo.User" >
   <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -63,7 +63,7 @@
       #{createDate,jdbcType=TIMESTAMP}, #{exp1,jdbcType=VARCHAR}, #{exp2,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.efrobot.robotstore.baseapi.manager.pojo.User" >
+  <insert id="insertSelective" parameterType="com.efrobot.weixin.baseapi.pojo.User" >
   <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -122,7 +122,7 @@
     </trim>
   </insert>
  
-  <update id="updateByPrimaryKeySelective" parameterType="com.efrobot.robotstore.baseapi.manager.pojo.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.efrobot.weixin.baseapi.pojo.User" >
     update user
     <set >
       <if test="openid != null" >
@@ -155,7 +155,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.efrobot.robotstore.baseapi.manager.pojo.User" >
+  <update id="updateByPrimaryKey" parameterType="com.efrobot.weixin.baseapi.pojo.User" >
     update user
     set openid = #{openid,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
@@ -169,7 +169,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByParms" resultMap="BaseResultMap"
-	parameterType="com.efrobot.robotstore.baseapi.manager.pojo.User">
+	parameterType="com.efrobot.weixin.baseapi.pojo.User">
 	SELECT
 	us.*,
 	c.channel
