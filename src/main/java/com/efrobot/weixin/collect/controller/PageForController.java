@@ -81,19 +81,27 @@ public class PageForController {
 		int result = -1;
 		String openid = (String) session.getAttribute("openid");
 		User user2=new User();
-		user2.setPhone(record.getPhone());
+		user2.setOpenid(openid);
 		List<User> list=userService.selectByUser(user2);
 		record.setOpenid(openid);
 		if(list.size()!=0){
 			record.setId(list.get(0).getId());
 			result = userService.updateByPrimaryKeySelective(record);
 		}else{
-			if(record.getName()!=null&&!"".equals(record.getName())){
-				record.setExp1("是");
+			User user3=new User();
+			user3.setPhone(record.getPhone());
+			List<User> list3=userService.selectByUser(user3);
+			if(list3.size()!=0){
+				record.setId(list.get(0).getId());
+				result = userService.updateByPrimaryKeySelective(record);
 			}else{
-				record.setExp1("未");
+				if(record.getName()!=null&&!"".equals(record.getName())){
+					record.setExp1("是");
+				}else{
+					record.setExp1("未");
+				}
+				result = userService.insertSelective(record);
 			}
-			result = userService.insertSelective(record);
 		}
 		if (result == 0) {
 			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
