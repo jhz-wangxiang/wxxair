@@ -93,45 +93,6 @@ public class UserController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> insertUser(User record, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-		int result = -1;
-		String openid = (String) session.getAttribute("openid");
-		openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
-		session.setAttribute("openid", openid);
-		if (null == openid || "".equals(openid)) {
-			openid = WeixinUtil.getopenidAction(request);// 获得openid
-			if (null == openid || "".equals(openid)) {
-				throw new RuntimeException("数据异常");
-			}
-			session.setAttribute("openid", openid);
-		}
-		User user2=new User();
-		user2.setPhone(record.getPhone());
-		List<User> list=userService.selectByUser(user2);
-		record.setOpenid(openid);
-		if(list.size()!=0){
-			record.setId(list.get(0).getId());
-			result = userService.updateByPrimaryKeySelective(record);
-		}else{
-			if(record.getName()!=null&&!"".equals(record.getName())){
-				record.setExp1("是");
-			}else{
-				record.setExp1("未");
-			}
-			result = userService.insertSelective(record);
-		}
-		if (result == 0) {
-			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
-		} else if (result == 1){
-			return CommonUtil.resultMsg("SUCCESS", "信息插入功");
-		}else {
-			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
-		}
-		
-	}
-	
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> updateUser(User record ) throws Exception {
