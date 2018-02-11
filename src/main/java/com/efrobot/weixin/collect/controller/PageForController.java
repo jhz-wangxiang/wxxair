@@ -280,4 +280,24 @@ public class PageForController {
 		request.setAttribute("navName", "订单详情");
 		return "orderDetail";
 	}
+	@RequestMapping(value = "/orderPay")
+	public String orderPay(HttpServletRequest request) {
+		request.setAttribute("navName", "订单支付");
+		return "orderPay";
+	}
+	@RequestMapping(value = "/orderCancel")
+	public String orderCancel(HttpServletRequest request) {
+		request.setAttribute("navName", "取消订单");
+		return "orderCancel";
+	}
+	@RequestMapping(value = "/orderAddressList")
+	public String orderAddressList(HttpServletRequest request) {
+		request.setAttribute("navName", "收货地址");
+		return "orderAddressList";
+	}
+	@RequestMapping(value = "/orderAddressNew")
+	public String orderAddressNew(HttpServletRequest request) {
+		request.setAttribute("navName", "新增地址");
+		return "orderAddressNew";
+	}
 }

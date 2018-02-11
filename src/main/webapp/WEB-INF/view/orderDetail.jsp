@@ -21,7 +21,7 @@
 <body>
   <div class="wrapper">
     <section class="order-item">
-     <p class="order-no0209"><span>订单编号: <em>201709093123</em></span><span>订单状态：<em class="orange">已支付</em></span></p>
+     <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
       <div class="order-detail0209">
         <div class="detail-item0209">
           <em>收件人:</em><em>马化腾</em>
@@ -96,6 +96,20 @@
       <p class="order-no0209 flex-p0209"><span>订单状态:<em class="success">支付成功</em></span><a href="javascript:;">查看详情></a></p>
     </section>
   </div>
+<div id="modal">
+  <div class="cover"></div>
+  <div class="modal">
+    <div class="modal-title0211">
+      <h2>使用说明</h2>
+    </div>
+    <div class="modal-cont0211">
+      <p>说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明</p>
+    </div>
+    <div class="modal-footer0211">
+      <a href="JavaScript:;" class="btn btn-nm">关闭</a>
+    </div>
+  </div>
+</div>
 </body>
 </html>
 
