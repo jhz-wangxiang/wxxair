@@ -19,83 +19,32 @@
   <script type="text/javascript" src="<%=basePath%>resources/js/rem.js"></script>
 </head>
 <body>
-  <div class="wrapper">
-    <section class="order-item">
-     <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
-      <div class="order-detail0209">
-        <div class="detail-item0209">
-          <em>收件人:</em><em>马化腾</em>
-        </div>
-        <div class="detail-item0209">
-          <em>详细地址:</em><em>北京市海淀区北三环西路19号院xxxxx小区xxx号楼xxxx单元sssss说的是顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶</em>
-        </div>
-        <div class="detail-item0209">
-          <em>预计送达时间:</em><em>2017-02-07 10:20</em>
-        </div>
-      </div>
-      <p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">待支付状态</em></span><a href="javascript:;">查看详情></a></p>
-    </section>
-    <section class="order-item">
-      <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
-      <div class="order-detail0209">
-        <div class="detail-item0209">
-          <em>收件人:</em><em>马化腾</em>
-        </div>
-        <div class="detail-item0209">
-          <em>详细地址:</em><em>北京市海淀区北三环西路19号院xxxxx小区xxx号楼xxxx单元sssss</em>
-        </div>
-        <div class="detail-item0209">
-          <em>预计送达时间:</em><em>2017-02-07 10:20</em>
-        </div>
-      </div>
-      <p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">待支付状态</em></span><a href="javascript:;">查看详情></a></p>
-    </section>
-    <section class="order-item">
-     <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
-      <div class="order-detail0209">
-        <div class="detail-item0209">
-          <em>收件人:</em><em>马化腾</em>
-        </div>
-        <div class="detail-item0209">
-          <em>详细地址:</em><em>北京市海淀区北三环西路19号院xxxxx小区xxx号楼xxxx单元sssss</em>
-        </div>
-        <div class="detail-item0209">
-          <em>预计送达时间:</em><em>2017-02-07 10:20</em>
-        </div>
-      </div>
-      <p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">待支付状态</em></span><a href="javascript:;">查看详情></a></p>
-    </section>
-    <section class="order-item">
-     <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
-      <div class="order-detail0209">
-        <div class="detail-item0209">
-          <em>收件人:</em><em>马化腾</em>
-        </div>
-        <div class="detail-item0209">
-          <em>详细地址:</em><em>北京市海淀区北三环西路19号院xxxxx小区xxx号楼xxxx单元sssss</em>
-        </div>
-        <div class="detail-item0209">
-          <em>预计送达时间:</em><em>2017-02-07 10:20</em>
-        </div>
-      </div>
-      <p class="order-no0209 flex-p0209"><span>订单状态:<em class="warn">未交行李</em></span><a href="javascript:;">查看详情></a></p>
-    </section>
-    <section class="order-item">
-     <p class="order-no0209"><span>订单编号: <em>201709093123</em></span></p>
-      <div class="order-detail0209">
-        <div class="detail-item0209">
-          <em>收件人:</em><em>马化腾</em>
-        </div>
-        <div class="detail-item0209">
-          <em>详细地址:</em><em>北京市海淀区北三环西路19号院xxxxx小区xxx号楼xxxx单元sssss</em>
-        </div>
-        <div class="detail-item0209">
-          <em>预计送达时间:</em><em>2017-02-07 10:20</em>
-        </div>
-      </div>
-      <p class="order-no0209 flex-p0209"><span>订单状态:<em class="success">支付成功</em></span><a href="javascript:;">查看详情></a></p>
-    </section>
-  </div>
+  <div class="wrapper" id="order-list"></div>
+  <script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>
+  <script>
+      $(function () {
+          var basePath = "<%=basePath %>";
+          $.ajax({
+              url: basePath + 'v1/order/micro/getOrderList',
+              type: "POST",
+              success: function (res) {
+                  console.log(res);
+                  if(res.resultCode == 'SUCCESS'){
+                      var html = [];
+                      for (var i = 0; i<res.orderList.length; i++){
+                          var _item = res.orderList[i];
+                          html.push('<section class="order-item"><p class="order-no0209"><span>订单编号: <em>'+_item.orderNo+'</em></span></p><div class="order-detail0209"><div class="detail-item0209"><em>收件人:</em><em>'+_item.consignee+'</em></div><div class="detail-item0209"><em>详细地址:</em><em>'+_item.province+''+_item.city+''+_item.area+''+_item.address+'</em></div></div><p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">'+_item.describe+'</em></span><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p></section>')
+                          //<div class="detail-item0209"><em>预计送达时间:</em><em>2017-02-07 10:20</em></div>
+                      }
+                      $('#order-list').html(html.join(''));
+                  }else{
+                      Common.alter(res.msg);
+                  }
+              }
+          })
+      })
+
+  </script>
 </body>
 </html>
 
