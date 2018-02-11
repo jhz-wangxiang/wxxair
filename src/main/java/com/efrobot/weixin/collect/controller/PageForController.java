@@ -85,6 +85,7 @@ public class PageForController {
 		List<User> list=userService.selectByUser(user2);
 		record.setOpenid(openid);
 		if(list.size()!=0){
+			record.setId(list.get(0).getId());
 			result = userService.updateByPrimaryKeySelective(record);
 		}else{
 			if(record.getName()!=null&&!"".equals(record.getName())){
@@ -285,6 +286,25 @@ public class PageForController {
 		}
 		return map;
 	}
+	@RequestMapping(value = "/getAddressAll", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getAddressAll(Address record,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		Map<String,Object> map = CommonUtil.resultMsg("SUCCESS", "查询!");
+		String openid = (String) session.getAttribute("openid");
+		User user = new User();
+		user.setOpenid(openid);
+		List<User> list2 = userService.selectByUser(user);
+		if (list2.size() != 0) {
+			record.setUserid(list2.get(0).getId());
+		}
+		record.setStatus(1);
+		
+		List<Address> list=addressService.getAddress(record);
+		if(list.size()!=0){
+			map.put("addressList", list);
+		}
+		return map;
+	}
 	
 	@RequestMapping(value = "/orderDeal")
 	public String orderDeal(HttpServletRequest request) {
@@ -293,8 +313,28 @@ public class PageForController {
 	}
 
 	@RequestMapping(value = "/userInfo")
-	public String userInfo(HttpServletRequest request) {
+	public String userInfo(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.setAttribute("navName", "个人信息");
+		String openid = (String) session.getAttribute("openid");
+		openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
+		session.setAttribute("openid", openid);
+		if (null == openid || "".equals(openid)) {
+			openid = WeixinUtil.getopenidAction(request);// 获得openid
+			if (null == openid || "".equals(openid)) {
+				throw new RuntimeException("数据异常");
+			}
+			session.setAttribute("openid", openid);
+		}
+		User user = new User();
+		user.setOpenid(openid);
+		List<User> list = userService.selectByUser(user);
+		if (list.size() != 0) {
+			request.setAttribute("name", list.get(0).getName());
+			request.setAttribute("phone", list.get(0).getPhone());
+		}else{
+			request.setAttribute("name", "");
+			request.setAttribute("phone", "");
+		}
 		return "userInfo";
 	}
 
