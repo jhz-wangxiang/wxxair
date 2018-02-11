@@ -129,8 +129,13 @@ public class PageForController {
 		}
 		// 校验航班时间
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
-
-		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + ":00";
+		String endHour="";
+		if (flightNum.getEndHour().length() == 2) {
+			endHour= flightNum.getEndHour() + "00:00";
+		} else {
+			endHour= flightNum.getEndHour() + ":00";
+		}
+		String time = sdf.format(record.getNowTime()) + " " + flightNum.getEndHour() + endHour;
 
 		Date t = sdf2.parse(time);
 		Date n = new Date();
