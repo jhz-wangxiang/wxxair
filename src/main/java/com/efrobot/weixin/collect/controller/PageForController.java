@@ -313,8 +313,28 @@ public class PageForController {
 	}
 
 	@RequestMapping(value = "/userInfo")
-	public String userInfo(HttpServletRequest request) {
+	public String userInfo(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.setAttribute("navName", "个人信息");
+		String openid = (String) session.getAttribute("openid");
+		openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
+		session.setAttribute("openid", openid);
+		if (null == openid || "".equals(openid)) {
+			openid = WeixinUtil.getopenidAction(request);// 获得openid
+			if (null == openid || "".equals(openid)) {
+				throw new RuntimeException("数据异常");
+			}
+			session.setAttribute("openid", openid);
+		}
+		User user = new User();
+		user.setOpenid(openid);
+		List<User> list = userService.selectByUser(user);
+		if (list.size() != 0) {
+			request.setAttribute("name", list.get(0).getName());
+			request.setAttribute("phone", list.get(0).getPhone());
+		}else{
+			request.setAttribute("name", "");
+			request.setAttribute("phone", "");
+		}
 		return "userInfo";
 	}
 
