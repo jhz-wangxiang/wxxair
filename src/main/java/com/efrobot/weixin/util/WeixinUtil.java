@@ -66,7 +66,6 @@ import com.efrobot.toolkit.util.string.StringUtils;
 import com.efrobot.toolkit.util.weixin.GenerateRequestXml;
 import com.efrobot.toolkit.util.weixin.Signature;
 import com.efrobot.toolkit.util.weixin.bean.CashRedPacketRequestXmlBean;
-import com.efrobot.toolkit.util.weixin.bean.EnterprisePayRequestXmlBean;
 import com.efrobot.toolkit.util.weixin.bean.PayRequestXmlBean;
 import com.efrobot.toolkit.util.xml.XMLParser;
 import com.efrobot.weixin.collect.bean.WxPay;
