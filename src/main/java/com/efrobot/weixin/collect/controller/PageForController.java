@@ -124,7 +124,7 @@ public class PageForController {
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 		String endHour="";
 		if (flightNum.getEndHour().length() == 2) {
-			endHour= flightNum.getEndHour() + "00:00";
+			endHour= flightNum.getEndHour() + ":00:00";
 		} else {
 			endHour= flightNum.getEndHour() + ":00";
 		}

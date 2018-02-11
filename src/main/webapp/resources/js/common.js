@@ -5,6 +5,9 @@ var Common ={
 		isNull: function (str) {
 	        return (str == "" || typeof str != "string");
 	    },
+	    ltrim:function (text){
+			return (text || "").replace(/^\s+/g,"").replace(/\s+$/g,"");
+		},
 	    //正整数
 	    isNumCross:function(str){
 	    	console.log(validateReg.isNumCross)
@@ -27,5 +30,17 @@ var Common ={
 		},
 		removeModal:function(){
 			$('#modal').remove();
+		},
+		GetUrlRequest:function () {
+			var url = location.search;
+			var theRequest = new Object();
+			if (url.indexOf("?") != -1) {
+				var str = url.substr(1);
+				strs = str.split("&");
+				for(var i = 0; i < strs.length; i ++) {
+					theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+				}
+			}
+			return theRequest;
 		}
 };
