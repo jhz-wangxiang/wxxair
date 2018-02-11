@@ -62,10 +62,10 @@ public class PageForController {
 		if (list.size() != 0) {
 //			request.setAttribute("user", list.get(0));
 			request.setAttribute("name", list.get(0).getName());
-			request.setAttribute("user", list.get(0).getPhone());
+			request.setAttribute("phone", list.get(0).getPhone());
 		}else{
 			request.setAttribute("name", "");
-			request.setAttribute("user", "");
+			request.setAttribute("phone", "");
 		}
 		// 微信分享 modify by king ---start
 		WeixinUtil.wxConfig(request, response);
