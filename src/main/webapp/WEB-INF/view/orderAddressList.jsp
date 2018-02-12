@@ -52,9 +52,9 @@ $.ajax({
 			html.push('<p class="order-no0209 flex-p0209" style="padding:5px 0;'+c+'">');
 			if(data.addressList.length>1){
 				if(data.addressList[i].status){
-					html.push('<span><input type="checkbox" style="display: none;" id="address-radio" checked class="address-radio" onchange="changeAdress(this,\''+data.addressList[i].id+'\',\''+data.addressList[i].userid+'\')"><label for="address-radio" class="cur address-radio-box">设置成默认地址</label></span>');
+					html.push('<span><input type="checkbox" style="display: none;" id="address-radio'+data.addressList[i].id+'" checked class="address-radio" onchange="changeAdress(this,\''+data.addressList[i].id+'\',\''+data.addressList[i].userid+'\')"><label for="address-radio'+data.addressList[i].id+'" class="cur address-radio-box">设置成默认地址</label></span>');
 				}else{
-					html.push('<span><input type="checkbox" style="display: none;" id="address-radio" class="address-radio" onchange="changeAdress(this,\''+data.addressList[i].id+'\',\''+data.addressList[i].userid+'\')"><label for="address-radio" class="address-radio-box">设置成默认地址</label></span>');
+					html.push('<span><input type="checkbox" style="display: none;" id="address-radio'+data.addressList[i].id+'" class="address-radio" onchange="changeAdress(this,\''+data.addressList[i].id+'\',\''+data.addressList[i].userid+'\')"><label for="address-radio'+data.addressList[i].id+'" class="address-radio-box">设置成默认地址</label></span>');
 				}
 			}
 			html.push('<a href="'+basePath+'v1/page/orderAddressUpdate?id='+data.addressList[i].id+'" class="orderAddressEdit">编辑</a><a href="javascript:delAddress(\''+data.addressList[i].id+'\');" class="orderAddressEdit orderAddressDel">删除</a>');
@@ -65,15 +65,19 @@ $.ajax({
 	}
 });
 var changeAdress = function(t,id,userid){
-	if($(t).prop('checked')){
+    $(':checkbox').each(function () {
+        $(this).next('label').removeClass('cur');
+        $(this).prop('checked',false);
+    })
+	if(!$(t).prop('checked')){
 		$(t).prop('checked',true);
 		$(t).siblings('label').addClass('cur');
 		$.ajax({
 			url:basePath+"v1/address/updateAddressStatus",
 			type:"POST",
 			data:{id:id,userid:userid},
-			success:function(data){
-				console.log(data)
+			success:function(res){
+				console.log(res)
 				if (res.resultCode == "SUCCESS") {
 					Common.alter(res.msg);
                 }else{
@@ -88,13 +92,13 @@ var changeAdress = function(t,id,userid){
 			url:basePath+"v1/address/updateAddressStatus",
 			type:"POST",
 			data:{id:id,userid:userid},
-			success:function(data){
-				console.log(data)
+			success:function(res){
+				console.log(res)
 				if (res.resultCode == "SUCCESS") {
 					Common.alter(res.msg);
-                }else{
-                  Common.alter(res.msg);
-                }
+        }else{
+            Common.alter(res.msg);
+  }
 			}
 		})
 	}
