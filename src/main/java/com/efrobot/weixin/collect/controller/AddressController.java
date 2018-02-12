@@ -109,13 +109,7 @@ public class AddressController {
 				result = addressService.updateByPrimaryKeySelective(a);
 			}
 		}
-		if (result == 0) {
-			return CommonUtil.resultMsg("FAIL", "未找到可编辑的生产信息");
-		} else if (result == 1)
 			return CommonUtil.resultMsg("SUCCESS", "编辑生产信息成功");
-		else {
-			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
-		}
 	}
 	
 	
