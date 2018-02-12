@@ -82,9 +82,9 @@
 	<p>(三)甲方有权依据国家政策、技术条件、产品功能等变化需要而进行修改本协议，甲方会将修改后的协议予以发布。前述内容一经正式发布，并以适当的方式送达用户（网站公布、系统通知等），即为本协议不可分割的组成部分，乙方应同样遵守。乙方对修改后的协议有异议的，请立即停止登录、使用“行李到家”软件及相关服务，若您登录或继续使用“行李到家”软件及相关服务，视为认可修改后的协议。</p>
 	<p>本协议的版权为甲方所有，甲方保留一切解释和修改的权利。</p>
 </section>
-<section class="text-cont0212">
-	<a href="<%=basePath %>v1/page/orderStepOne" class="btn btn-lg" style="margin-bottom:.4rem;">返回</a>
-</section>
+<%--<section class="text-cont0212">--%>
+	<%--<a href="<%=basePath %>v1/page/orderStepOne" class="btn btn-lg" style="margin-bottom:.4rem;">返回</a>--%>
+<%--</section>--%>
 
 </body>
 </html>

@@ -260,6 +260,21 @@ var Insert = function(){
 			stepThree();//填写第三部
 			initArea();//初识话地址栏
 			lastStep();//最后一步
-		}
+		},
+        gotoUseIntro: function () {
+			$('#order-deal').hide();
+			$('#order-useIntro').show();
+			$('#order-serviceProtocol').hide();
+        },
+        gotoServiceProtocol: function () {
+            $('#order-deal').hide();
+            $('#order-useIntro').hide();
+            $('#order-serviceProtocol').show();
+        },
+        returnOrderDeal: function () {
+            $('#order-deal').show();
+            $('#order-useIntro').hide();
+            $('#order-serviceProtocol').hide();
+        }
 	}
 }();
