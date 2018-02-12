@@ -313,8 +313,18 @@ public class PageForController {
 	}
 
 	@RequestMapping(value = "/orderList")
-	public String orderList(HttpServletRequest request) {
+	public String orderList(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.setAttribute("navName", "订单列表");
+		String openid = (String) session.getAttribute("openid");
+		openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
+		session.setAttribute("openid", openid);
+		if (null == openid || "".equals(openid)) {
+			openid = WeixinUtil.getopenidAction(request);// 获得openid
+			if (null == openid || "".equals(openid)) {
+				throw new RuntimeException("数据异常");
+			}
+			session.setAttribute("openid", openid);
+		}
 		return "orderList";
 	}
 
