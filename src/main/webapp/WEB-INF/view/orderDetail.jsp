@@ -53,32 +53,34 @@
           data: {"id":id},
           type: "POST",
           success: function (res) {
-              console.log(res);
+              alert(1);
+              var order = res.order;
               var html = [];
               html.push('<section class="order-item">')
-              html.push('<p class="order-no0209"><span>订单编号：<em>'+res.orderNo+'</em></span></p>')
-              html.push('<p class="order-no0209"><span>订单状态：<em class="orange">'+res.describe+'</em></span></p>')
+              html.push('<p class="order-no0209"><span>订单编号：<em>'+order.orderNo+'</em></span></p>')
+              html.push('<p class="order-no0209"><span>订单状态：<em class="orange">'+order.describe+'</em></span></p>')
               html.push('<div class="order-detail0209">')
               html.push('<p class="order-detail-tip">请前往柜台处提交行李小票，办理托运业务</p>')
               html.push('<h3 class="order-deal-header">行李信息</h3>')
               html.push('<div class="order-deal-box" style="border: 0;">')
-              html.push('<div class="order-deal-item"><span class="label">航班号：</span><span class="content">'+res.flightNum+'</span></div>')
-              html.push('<div class="order-deal-item"><span class="label">日期：</span><span class="content">'+Common.getLocalDate(res.nowTime)+'</span></div>')
-              html.push('<div class="order-deal-item"><span class="label">行李数量：</span><span class="content">'+res.baggageNum+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">航班号：</span><span class="content">'+order.flightNum+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">日期：</span><span class="content">'+Common.getLocalDate(order.nowTime)+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">行李数量：</span><span class="content">'+order.baggageNum+'</span></div>')
               html.push('<div class="order-deal-item"><span class="tip">行李内无贵重、易碎、违禁物品</span></div>')
               html.push('</div>')
               html.push('<h3 class="order-deal-header">收货地址</h3>')
               html.push('<div class="order-deal-box" style="border: 0; margin-bottom: 0;">')
-              html.push('<div class="order-deal-item"><span class="label">收件人：</span><span class="content">'+res.consignee+'</span></div>')
-              html.push('<div class="order-deal-item"><span class="label">联系方式：</span><span class="content">'+res.consigneePhone+'</span></div>')
-              html.push('<div class="order-deal-item"><span class="label">详细地址：</span><span class="content">'+res.province+''+res.city+''+res.area+''+res.address+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">收件人：</span><span class="content">'+order.consignee+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">联系方式：</span><span class="content">'+order.consigneePhone+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">详细地址：</span><span class="content">'+order.province+''+order.city+''+order.area+''+order.address+'</span></div>')
               html.push('</div>')
               html.push('</div>')
-              if(res.orderStatus == 1){
-                html.push('<a href="javascript:;" class="btn btn-lg" style="margin-top: .2rem;margin-bottom: .5rem;" onclick="cancelOrder('+res.id+')">取消订单</a>');
+              if(order.orderStatus == 1){
+                html.push('<a href="javascript:;" class="btn btn-lg" style="margin-top: .2rem;margin-bottom: .5rem;" onclick="cancelOrder('+order.id+')">取消订单</a>');
               }
               html.push('</section>')
               $('#order-detail').html(html.join(''));
+              alert(2);
           }
       })
   })
@@ -107,7 +109,7 @@
   }
   function cancelSuccess() {
       var html = [];
-      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-cancle"><img src="<%=basePath%>resources/image/order-cancle.png" alt=""><p class="order-info-title">您的订单已取消！</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
+      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-cancle"><img src="'+basePath+'resources/image/order-cancle.png" alt=""><p class="order-info-title">您的订单已取消！</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
       $('body').append(html.join(''));
       $('.modal-footer0211>a').eq(0).click(function () {
           $('#modal').remove();
