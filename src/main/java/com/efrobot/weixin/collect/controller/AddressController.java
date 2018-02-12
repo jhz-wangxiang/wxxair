@@ -157,6 +157,8 @@ public class AddressController {
 		List<Address> list = addressService.getAddress(record);
 		if (list.size() != 0) {
 			map.put("addressList", list);
+		}else{
+			map.put("addressList", "");
 		}
 		return map;
 	}
