@@ -375,4 +375,9 @@ public class PageForController {
 		request.setAttribute("navName", "服务介绍");
 		return "serviceInstroduction";
 	}
+	@RequestMapping(value = "/orderAddressUpdate")
+	public String orderAddressUpdate(HttpServletRequest request) {
+		request.setAttribute("navName", "编辑地址");
+		return "orderAddressUpdate";
+	}
 }

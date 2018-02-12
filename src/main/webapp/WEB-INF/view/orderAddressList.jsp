@@ -43,7 +43,7 @@ $.ajax({
 			html.push('<section class="order-item"><div class="order-detail0209" style="border-width: 0 0 1px 0;">');
 			html.push('<div class="detail-item0209"><em>收件人:</em><em>'+data.addressList[i].consignee+'</em></div>');
 			html.push('<div class="detail-item0209"><em>联系电话:</em><em>'+data.addressList[i].consigneePhone+'</em></div>');
-			html.push('<div class="detail-item0209"><em>详细地址:</em><em>'+data.addressList[i].province+data.addressList[i].city+data.addressList[i].area+'</em></div></div>');
+			html.push('<div class="detail-item0209"><em>详细地址:</em><em>'+data.addressList[i].province+data.addressList[i].city+data.addressList[i].area+data.addressList[i].address+'</em></div></div>');
 			if(data.addressList.length>1){
 				c = "justify-content: space-between;"
 			}else{
@@ -57,9 +57,10 @@ $.ajax({
 					html.push('<span><input type="checkbox" style="display: none;" id="address-radio" class="address-radio" onchange="changeAdress(this,\''+data.addressList[i].id+'\',\''+data.addressList[i].userid+'\')"><label for="address-radio" class="address-radio-box">设置成默认地址</label></span>');
 				}
 			}
-			html.push('<a href="javascript:;" class="orderAddressEdit">编辑</a><a href="javascript:delAddress(\''+data.addressList[i].id+'\');" class="orderAddressEdit orderAddressDel">删除</a>');
+			html.push('<a href="'+basePath+'v1/page/orderAddressUpdate?id='+data.addressList[i].id+'" class="orderAddressEdit">编辑</a><a href="javascript:delAddress(\''+data.addressList[i].id+'\');" class="orderAddressEdit orderAddressDel">删除</a>');
 			html.push('</p></section>');
 		}
+		html.push('<a href="'+basePath+'v1/page/orderAddressNew" class="btn btn-lg" style="margin: .5rem .2rem;">新增</a>')
 		$("#table").html(html.join(""));
 	}
 });
