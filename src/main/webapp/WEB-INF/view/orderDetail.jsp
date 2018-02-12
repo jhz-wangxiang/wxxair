@@ -59,7 +59,7 @@
               html.push('<p class="order-no0209"><span>订单编号：<em>'+res.orderNo+'</em></span></p>')
               html.push('<p class="order-no0209"><span>订单状态：<em class="orange">'+res.describe+'</em></span></p>')
               html.push('<div class="order-detail0209">')
-              html.push('<p class="order-detail-tip">请前往XXXXX处提交行李小票，办理托运业务</p>')
+              html.push('<p class="order-detail-tip">请前往柜台处提交行李小票，办理托运业务</p>')
               html.push('<h3 class="order-deal-header">行李信息</h3>')
               html.push('<div class="order-deal-box" style="border: 0;">')
               html.push('<div class="order-deal-item"><span class="label">航班号：</span><span class="content">'+res.flightNum+'</span></div>')

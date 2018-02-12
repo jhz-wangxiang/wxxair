@@ -319,7 +319,7 @@ public class PageForController {
 	public String orderList(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.setAttribute("navName", "订单列表");
 		String openid = (String) session.getAttribute("openid");
-//		openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
+		openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
 		session.setAttribute("openid", openid);
 		if (null == openid || "".equals(openid)) {
 			openid = WeixinUtil.getopenidAction(request);// 获得openid
@@ -374,5 +374,10 @@ public class PageForController {
 	public String serviceInstroduction(HttpServletRequest request) {
 		request.setAttribute("navName", "服务介绍");
 		return "serviceInstroduction";
+	}
+	@RequestMapping(value = "/orderAddressUpdate")
+	public String orderAddressUpdate(HttpServletRequest request) {
+		request.setAttribute("navName", "编辑地址");
+		return "orderAddressUpdate";
 	}
 }
