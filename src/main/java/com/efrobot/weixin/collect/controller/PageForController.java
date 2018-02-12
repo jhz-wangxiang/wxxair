@@ -347,4 +347,19 @@ public class PageForController {
 		request.setAttribute("navName", "新增地址");
 		return "orderAddressNew";
 	}
+	@RequestMapping(value = "/serviceProtocol")
+	public String serviceProtocol(HttpServletRequest request) {
+		request.setAttribute("navName", "委托服务协议条款");
+		return "serviceProtocol";
+	}
+	@RequestMapping(value = "/useInstroduction")
+	public String useInstroduction(HttpServletRequest request) {
+		request.setAttribute("navName", "使用说明");
+		return "useInstroduction";
+	}
+	@RequestMapping(value = "/serviceInstroduction")
+	public String serviceInstroduction(HttpServletRequest request) {
+		request.setAttribute("navName", "服务介绍");
+		return "serviceInstroduction";
+	}
 }
