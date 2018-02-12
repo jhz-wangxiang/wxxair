@@ -79,9 +79,9 @@ var changeAdress = function(t,id,userid){
 			success:function(res){
 				console.log(res)
 				if (res.resultCode == "SUCCESS") {
-					Common.alter(res.msg);
+					//Common.alter(res.msg);
                 }else{
-                  Common.alter(res.msg);
+                 // Common.alter(res.msg);
                 }
 			}
 		})
@@ -95,9 +95,9 @@ var changeAdress = function(t,id,userid){
 			success:function(res){
 				console.log(res)
 				if (res.resultCode == "SUCCESS") {
-					Common.alter(res.msg);
+					//Common.alter(res.msg);
         }else{
-            Common.alter(res.msg);
+           // Common.alter(res.msg);
   }
 			}
 		})
