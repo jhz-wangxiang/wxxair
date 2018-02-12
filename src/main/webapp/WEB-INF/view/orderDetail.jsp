@@ -53,7 +53,6 @@
           data: {"id":id},
           type: "POST",
           success: function (res) {
-              alert(1);
               var order = res.order;
               var html = [];
               html.push('<section class="order-item">')
@@ -80,7 +79,6 @@
               }
               html.push('</section>')
               $('#order-detail').html(html.join(''));
-              alert(2);
           }
       })
   })
