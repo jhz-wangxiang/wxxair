@@ -27,32 +27,27 @@ public class AddressController {
 	private AddressService addressService;
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping(value = "/insertAddress", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertAddress(Address record,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+	public Map<String, Object> insertAddress(Address record, HttpServletRequest request, HttpServletResponse response,
+			HttpSession session) throws Exception {
 		int result = -1;
 		String openid = (String) session.getAttribute("openid");
-		
+
 		User user = new User();
 		user.setOpenid(openid);
 		List<User> list2 = userService.selectByUser(user);
 		if (list2.size() != 0) {
 			record.setUserid(list2.get(0).getId());
 		}
-		if(null==record.getUserid()){
+		if (null == record.getUserid()) {
 			return CommonUtil.resultMsg("FAIL", "用户信息不存在!");
 		}
-		List<Address> list=addressService.getAddress(record);
-		record.setStatus(1);
-		if(list.size()==0){
+		List<Address> list = addressService.getAddress(record);
+		record.setStatus(0);
+		if (list.size() == 0) {
 			record.setStatus(1);
-		}else{
-			for(Address ad:list){
-				if(null!=record.getStatus()&&"1".equals(record.getStatus())){
-					record.setStatus(0);
-				}
-			}
 		}
 		result = addressService.insertSelective(record);
 		if (result == 0) {
@@ -63,11 +58,12 @@ public class AddressController {
 			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
 		}
 	}
-	
+
 	@RequestMapping(value = "/updateAddress", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateAddress(Address record ) throws Exception {
+	public Map<String, Object> updateAddress(Address record) throws Exception {
 		int result = -1;
+		record.setStatus(null);
 		result = addressService.updateByPrimaryKeySelective(record);
 		if (result == 0) {
 			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
@@ -77,12 +73,23 @@ public class AddressController {
 			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
 		}
 	}
+
 	@RequestMapping(value = "/updateAddressStatus", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateAddressStatus(Address record) throws Exception {
+	public Map<String, Object> updateAddressStatus(Address record, HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) throws Exception {
 		int result = -1;
-		record.setStatus(0);
-		result = addressService.updateAddressStatus(record);
+		String openid = (String) session.getAttribute("openid");
+		Address ad = new Address();
+		User user = new User();
+		user.setOpenid(openid);
+		List<User> list2 = userService.selectByUser(user);
+		if (list2.size() != 0) {
+			ad.setUserid(list2.get(0).getId());
+		}
+		ad.setStatus(0);
+		result = addressService.updateAddressStatus(ad);
+
 		record.setStatus(1);
 		result = addressService.updateByPrimaryKeySelective(record);
 		if (result == 0) {
@@ -93,33 +100,22 @@ public class AddressController {
 			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
 		}
 	}
+
 	@RequestMapping(value = "/deletAddress")
 	@ResponseBody
 	public Map<String, Object> deletAddress(Address record) throws Exception {
 		int result = -1;
-		Address record2=addressService.selectByPrimaryKey(record.getId());
-		if(record2.getStatus()==0){
-			result = addressService.deleteByPrimaryKey(record.getId());
-		}else{
-			result = addressService.deleteByPrimaryKey(record.getId());
-			List<Address> list=addressService.getAddress(record);
-			if(list.size()!=0){
-				Address a=list.get(0);
-				a.setStatus(1);
-				result = addressService.updateByPrimaryKeySelective(a);
-			}
-		}
-			return CommonUtil.resultMsg("SUCCESS", "编辑生产信息成功");
+		result = addressService.deleteByPrimaryKey(record.getId());
+		return CommonUtil.resultMsg("SUCCESS", "编辑生产信息成功");
 	}
-	
-	
+
 	@RequestMapping(value = "/getAddressDetail", method = RequestMethod.POST)
 	@ResponseBody
 	public Address getAddressDetail(Integer id) throws Exception {
-		Address adderss=addressService.selectByPrimaryKey(id);
+		Address adderss = addressService.selectByPrimaryKey(id);
 		return adderss;
 	}
-	
+
 	@RequestMapping(value = "/getAddress", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> getAddress(Address record, HttpServletRequest request, HttpServletResponse response,
@@ -157,7 +153,7 @@ public class AddressController {
 		List<Address> list = addressService.getAddress(record);
 		if (list.size() != 0) {
 			map.put("addressList", list);
-		}else{
+		} else {
 			map.put("addressList", "");
 		}
 		return map;
