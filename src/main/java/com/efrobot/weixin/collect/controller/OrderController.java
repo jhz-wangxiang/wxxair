@@ -60,9 +60,12 @@ public class OrderController {
 
 	@RequestMapping(value = "/getOrderDetail", method = RequestMethod.POST)
 	@ResponseBody
-	public Order getOrderDetail(Order record) throws Exception {
+	public Map<String, Object> getOrderDetail(Order record) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
 		List<Order> orderList = orderService.selectByParms(record);
-		return orderList.get(0);
+		map.put("order", orderList.get(0));
+		System.out.println("++++++++++++++++"+map);
+		return map;
 	}
 
 	/**
