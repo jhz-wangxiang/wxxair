@@ -153,6 +153,17 @@ public class UserController {
 		List<User> list=userService.selectByUser(user2);
 		record.setOpenid(openid);
 		if(list.size()!=0){
+			User user4=new User();
+			user4.setPhone(record.getPhone());
+			List<User> list4=userService.selectByUser(user4);
+			if(list4.size()!=0){
+				if(list4.get(0).getOpenid()==null){
+					return CommonUtil.resultMsg("FAIL", "该手机号已经被别的微信号绑定,请先解绑在绑定");
+				}
+				if(!list4.get(0).getOpenid().equals(openid)){
+					return CommonUtil.resultMsg("FAIL", "该手机号已经被别的微信号绑定,请先解绑在绑定");
+				}
+			}
 			record.setId(list.get(0).getId());
 			result = userService.updateByPrimaryKeySelective(record);
 		}else{
@@ -174,7 +185,7 @@ public class UserController {
 		if (result == 0) {
 			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
 		} else if (result == 1){
-			return CommonUtil.resultMsg("SUCCESS", "信息插入功");
+			return CommonUtil.resultMsg("SUCCESS", "信息修改成功");
 		}else {
 			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
 		}
