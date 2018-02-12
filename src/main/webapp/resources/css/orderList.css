@@ -20,3 +20,8 @@
 .order-item .flex-p0209>a.orderAddressDel{ background:#666;}
 .address-radio-box{ color:#999; background: url("../image/order-checkbox.png") left center no-repeat; padding-left:20px; background-size: contain; }
 .address-radio-box.cur{ color:#999; background: url("../image/order-checkbox-checked.png") left center no-repeat; padding-left:20px; background-size: contain; }
+
+/* 服务协议 */	
+.text-cont0212{padding:0 0.5rem;margin-top:.5rem;}
+.text-cont0212 h1{font-size:0.32rem;line-height:0.4rem;color:#3974bb;text-align:center;}
+.text-cont0212 p{font-size:0.22rem;line-height:.4rem;color:#666666;}
