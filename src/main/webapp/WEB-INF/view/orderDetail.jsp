@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="order-body" style="padding: 0;" id="order-detail">
-  <section class="order-item">
+  <%--<section class="order-item">
     <p class="order-no0209" style="display: flex; display: -webkit-flex; justify-content: space-between;"><span>订单编号：<em>201709093123</em></span><span>订单状态：<em class="orange">已支付</em></span></p>
     <div class="order-detail0209">
       <p class="order-detail-tip">请前往XXXXX处提交行李小票，办理托运业务</p>
@@ -40,7 +40,7 @@
       </div>
     </div>
     <a href="javascript:;" class="btn btn-lg" style="margin-top: .2rem;margin-bottom: .5rem;">取消订单</a>
-  </section>
+  </section>--%>
 </div>
 <script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>
 <script>
@@ -63,7 +63,7 @@
               html.push('<h3 class="order-deal-header">行李信息</h3>')
               html.push('<div class="order-deal-box" style="border: 0;">')
               html.push('<div class="order-deal-item"><span class="label">航班号：</span><span class="content">'+res.flightNum+'</span></div>')
-              html.push('<div class="order-deal-item"><span class="label">日期：</span><span class="content">'+res.nowTime+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">日期：</span><span class="content">'+Common.getLocalDate(res.nowTime)+'</span></div>')
               html.push('<div class="order-deal-item"><span class="label">行李数量：</span><span class="content">'+res.baggageNum+'</span></div>')
               html.push('<div class="order-deal-item"><span class="tip">行李内无贵重、易碎、违禁物品</span></div>')
               html.push('</div>')
