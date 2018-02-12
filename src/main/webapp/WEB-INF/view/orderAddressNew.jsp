@@ -111,7 +111,7 @@ var addAddress = function(){
 		return false;
 	}
 	$.ajax({
-		url: basePath+"v1/addressinsertAddress",
+		url: basePath+"v1/address/insertAddress",
 		type:"POST",
 		data:{
 			consignee:consignee,
