@@ -232,10 +232,10 @@
 			<if test="updateDate != null">
 				update_date,
 			</if>
-			<if test="updateDate != null">
+			<if test="paidFee != null">
 				paid_fee,
 			</if>
-			<if test="updateDate != null">
+			<if test="expFee != null">
 				exp_fee,
 			</if>
 			<if test="singleWay != null">
@@ -361,10 +361,10 @@
 			<if test="updateDate != null">
 				#{updateDate,jdbcType=TIMESTAMP},
 			</if>
-			<if test="payCost != null">
+			<if test="paidFee != null">
 				#{paidFee,jdbcType=DECIMAL},
 			</if>
-			<if test="payCost != null">
+			<if test="expFee != null">
 				#{expFee,jdbcType=DECIMAL},
 			</if>
 			<if test="singleWay != null">

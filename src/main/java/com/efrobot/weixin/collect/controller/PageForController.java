@@ -234,6 +234,9 @@ public class PageForController {
 		record.setOrderNo(orderNo);
 		record.setSingleWay("微信下单");
 		record.setAbnormalStatus("否");
+		record.setOperator("微信下单");
+		record.setRegisterName(record.getName());
+		record.setRegisterPhone(record.getPhone());
 		// 价格计算
 		float c = 10;
 		float a = 10;
