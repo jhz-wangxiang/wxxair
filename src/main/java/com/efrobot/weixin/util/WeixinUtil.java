@@ -1188,183 +1188,37 @@ public class WeixinUtil {
 		HttpPost httpost = HttpClientConnectionManager.getPostMethod(url);
 		String menu = null;
 		try {
-			// String postParam = "{\"button\":[" +
-			// "{\"name\":\"胖粉中心\",\"sub_button\":[" +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"我的订单\"," +
-			// "url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-			// +
-			// WXKeys.WX_APPID +
-			// "&redirect_uri=http://wechat-server.efrobot.com/sendurl/userinfo&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-			// +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"10元投票\"," +
-			// "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-			// +
-			// WXKeys.WX_APPID +
-			// "&redirect_uri=http://wechat-server.efrobot.com/tenVote/initVoteView&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-			// +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"使用技巧\"," +
-			// "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&mid=555447816&idx=2&sn=31f557eef8bba4b061c52e5cf8a9184d#rd\""
-			// +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"了解小胖\"," +
-			// "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&mid=555447816&idx=1&sn=81ab5168588a2fde3a34dd04638e0650#rd\""
-			// +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"家用小胖\"," +
-			// "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&mid=2702931589&idx=4&sn=1d9c59f9d3475619948077abb80ce4e3&scene=0#wechat_redirect\""
-			// +
-			// "}" +
-			//// "{\"type\":\"view\",\"name\":\"会员中心\",\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-			// +
-			//// WXKeys.WX_APPID +
-			// "&redirect_uri=http://wechat-server.efrobot.com/wxclient/index.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-			// +
-			//// "}" +
-			//// "{" +
-			//// "\"type\":\"view\"," +
-			//// "\"name\":\"会员中心\"," +
-			//// "\"url\":\"http://web-wechat.aliapp.com/wxclient/index.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-			// +
-			//// "}" +
-			// "]" +
-			// "}," +
-			// "{\"name\":\"诚邀加盟\",\"sub_button\":[" +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"招商通道\"," +
-			// "\"url\":\"http://viewer.maka.im/k/LH4L9453\"" +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"商务机视频\"," +
-			// "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&mid=555447816&idx=3&sn=9453aef53eca7abe9a0d6f99691c45ff#rd\""
-			// +
-			// "}" +
-			// "]" +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"微信商城\"," +
-			// "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-			// + WXKeys.WX_APPID +
-			// "&redirect_uri=http://wechat-server.efrobot.com/sendurl/index&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-			// +
-			// "}" +
-			//// "{" +
-			//// "\"type\":\"view\"," +
-			//// "\"name\":\"10元投票\"," +
-			//// "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-			// + WXKeys.WX_APPID +
-			// "&redirect_uri=http://wechat-server.efrobot.com/tenVote/initVoteView.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-			// +
-			//// "}" +
-			// "]" +
-			// "}";
-			// 正式
-			String postParam = "{\"button\":[{\"name\":\"胖粉中心\",\"sub_button\":[{\"type\":\"view\",\"name\":\"我的订单\",\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-					+ WXKeys.WX_APPID
-					+ "&redirect_uri=http://wechat-server.efrobot.com/sendurl/userinfo.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-					+ "}," +
-					// "{" +
-					// "\"type\":\"view\"," +
-					// "\"name\":\"小胖新功能\"," +
-					// "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&mid=2702932074&idx=3&sn=3c46bcc9819eea72d1fb3b814c991d6f&chksm=b3c87d1584bff403ea6548907904593d0a88cd14d9a41b54477bc415e1cefaf241efaaab5b2f#rd\""
-					// +
-					// "}," +
-			"{" + "\"type\":\"view\"," + "\"name\":\"帮助视频\","
-					+ "\"url\":\"http://weixinstore.efrobot.com/v1/store/micro/video\"" + "}," + "{"
-					+ "\"type\":\"view\"," + "\"name\":\"小胖大事记\","
-					+ "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&mid=555447816&idx=1&sn=81ab5168588a2fde3a34dd04638e0650#rd\""
-					+ "}," + "{" + "\"type\":\"view\"," + "\"name\":\"家用小胖\","
-					+ "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&mid=2702931589&idx=4&sn=1d9c59f9d3475619948077abb80ce4e3&scene=0#wechat_redirect\""
-					+ "}" + "]" + "}," + "{\"name\":\"招商加盟\",\"sub_button\":[" + "{" + "\"type\":\"view\","
-					+ "\"name\":\"招商通道\"," + "\"url\":\"http://viewer.maka.im/k/LH4L9453\"" + "}," + "{"
-					+ "\"type\":\"view\"," + "\"name\":\"商务机视频\","
-					+ "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&mid=555447816&idx=3&sn=9453aef53eca7abe9a0d6f99691c45ff#rd\""
-					+ "}" + "]" + "}," + "{" + "\"type\":\"view\"," + "\"name\":\"商城\","
-					+ "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WXKeys.WX_APPID
-					+ "&redirect_uri=http://wechat-server.efrobot.com/sendurl/index.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-					+ "}" + "]" + "}";
-			// 测试菜单
-			// String postParam =
-			// "{\"button\":[{\"name\":\"胖粉中心\",\"sub_button\":[{\"type\":\"view\",\"name\":\"我的订单\",\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-			// +
-			// WXKeys.WX_APPID +
-			// "&redirect_uri=http://weixin.efrobot.com/sendurl/userinfo.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-			// +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"十元投票\"," +
-			// "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-			// + WXKeys.WX_APPID +
-			// "&redirect_uri=http://weixin.efrobot.com/tenVote/initVoteView.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-			// +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"帮助视频\"," +
-			// "\"url\":\"http://www.game.test.efrobot.com/v1/store/micro/video\""
-			// +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"了解小胖\"," +
-			// "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&mid=555447816&idx=1&sn=81ab5168588a2fde3a34dd04638e0650#rd\""
-			// +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"家用小胖\"," +
-			// "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&tempkey=7zS7J%2Fkp1uFYClpXS%2FlzLTv6qO9Zg6k%2FhUbuNZKdlfRED47vQfoRj9%2B0z2c%2FodFoIp%2BSsnc5mPrJ33wMhxS7onMKhbEn5p%2BBl%2B5KCQAw6UTIvDYvmPzdQetpB1oBg5b3LD8LEI9Hmtw61VTc9bDL9g%3D%3D&chksm=33c8737704bffa61c4c3bd26a2769773f13838172049601127eed7b9b1aa247c327df426ff36#rd\""
-			// +
-			// "}" +
-			// "]" +
-			// "}," +
-			// "{\"name\":\"诚邀加盟\",\"sub_button\":[" +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"招商通道\"," +
-			// "\"url\":\"http://viewer.maka.im/k/LH4L9453\"" +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"商务机视频\"," +
-			// "\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwNjA0MjEyOA==&mid=555447816&idx=3&sn=9453aef53eca7abe9a0d6f99691c45ff#rd\""
-			// +
-			// "}" +
-			// "]" +
-			// "}," +
-			// "{" +
-			// "\"type\":\"view\"," +
-			// "\"name\":\"微信商城\"," +
-			// "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-			// + WXKeys.WX_APPID +
-			// "&redirect_uri=http://weixin.efrobot.com/sendurl/index.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-			// +
-			// "}" +
-			//// "{" +
-			//// "\"type\":\"view\"," +
-			//// "\"name\":\"10元投票\"," +
-			//// "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-			// + WXKeys.WX_APPID +
-			// "&redirect_uri=http://weixin.efrobot.com/tenVote/initVoteView.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\""
-			// +
-			//// "}" +
-			// "]" +
-			// "}";
+			//正式
+			 String postParam = "{\"button\":[{\"name\":\"个人信息\",\"sub_button\":[{\"type\":\"view\",\"name\":\"我的订单\",\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + 
+	    			 WXKeys.WX_APPID + "&redirect_uri=http://api01.jiankangzhan.com/v1/page/orderList.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
+	  		           "}," + 
+  		              "{" + 
+	    		        "\"type\":\"view\"," + 
+	    		        "\"name\":\"帐号信息\"," + 
+	    		        "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +  WXKeys.WX_APPID + "&redirect_uri=http://api01.jiankangzhan.com/v1/page/userInfo.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
+	    		        "}" + 
+	    		        "]" + 
+	    		        "}," +  
+	    		        "{\"name\":\"业务说明\",\"sub_button\":[" +
+						"{" + 
+						"\"type\":\"view\"," + 
+						"\"name\":\"操作说明\"," + 
+						"\"url\":\"https://www.baidu.com\"" + 
+						"}," +
+						 "{" + 
+						 "\"type\":\"view\"," + 
+						 "\"name\":\"使用说明\"," + 
+						 "\"url\":\"https://www.baidu.com\"" + 
+						 "}" + 				
+						"]" + 
+						"}," + 
+	    		        "{" + 
+	    		        "\"type\":\"view\"," + 
+	    		        "\"name\":\"立刻下单\"," + 
+	    		        "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +  WXKeys.WX_APPID + "&redirect_uri=http://api01.jiankangzhan.com/v1/page/orderStepOne.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
+	    		        "}" + 
+	    		        "]" + 
+	    		        "}";
 
 			System.out.println("菜单：" + postParam);
 			httpost.setEntity(new StringEntity(postParam, "UTF-8"));
@@ -1382,15 +1236,8 @@ public class WeixinUtil {
 	}
 
 	public static void main(String[] args) {
-		// createMenu("7qLCWJqGI4C_8DPXox0PqHeVGpgpmDLM2X_9lIh6EEx4Ip89adHp58DOYNN9Sz8qmOGyXMBLycOlrRTNb-FystdYEarnGZik4UCPOkavQrhUdIDQrFrH9o893gaKnPqCFAJjAFAJEN");
+		 createMenu("6_ZXWmr-5oh3nteutjCjOtez__tiLXbO-WvlR7Z_NIn30b1Pv5bv9ch7Jt05Tp72xKUbDd1wDQPsaVMGiuUmetQr-lW5cHhqAC7v2nJdfoVlYhu_LSlp-CzSR67PA5re1djqjFs-1f4B6xIPJaGYPjABAASJ");
 
-//		try {
-//			downLoadFromUrl("https://dict.youdao.com/dictvoice?rate=4&le=auto&audio=good+hello", "百度.mp3", "d:/");
-			change("","");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 
 	}
 }

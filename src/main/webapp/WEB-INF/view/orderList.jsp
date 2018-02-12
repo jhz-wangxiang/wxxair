@@ -8,7 +8,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>air</title>
+  <title>订单列表</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"name="viewport" />
   <meta content="yes" name="apple-mobile-web-app-capable" />
@@ -29,12 +29,17 @@
               type: "POST",
               success: function (res) {
                   console.log(res);
+                  var html = [];
                   if(res.resultCode == 'SUCCESS'){
-                      var html = [];
-                      for (var i = 0; i<res.orderList.length; i++){
-                          var _item = res.orderList[i];
-                          html.push('<section class="order-item"><p class="order-no0209"><span>订单编号: <em>'+_item.orderNo+'</em></span></p><div class="order-detail0209"><div class="detail-item0209"><em>收件人:</em><em>'+_item.consignee+'</em></div><div class="detail-item0209"><em>详细地址:</em><em>'+_item.province+''+_item.city+''+_item.area+''+_item.address+'</em></div></div><p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">'+_item.describe+'</em></span><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p></section>')
-                          //<div class="detail-item0209"><em>预计送达时间:</em><em>2017-02-07 10:20</em></div>
+                      if(res.orderList.length == 0){
+                          html.push('<p style="font-size:.2rem; color:#666; text-align:center; padding:10px; margin-top:3rem">您还没有订单，请点击按钮新建订单</p>');
+                          html.push('<div class="step-box" style="justify-content:center"><a href="'+basePath+'v1/page/orderStepOne" class="btn btn-nm" style="width:2rem">新建订单</a></div>')
+                      }else{
+                          for (var i = 0; i<res.orderList.length; i++){
+                              var _item = res.orderList[i];
+                              html.push('<section class="order-item"><p class="order-no0209"><span>订单编号: <em>'+_item.orderNo+'</em></span></p><div class="order-detail0209"><div class="detail-item0209"><em>收件人:</em><em>'+_item.consignee+'</em></div><div class="detail-item0209"><em>详细地址:</em><em>'+_item.province+''+_item.city+''+_item.area+''+_item.address+'</em></div></div><p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">'+_item.describe+'</em></span><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p></section>')
+                              //<div class="detail-item0209"><em>预计送达时间:</em><em>2017-02-07 10:20</em></div>
+                          }
                       }
                       $('#order-list').html(html.join(''));
                   }else{
