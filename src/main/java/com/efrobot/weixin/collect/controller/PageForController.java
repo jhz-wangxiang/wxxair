@@ -101,6 +101,7 @@ public class PageForController {
 	@ResponseBody
 	public Map<String, Object> checkflightNum(Order record) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 		if ("".equals(record.getNowTimeStr()) || null == record.getNowTimeStr()) {
 			return CommonUtil.resultMsg("FAIL", "航班日期不能为空 ");
 		}
@@ -118,10 +119,9 @@ public class PageForController {
 		if (record.getNowTime().getTime() < flightNum.getEndTime().getTime()
 				&& record.getNowTime().getTime() >= flightNum.getStartTime().getTime()) {
 		} else {
-			return CommonUtil.resultMsg("FAIL", "对不起，你航班的目的地还未开通此项服务。 ");
+			return CommonUtil.resultMsg("FAIL", "对不起，你航班还没有开通。 ");
 		}
 		// 校验航班时间
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 		String endHour="";
 		if (flightNum.getEndHour().length() == 2) {
 			endHour= flightNum.getEndHour() + ":00:00";
@@ -132,9 +132,9 @@ public class PageForController {
 
 		Date t = sdf2.parse(time);
 		Date n = new Date();
-		if (!CommonUtil.jisuan(n, t)) {
-			return CommonUtil.resultMsg("FAIL", "航班未开放，请于落地前 24 小时内下单");//
-		}
+//		if (!CommonUtil.jisuan(n, t)) {
+//			return CommonUtil.resultMsg("FAIL", "航班未开放，请于落地前 24 小时内下单");//
+//		}
 		return CommonUtil.resultMsg("SUCCESS", "校验成功");
 	}
 
@@ -204,7 +204,7 @@ public class PageForController {
 		if (record.getNowTime().getTime() <= flightNum.getEndTime().getTime()
 				&& record.getNowTime().getTime() >= flightNum.getStartTime().getTime()) {
 		} else {
-			return CommonUtil.resultMsg("FAIL", "对不起，你航班的目的地还未开通此项服务。 ");
+			return CommonUtil.resultMsg("FAIL", "对不起，你航班还没有开通。 ");
 		}
 		// 校验航班时间
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
@@ -219,11 +219,11 @@ public class PageForController {
 
 		Date t = sdf2.parse(time);
 		Date n = new Date();
-		if (!CommonUtil.jisuan(n, t)) {
-			return CommonUtil.resultMsg("FAIL", "航班未开放，请于落地前 24 小时内下单");// 订单可在航班计划落地时间前
-																		// 24
-																		// 小时内下单，如早下单，则提示
-		}
+//		if (!CommonUtil.jisuan(n, t)) {
+//			return CommonUtil.resultMsg("FAIL", "航班未开放，请于落地前 24 小时内下单");// 订单可在航班计划落地时间前
+//																		// 24
+//																		// 小时内下单，如早下单，则提示
+//		}
 		String zm = flightNum.getExp1();
 		String orderNo = zm + datestr + mmdd.format(record.getNowTime()) + record.getFlightNum()
 				+ SerialNum.getSystemManageOrder();
