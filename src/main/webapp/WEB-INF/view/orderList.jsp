@@ -31,7 +31,7 @@
                   console.log(res);
                   var html = [];
                   if(res.resultCode == 'SUCCESS'){
-                      if(res.orderList.length == 0){
+                      if(!res.orderList){
                           html.push('<p style="font-size:.2rem; color:#666; text-align:center; padding:10px; margin-top:3rem">您还没有订单，请点击按钮新建订单</p>');
                           html.push('<div class="step-box" style="justify-content:center"><a href="'+basePath+'v1/page/orderStepOne" class="btn btn-nm" style="width:2rem">新建订单</a></div>')
                       }else{
