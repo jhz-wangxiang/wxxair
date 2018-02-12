@@ -16,7 +16,7 @@
 .warn{color: #cc0000;}
 .success{color: #009900;}
 
-.order-item .flex-p0209>a.orderAddressEdit{line-height:0.5rem; color:#fff; background:#3974bb; width:1rem; text-align:center; border-radius:5px; align-self:center;}
-.order-item .flex-p0209>a.orderAddressDel{ background:#666;}
+.order-item .flex-p0209 a.orderAddressEdit{line-height:0.5rem; color:#fff; background:#3974bb; width:1rem; text-align:center; border-radius:5px; align-self:center; margin-right:10px;}
+.order-item .flex-p0209 a.orderAddressDel{ background:#666;}
 .address-radio-box{ color:#999; background: url("../image/order-checkbox.png") left center no-repeat; padding-left:20px; background-size: contain; }
 .address-radio-box.cur{ color:#999; background: url("../image/order-checkbox-checked.png") left center no-repeat; padding-left:20px; background-size: contain; }
