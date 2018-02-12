@@ -1202,13 +1202,13 @@ public class WeixinUtil {
 	    		        "{\"name\":\"业务说明\",\"sub_button\":[" +
 						"{" + 
 						"\"type\":\"view\"," + 
-						"\"name\":\"操作说明\"," + 
-						"\"url\":\"https://www.baidu.com\"" + 
+						"\"name\":\"服务介绍\"," + 
+						"\"url\":\"http://api01.jiankangzhan.com/v1/page/serviceInstroduction.htmls\"" + 
 						"}," +
 						 "{" + 
 						 "\"type\":\"view\"," + 
 						 "\"name\":\"使用说明\"," + 
-						 "\"url\":\"https://www.baidu.com\"" + 
+						 "\"url\":\"http://api01.jiankangzhan.com/v1/page/useInstroduction.htmls\"" + 
 						 "}" + 				
 						"]" + 
 						"}," + 

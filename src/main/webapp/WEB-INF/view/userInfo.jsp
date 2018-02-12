@@ -25,7 +25,7 @@
     <div class="vspace"></div>
     <div class="input-box"><label for="name">乘机人姓名</label><input type="text" id="name" value="${name}" name="name"></div>
    	<div class="input-box"><label for="phone">联系电话</label><input type="text" id="phone" value="${phone}" name="phone"></div>
-	<div class="user-info-address"><p class="">如您需编辑常用地址，请点击按钮前往</p><a href="" class="btn btn-xs" style="padding:5px">地址编辑</a></div>
+	<div class="user-info-address"><p class="">如您需编辑常用地址，请点击按钮前往</p><a href="<%=basePath%>v1/page/orderAddressList" class="btn btn-xs" style="padding:5px">地址编辑</a></div>
   	<a class="btn btn-lg" >确认</a>
   </form>
 </section>
