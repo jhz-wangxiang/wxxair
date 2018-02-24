@@ -87,18 +87,6 @@ public class WeixinUtil {
 
 	public static RestTemplate restTemplate = RestClient.getInstance();// 请求类
 
-	/**
-	 * 阿里云服务器上传图片类
-	 * 
-	 * @return OssClient
-	 */
-	public static OssClient getOssClient() throws Exception {
-		// 第一个参数是阿里云服务器数据中心(beijing(默认),hangzhou) 第二个,三个参数分别是云端通行证和密码
-		// 第四个参数,配置是否为内网(默认false)
-		OssClient instance = OssClient.getInstance(EndPointEnum.BEIJING, WXKeys.ALI_ACCESSKEYID,
-				WXKeys.ALI_ACCESSKEYSECRET, true);
-		return instance;
-	}
 
 	public static DefaultHttpClient initHttpclient() {
 		DefaultHttpClient httpclient = new DefaultHttpClient();
@@ -1096,22 +1084,6 @@ public class WeixinUtil {
 				 out_refund_no,  total_fee,  refund_fee);
 		return xmlBean;
 	}
-	/**
-	 * 发送mqtt消息
-	 * 
-	 * @param json
-	 * @return
-	 * @throws ParseException
-	 */
-	public static Map<String, Object> sendMqttMsg(Map<String, Object> map) throws Exception {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-		HttpEntity<Long> entity = new HttpEntity(JSONObject.toJSONString(map), headers);
-		// 机器人后台地址
-		Map<String, Object> checkRobotResult = restTemplate.postForObject(WXKeys.ROBOT_SERVICE_MQTT + "msg/addMsg",
-				entity, Map.class);
-		return checkRobotResult;
-	}
 
 	/**
 	 * md5相关
@@ -1189,36 +1161,69 @@ public class WeixinUtil {
 		String menu = null;
 		try {
 			//正式
-			 String postParam = "{\"button\":[{\"name\":\"个人信息\",\"sub_button\":[{\"type\":\"view\",\"name\":\"我的订单\",\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + 
-	    			 WXKeys.WX_APPID + "&redirect_uri=http://api01.jiankangzhan.com/v1/page/orderList.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
-	  		           "}," + 
-  		              "{" + 
-	    		        "\"type\":\"view\"," + 
-	    		        "\"name\":\"帐号信息\"," + 
-	    		        "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +  WXKeys.WX_APPID + "&redirect_uri=http://api01.jiankangzhan.com/v1/page/userInfo.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
-	    		        "}" + 
-	    		        "]" + 
-	    		        "}," +  
-	    		        "{\"name\":\"业务说明\",\"sub_button\":[" +
-						"{" + 
-						"\"type\":\"view\"," + 
-						"\"name\":\"服务介绍\"," + 
-						"\"url\":\"http://api01.jiankangzhan.com/v1/page/serviceInstroduction.htmls\"" + 
-						"}," +
-						 "{" + 
-						 "\"type\":\"view\"," + 
-						 "\"name\":\"使用说明\"," + 
-						 "\"url\":\"http://api01.jiankangzhan.com/v1/page/useInstroduction.htmls\"" + 
-						 "}" + 				
-						"]" + 
-						"}," + 
-	    		        "{" + 
-	    		        "\"type\":\"view\"," + 
-	    		        "\"name\":\"立刻下单\"," + 
-	    		        "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +  WXKeys.WX_APPID + "&redirect_uri=http://api01.jiankangzhan.com/v1/page/orderStepOne.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
-	    		        "}" + 
-	    		        "]" + 
-	    		        "}";
+//			 String postParam = "{\"button\":[{\"name\":\"个人信息\",\"sub_button\":[{\"type\":\"view\",\"name\":\"我的订单\",\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + 
+//	    			 WXKeys.WX_APPID + "&redirect_uri=http://ajtservice.com/v1/page/orderList.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
+//	  		           "}," + 
+//  		              "{" + 
+//	    		        "\"type\":\"view\"," + 
+//	    		        "\"name\":\"帐号信息\"," + 
+//	    		        "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +  WXKeys.WX_APPID + "&redirect_uri=http://ajtservice.com/v1/page/userInfo.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
+//	    		        "}" + 
+//	    		        "]" + 
+//	    		        "}," +  
+//	    		        "{\"name\":\"业务说明\",\"sub_button\":[" +
+//						"{" + 
+//						"\"type\":\"view\"," + 
+//						"\"name\":\"服务介绍\"," + 
+//						"\"url\":\"http://ajtservice.com/v1/page/serviceInstroduction.htmls\"" + 
+//						"}," +
+//						 "{" + 
+//						 "\"type\":\"view\"," + 
+//						 "\"name\":\"使用说明\"," + 
+//						 "\"url\":\"http://ajtservice.com/v1/page/useInstroduction.htmls\"" + 
+//						 "}" + 				
+//						"]" + 
+//						"}," + 
+//	    		        "{" + 
+//	    		        "\"type\":\"view\"," + 
+//	    		        "\"name\":\"立刻下单\"," + 
+//	    		        "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +  WXKeys.WX_APPID + "&redirect_uri=http://ajtservice.com/v1/page/orderStepOne.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
+//	    		        "}" + 
+//	    		        "]" + 
+//	    		        "}";
+			 String postParam = "{\"button\":[{\"name\":\"行李到家\",\"sub_button\":[{\"type\":\"view\",\"name\":\"首都机场T2航站楼\",\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + 
+					 WXKeys.WX_APPID + "&redirect_uri=http://ajtservice.com/v1/page/orderStepOne.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
+					 "}" +  
+					 "]" + 
+					 "}," +  
+					 "{\"name\":\"出行资讯\",\"sub_button\":[" +
+					 "{" + 
+					 "\"type\":\"view\"," + 
+					 "\"name\":\"服务介绍\"," + 
+					 "\"url\":\"http://ajtservice.com/v1/page/serviceInstroduction.htmls\"" + 
+					 "}," +
+					 "{" + 
+					 "\"type\":\"view\"," + 
+					 "\"name\":\"航业知识\"," + 
+					 "\"url\":\"https://mp.weixin.qq.com/s?__biz=MzIxNzcwMTkwNw==&mid=2247483659&idx=1&sn=27793efe663dca2cfca2223367a0bd64&scene=19#wechat_redirect\"" + 
+					 "}" + 				
+					 "]" + 
+					 "}," + 
+					 "{\"name\":\"我的\",\"sub_button\":[" +
+					 "{" + 
+					 "\"type\":\"view\"," + 
+					 "\"name\":\"我的订单\"," + 
+					 "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +  WXKeys.WX_APPID + "&redirect_uri=http://ajtservice.com/v1/page/orderList.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
+					 "}," +
+					 "{" + 
+					 "\"type\":\"view\"," + 
+					 "\"name\":\"个人信息\"," + 
+					 "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +  WXKeys.WX_APPID + "&redirect_uri=http://ajtservice.com/v1/page/userInfo.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
+					 "}" + 				
+					 "]" + 
+					 "}" + 
+					 "]" + 
+					 "}";
 
 			System.out.println("菜单：" + postParam);
 			httpost.setEntity(new StringEntity(postParam, "UTF-8"));
@@ -1236,7 +1241,7 @@ public class WeixinUtil {
 	}
 
 	public static void main(String[] args) {
-		 createMenu("6_ZXWmr-5oh3nteutjCjOtez__tiLXbO-WvlR7Z_NIn30b1Pv5bv9ch7Jt05Tp72xKUbDd1wDQPsaVMGiuUmetQr-lW5cHhqAC7v2nJdfoVlYhu_LSlp-CzSR67PA5re1djqjFs-1f4B6xIPJaGYPjABAASJ");
+		 createMenu("7_vr1ND4dsD5Eebx8a3ZItJJO-5EP3FkQSEPD5yHj2AJfosTFrj5U8WNDVfBxRr4e_HxwQi_Hs84RwetXfyDiKiZUu291dvuy3I1t9H-0WoA-i3HFpuwQMlKThQnKsmm0AE50hfzm3wAFUCUtSKNXdADAPSC");
 
 
 	}

@@ -1,5 +1,7 @@
 package com.efrobot.weixin.collect.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.efrobot.toolkit.util.xml.XMLParser;
 import com.efrobot.weixin.baseapi.pojo.Address;
 import com.efrobot.weixin.baseapi.pojo.Area;
 import com.efrobot.weixin.baseapi.pojo.Channel;
@@ -24,6 +27,7 @@ import com.efrobot.weixin.baseapi.pojo.FlightNum;
 import com.efrobot.weixin.baseapi.pojo.Order;
 import com.efrobot.weixin.baseapi.pojo.OrderStatusRecord;
 import com.efrobot.weixin.baseapi.pojo.User;
+import com.efrobot.weixin.collect.bean.WxPay;
 import com.efrobot.weixin.collect.service.AddressService;
 import com.efrobot.weixin.collect.service.AreaService;
 import com.efrobot.weixin.collect.service.FlightNumService;
@@ -31,6 +35,7 @@ import com.efrobot.weixin.collect.service.OrderService;
 import com.efrobot.weixin.collect.service.UserService;
 import com.efrobot.weixin.util.CommonUtil;
 import com.efrobot.weixin.util.SerialNum;
+import com.efrobot.weixin.util.WXKeys;
 import com.efrobot.weixin.util.WeixinUtil;
 
 @RequestMapping("/v1/page")
@@ -52,7 +57,7 @@ public class PageForController {
 	public String orderStepOne(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.setAttribute("navName", "下单第一步");
 		String openid = (String) session.getAttribute("openid");
-//		openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
+//		openid = "oEzzKvw3ZWWJwu0YNFQZP0Hi_dCo";
 		session.setAttribute("openid", openid);
 		if (null == openid || "".equals(openid)) {
 			openid = WeixinUtil.getopenidAction(request);// 获得openid
@@ -264,7 +269,9 @@ public class PageForController {
 			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
 		} else if (result == 1) {
 			setHistory("提交订单", orderNo, "");
-			return CommonUtil.resultMsg("SUCCESS", "订单创建成功!");
+			Map<String,Object> map=CommonUtil.resultMsg("SUCCESS", "订单创建成功!");
+			map.put("orderNo", orderNo);
+			return map;
 		} else {
 			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
 		}
@@ -293,7 +300,7 @@ public class PageForController {
 	public String userInfo(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.setAttribute("navName", "个人信息");
 		String openid = (String) session.getAttribute("openid");
-//		openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
+		openid = "oEzzKvw3ZWWJwu0YNFQZP0Hi_dCo";
 		session.setAttribute("openid", openid);
 		if (null == openid || "".equals(openid)) {
 			openid = WeixinUtil.getopenidAction(request);// 获得openid
@@ -330,7 +337,76 @@ public class PageForController {
 		}
 		return "orderList";
 	}
+	/**
+	 * 获取用户购买产品支付信息参数
+	 * 
+	 * @author wangxiangxiang
+	 */
+	@RequestMapping({ "/getPackage" })
+	public void getPackage(String orderNo,HttpServletRequest request, HttpServletResponse response,
+			HttpSession session) throws Exception {
+		Order record=new Order();
+		record.setOrderNo(orderNo);
+		List<Order> orderList = orderService.selectByParms(record);
+		String openid = (String) session.getAttribute("openid");
+		WxPay tpWxPay = new WxPay();
+		tpWxPay.setBody("行李到家");
+		tpWxPay.setOrderId(orderNo);
+		tpWxPay.setSpbillCreateIp("127.0.0.1");
+		tpWxPay.setOpenId(openid);
+		tpWxPay.setTotalFee("0.01");
+//		tpWxPay.setTotalFee(orderList.get(0).getPaidFee().toString());
+		String finaPackage = WeixinUtil.getPackage(tpWxPay, WXKeys.WX_PYA_URL);
+		PrintWriter out;
+		out = response.getWriter();
+		out.print(finaPackage);
+	}
+	/**
+	 * 用户购买产品支付成功后的回调
+	 * 
+	 * @author wangxiangxiang
+	 */
+	@RequestMapping({ "/storeNotify" })
+	public void storeNotify(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String notityXml = "";
+			String resXml = "";
+			String inputLine;
+			while ((inputLine = request.getReader().readLine()) != null) {
+				notityXml = notityXml + inputLine;
+			}
+			request.getReader().close();
+			// log.info("接收到的报文：" + notityXml);
+			if (notityXml == null || "".equals(notityXml.trim())) {
+				resXml = "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[报文为空]]></return_msg></xml> ";
+			} else {
+				Map<String, String> m = XMLParser.getMapFromXML(notityXml);
+				if (m != null && m.get("result_code") != null && "SUCCESS".equals(m.get("result_code").toString())) {
 
+					String sign = WeixinUtil.getPaySign(m);// 获得支付成功后的签名
+					// 验证签名
+					// if (sign.equals(m.get("sign").toString())) {
+					resXml = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml> ";
+					String orderNum = m.get("out_trade_no").toString();
+					String transaction_id = m.get("transaction_id").toString();
+					Order record=new Order();
+					record.setOrderNo(orderNum);
+					List<Order> orderList = orderService.selectByParms(record);
+					Order order=orderList.get(0);
+					order.setOrderWxNo(transaction_id);
+					order.setPayStatus("已支付");
+					order.setPayType("微信支付");
+					order.setOrderStatus(2);
+					order.setUpdateDate(new Date());
+					orderService.updateByPrimaryKeySelective(order);
+				} else {
+					resXml = "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[报文为空]]></return_msg></xml> ";
+				}
+			}
+			BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+			out.write(resXml.getBytes());
+			out.flush();
+			out.close();
+	}
 	@RequestMapping(value = "/orderDetail")
 	public String orderDetail(HttpServletRequest request) {
 		request.setAttribute("navName", "订单详情");

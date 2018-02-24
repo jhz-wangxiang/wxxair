@@ -147,6 +147,9 @@ public class AddressController {
 		List<User> list2 = userService.selectByUser(user);
 		if (list2.size() != 0) {
 			record.setUserid(list2.get(0).getId());
+		}else{
+			map.put("addressList", "");
+			return map;
 		}
 		record.setStatus(1);
 
