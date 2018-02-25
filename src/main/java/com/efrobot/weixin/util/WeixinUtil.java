@@ -447,7 +447,7 @@ public class WeixinUtil {
 			String createOrderURL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 			String xmlString = restTemplate.postForObject(createOrderURL, payBean, String.class);
 			Map<String, String> mapString = XMLParser.getMapFromXML(xmlString);
-			System.out.println("获取到的预支付ID：" + prepay_id);
+			System.out.println("获取到的预支付ID：" + mapString);
 
 			// 获取prepay_id后，拼接最后请求支付所需要的package
 

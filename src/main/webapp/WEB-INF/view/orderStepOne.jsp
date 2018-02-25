@@ -241,6 +241,7 @@
 <script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>
 <script src="<%=basePath%>resources/js/common.js" type="text/javascript"></script>
 <script src="<%=basePath%>resources/js/insertOrder.js" type="text/javascript"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
 <script>
 var rootPath = '<%=basePath%>';
 Insert.init();

@@ -345,6 +345,7 @@ public class PageForController {
 	@RequestMapping({ "/getPackage" })
 	public void getPackage(String orderNo,HttpServletRequest request, HttpServletResponse response,
 			HttpSession session) throws Exception {
+		System.out.println("getPackage");
 		Order record=new Order();
 		record.setOrderNo(orderNo);
 		List<Order> orderList = orderService.selectByParms(record);
@@ -368,6 +369,7 @@ public class PageForController {
 	 */
 	@RequestMapping({ "/storeNotify" })
 	public void storeNotify(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("storeNotify");
 			String notityXml = "";
 			String resXml = "";
 			String inputLine;

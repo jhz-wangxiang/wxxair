@@ -162,6 +162,9 @@
     <if test="userid != null">
 		AND userid = #{userid,jdbcType=INTEGER}
 	</if>
+    <if test="status != null  and !status.isEmpty() and status != ''">
+		AND status = #{status,jdbcType=VARCHAR}
+	</if>
 	ORDER BY
 	status desc
   </select>
