@@ -294,10 +294,10 @@ var Insert = function(){
 				data:json,
 				success:function(res){
 					if(res.resultCode=='SUCCESS'){
-						alert(res.orderNo);
-						pay(res.orderNo);
+//						alert(res.orderNo);
+//						pay(res.orderNo);
 						
-						//cancelSuccess();
+						cancelSuccess();
 					}else{
 						Common.alter(res.msg);
 					}

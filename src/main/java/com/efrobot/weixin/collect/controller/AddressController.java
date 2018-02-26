@@ -132,6 +132,8 @@ public class AddressController {
 		List<Address> list = addressService.getAddress(record);
 		if (list.size() != 0) {
 			map.put("address", list.get(0));
+		}else{
+			map.put("address", null);
 		}
 		return map;
 	}
