@@ -33,6 +33,7 @@ import com.efrobot.weixin.collect.service.AreaService;
 import com.efrobot.weixin.collect.service.FlightNumService;
 import com.efrobot.weixin.collect.service.OrderService;
 import com.efrobot.weixin.collect.service.UserService;
+import com.efrobot.weixin.job.GetWXAccessJob;
 import com.efrobot.weixin.util.CommonUtil;
 import com.efrobot.weixin.util.SerialNum;
 import com.efrobot.weixin.util.WXKeys;
@@ -229,6 +230,7 @@ public class PageForController {
 //																		// 24
 //																		// 小时内下单，如早下单，则提示
 //		}
+		record.setFlightNum(record.getFlightNum().toUpperCase());
 		String zm = flightNum.getExp1();
 		String orderNo = zm + datestr + mmdd.format(record.getNowTime()) + record.getFlightNum()
 				+ SerialNum.getSystemManageOrder();
@@ -390,6 +392,8 @@ public class PageForController {
 					resXml = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml> ";
 					String orderNum = m.get("out_trade_no").toString();
 					String transaction_id = m.get("transaction_id").toString();
+					String openid = m.get("openid").toString();
+					String time_end = m.get("time_end").toString();
 					Order record=new Order();
 					record.setOrderNo(orderNum);
 					List<Order> orderList = orderService.selectByParms(record);
@@ -400,6 +404,7 @@ public class PageForController {
 					order.setOrderStatus(2);
 					order.setUpdateDate(new Date());
 					orderService.updateByPrimaryKeySelective(order);
+					WeixinUtil.sendTemplate( openid,  orderNum,  order.getPaidFee()+"元", time_end, GetWXAccessJob.getAccessToken());
 				} else {
 					resXml = "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[报文为空]]></return_msg></xml> ";
 				}
