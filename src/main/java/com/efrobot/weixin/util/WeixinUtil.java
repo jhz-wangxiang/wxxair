@@ -563,6 +563,49 @@ public class WeixinUtil {
 		}
 		return retr;
 	}
+	/**
+	 * 客服消息
+	 * 
+	 * @param accessToken
+	 * @return
+	 * 
+	 * 		.
+	 */
+	public static String sendTemplate(String postParam, String accessToken) {
+		String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + accessToken;
+		String retr = "";
+		postParam = "{\"touser\":\"oEzzKv-osV7a-57wHgA3TlDGLOVE\",\"template_id\":\"Emw1YIcD0FICcYnuCqUDc7olFz9c7kQfouaMi0YFxd0\",\"url\":\"https://www.baidu.com\","
+		 		+ "\"topcolor\":\"#FF0000\",\"data\":{"
+		 		+ "\"first\": {\"value\":\"您好，您的微信支付已成功\",\"color\":\"#173177\"},"
+		 		+ "\"keyword1\":{\"value\":\"wx123456789\",\"color\":\"#173177\"},"
+		 		+ "\"keyword2\":{\"value\":\"260.00元\",\"color\":\"#173177\"},"
+		 		+ "\"keyword3\":{\"value\":\"行李到家\",\"color\":\"#173177\"},"
+		 		+ "\"keyword4\":{\"value\":\"20180502\",\"color\":\"#173177\"},"
+		 		+ "\"remark\":{\"value\":\"请到柜台确认行李小票\",\"color\":\"#173177\"}}}";
+		try {
+			System.out.println("发送给客户postParam>>>>>>>>>>>>>>>" + postParam);
+			DefaultHttpClient httpclient = initHttpclient();
+			HttpPost httpost = HttpClientConnectionManager.getPostMethod(url);
+			JSONObject object = null;
+			try {
+				httpost.setEntity(new StringEntity(postParam, "UTF-8"));
+				HttpResponse res = httpclient.execute(httpost);
+				String jsonStr = EntityUtils.toString(res.getEntity(), "UTF-8");
+				object = JSONObject.parseObject(jsonStr);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				httpost.abort();
+				httpclient.getConnectionManager().shutdown();
+			}
+			// retr=restTemplate.postForObject(url,postParam,String.class);
+			System.out.println("发送给客户?>>>>>>>>>>>>>>>" + object.toString());
+			retr = object.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retr;
+	}
 
 	/**
 	 * 获得素材
@@ -1241,8 +1284,17 @@ public class WeixinUtil {
 	}
 
 	public static void main(String[] args) {
-		 createMenu("7_vr1ND4dsD5Eebx8a3ZItJJO-5EP3FkQSEPD5yHj2AJfosTFrj5U8WNDVfBxRr4e_HxwQi_Hs84RwetXfyDiKiZUu291dvuy3I1t9H-0WoA-i3HFpuwQMlKThQnKsmm0AE50hfzm3wAFUCUtSKNXdADAPSC");
+//		 createMenu("7_vr1ND4dsD5Eebx8a3ZItJJO-5EP3FkQSEPD5yHj2AJfosTFrj5U8WNDVfBxRr4e_HxwQi_Hs84RwetXfyDiKiZUu291dvuy3I1t9H-0WoA-i3HFpuwQMlKThQnKsmm0AE50hfzm3wAFUCUtSKNXdADAPSC");
 
-
+		 String postParam = "{\"touser\":\"oEzzKv-osV7a-57wHgA3TlDGLOVE\",\"template_id\":\"Emw1YIcD0FICcYnuCqUDc7olFz9c7kQfouaMi0YFxd0\",\"url\":\"https://www.baidu.com\","
+		 		+ "\"topcolor\":\"#FF0000\",\"data\":{"
+		 		+ "\"first\": {\"value\":\"您好，您的微信支付已成功\",\"color\":\"#173177\"},"
+		 		+ "\"keyword1\":{\"value\":\"wx123456789\",\"color\":\"#173177\"},"
+		 		+ "\"keyword2\":{\"value\":\"260.00元\",\"color\":\"#173177\"},"
+		 		+ "\"keyword3\":{\"value\":\"行李到家\",\"color\":\"#173177\"},"
+		 		+ "\"keyword4\":{\"value\":\"20180502\",\"color\":\"#173177\"},"
+		 		+ "\"remark\":{\"value\":\"请到柜台确认行李小票\",\"color\":\"#173177\"}}}";
+			String msg = WeixinUtil.sendTemplate(postParam, "7_wdQ2gG51hs7uWgHUX8OEIhAT7S-QcdQwDHr2QBeiRVvlJRWJFdtXkdMFrEpbCAXaWtfXGz7uMNYIvF3R8ztyCjenk0GdcB0Fq_8RO9WAknCuaVxxl_--Kc7OX8R-4i7OGKocdY_10m7O2q8RCVJcAJAWPD");
+			System.out.println(msg);
 	}
 }
