@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <div class="input-box"><label for="phone">详细地址</label><input type="text" id="address" name="address"></div>
-                <div class="fee-box"><span class="label">服务费：</span><span class="content" id="free">40元</span></div>
+                <div class="fee-box"><span class="label">服务费：</span><span class="content" id="free">0元</span></div>
                 <a href="javascript:;" class="btn btn-lg" id="sure">确认</a>
             </div>
         </form>
@@ -133,7 +133,7 @@
             <p class="order-info-warning">但流程未完</p>
             <p class="order-info-tip">您需要抵达机场后，将行李小票在行李柜台递交给工作人员</p>
         </div>
-        <div class="fee-box"><span class="label">服务费：</span><span class="content" id="serviceCost">40元</span></div>
+        <div class="fee-box"><span class="label">服务费：</span><span class="content" id="serviceCost">0元</span></div>
         <a href="javascript:;" class="btn btn-lg" style="background: #009900;" id="payStep">微信支付</a>
     </section>
 </div>

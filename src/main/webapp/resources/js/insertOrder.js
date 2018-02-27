@@ -105,6 +105,8 @@ var Insert = function(){
 						json.baggageNum = baggageNum;
 						$('.step-two').css("display","none");
 						$('.step-three').css("display","block");
+						//第三里面初始化默认地址
+						initDefaultAdd();
 						json.flightNum = flightNum;
 						json.nowTimeStr = nowTime.replace(/\-/g,'/');
 						//核对订单
@@ -124,6 +126,36 @@ var Insert = function(){
 		});
 		
 	}
+
+    /**
+	 * 初始化默认地址
+     */
+	function initDefaultAdd() {
+// v1/address
+        $.ajax({
+            type:"post",
+            url:rootPath+'v1/address/getAddress?'+Math.random(),
+
+            success:function(res){
+                if(res.resultCode=="SUCCESS"){
+                	if(res.address){//默认地址存在
+						$('#consignee').val(res.address.consignee);
+                        $('#consigneePhone').val(res.address.consigneePhone);
+                        $('#areaH').html(res.address.area);
+                        $('#areaId').val(res.address.areafrom);
+                        $('#address').val(res.address.address);
+                        json.id  = res.address.id;
+                        getPriceByAreaId(res.address.areafrom);
+					}
+                }else{
+                    Common.alter(res.msg);
+                }
+            },
+            error:function(){
+                Common.alter('服务器异常，请稍后再试。');
+            }
+        });
+    }
 	/**
 	 * 选择区
 	 */
