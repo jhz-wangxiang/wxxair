@@ -302,7 +302,7 @@ public class PageForController {
 	public String userInfo(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.setAttribute("navName", "个人信息");
 		String openid = (String) session.getAttribute("openid");
-		openid = "oEzzKvw3ZWWJwu0YNFQZP0Hi_dCo";
+//		openid = "oEzzKvw3ZWWJwu0YNFQZP0Hi_dCo";
 		session.setAttribute("openid", openid);
 		if (null == openid || "".equals(openid)) {
 			openid = WeixinUtil.getopenidAction(request);// 获得openid
