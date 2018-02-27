@@ -45,9 +45,9 @@
 <script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>
 <script>
     var basePath = "<%=basePath %>";
+    var id = Common.GetUrlRequest()['id'];
   $(function () {
 
-      var id = Common.GetUrlRequest()['id'];
       $.ajax({
           url: basePath + 'v1/order/getOrderDetail',
           data: {"id":id},
@@ -75,6 +75,7 @@
               html.push('</div>')
               html.push('</div>')
               if(order.orderStatus == 1){
+                  html.push('<a href="javascript:;" class="btn btn-lg" onclick="pay(\''+order.orderNo+'\')">支付</a>');
                 html.push('<a href="javascript:;" class="btn btn-lg" style="margin-top: .2rem;margin-bottom: .5rem;" onclick="cancelOrder('+order.id+')">取消订单</a>');
               }
               html.push('</section>')
@@ -114,6 +115,72 @@
           window.location.href = "<%=basePath %>v1/page/orderList"
       })
   }
+    //支付按钮事件
+    function pay(orderNo){
+        /* appId:wxcf9a42f63c23a637,timeStamp:1449319601,nonceStr:20151205236247,package:prepay_id=,signType:MD5,paySign:7579772D56139215721D5CB803A3DA22,orderNum:1245124521*/
+        var appId = null;
+        var timeStamp = null;
+        var nonceStr = null;
+        var package_var = null;
+        var signType = null;
+        var paySign = null;
+        var orderNum = null;
+        $.ajax({
+            async:true,
+            type : "POST",
+            url: basePath+'/v1/page/getPackage?orderNo='+orderNo,
+            dataType:'text',
+            success: function(msg){
+                var arr = msg.split(",");
+                appId = arr[0].split(":")[1];
+                timeStamp = arr[1].split(":")[1];
+                nonceStr = arr[2].split(":")[1];
+                package_var = arr[3].split(":")[1];
+                signType = arr[4].split(":")[1];
+                paySign = arr[5].split(":")[1];
+                orderNum = arr[6].split(":")[1];
+                if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', onBridgeReady(appId,timeStamp,nonceStr,package_var,signType,paySign,orderNum), false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', onBridgeReady(appId,timeStamp,nonceStr,package_var,signType,paySign,orderNum));
+                        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady(appId,timeStamp,nonceStr,package_var,signType,paySign,orderNum));
+                    }
+                }else{
+                    onBridgeReady(appId,timeStamp,nonceStr,package_var,signType,paySign,orderNum);
+                }
+            }
+        });
+    }
+    function onBridgeReady(appId,timeStamp,nonceStr,package_var,signType,paySign,orderNum){
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+                "appId" : appId,     //公众号名称，由商户传入
+                "timeStamp":timeStamp,         //时间戳，自1970年以来的秒数
+                "nonceStr" : nonceStr, //随机串
+                "package" : package_var,
+                "signType" :signType,         //微信签名方式：
+                "paySign" : paySign //微信签名
+            },
+            function(res){
+                if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                    paySuccess();
+                }else if(res.err_msg === 'get_brand_wcpay_request:cancel'){
+                    window.location.reload();
+                } else{
+                }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+            }
+        );
+    }
+    function paySuccess() {
+        var html = [];
+        html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">恭喜您已支付成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip">您需要抵达机场后，将行李小票在行李柜台递交给工作人员</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
+        $('body').append(html.join(''));
+        $('.modal-footer0211>a').eq(0).click(function () {
+            $('#modal').remove();
+            window.location.href = basePath+ "v1/page/orderList"
+        })
+    }
 </script>
 </body>
 </html>

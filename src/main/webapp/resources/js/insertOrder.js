@@ -219,9 +219,9 @@ var Insert = function(){
 			return false;
 		});
 	}
-	function cancelSuccess() {
+	function paySuccess() {
 	      var html = [];
-	      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">恭喜您已下单成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip">您需要抵达机场后，将行李小票在行李柜台递交给工作人员，并支付费用</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
+	      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">恭喜您已支付成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip">您需要抵达机场后，将行李小票在行李柜台递交给工作人员</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
 	      $('body').append(html.join(''));
 	      $('.modal-footer0211>a').eq(0).click(function () {
 	          $('#modal').remove();
@@ -277,9 +277,9 @@ var Insert = function(){
 		       },
 		       function(res){
 		           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-		        	   alert("ok");
+                       paySuccess();
 		           }else if(res.err_msg === 'get_brand_wcpay_request:cancel'){
-		             window.location.reload();
+                       window.location.href = rootPath+ "v1/page/orderList";
 		           } else{
 		           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
 		       }
@@ -295,13 +295,10 @@ var Insert = function(){
 				success:function(res){
 					if(res.resultCode=='SUCCESS'){
 //						alert(res.orderNo);
-//						pay(res.orderNo);
-						
-						cancelSuccess();
+						pay(res.orderNo);
 					}else{
 						Common.alter(res.msg);
 					}
-					
 				},
 				error:function(){
 					Common.alter('服务器异常，请稍后再试！');

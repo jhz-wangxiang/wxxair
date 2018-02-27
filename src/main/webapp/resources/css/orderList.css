@@ -8,13 +8,14 @@
 .order-detail0209 .detail-item0209{display: flex;display: -webkit-flex;flex-direction: row;line-height: .38rem;}
 .detail-item0209 em:first-child{flex: 3;color: #aaaaaa;padding-left: 0.14rem;}
 .detail-item0209 em:last-child{flex: 7;word-break: break-all;}
-.order-item .flex-p0209{display: flex;flex-direction: row;justify-content: space-between;}
+.order-item .flex-p0209{display: flex;flex-direction: row;justify-content: space-between;align-items: center;}
 .order-item .flex-p0209>span{color: #666666;}
 .order-no0209 span>em{margin-left: .1rem;}
 .order-item .flex-p0209>a{color: #3974bb;}
 .orange{color: #ffa73d;}
 .warn{color: #cc0000;}
 .success{color: #009900;}
+.cancel{color: #cccccc;}
 
 .order-item .flex-p0209 a.orderAddressEdit{line-height:0.5rem; color:#fff; background:#3974bb; width:1rem; text-align:center; border-radius:5px; align-self:center; margin-right:10px;}
 .order-item .flex-p0209 a.orderAddressDel{ background:#666;}
