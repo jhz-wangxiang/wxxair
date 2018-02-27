@@ -109,7 +109,7 @@
             </div>
         </form>
     </section>
-    <section class="order-body" style="display:none">
+    <section class="order-body" id="order-info" style="display:none">
         <h3 class="order-deal-header">行李信息</h3>
         <div class="order-deal-box">
             <div class="order-deal-item"><span class="label">航班号：</span><span class="content" id="sFNum">CA1987</span></div>
@@ -125,6 +125,16 @@
         </div>
         <div class="fee-box"><span class="label">服务费：</span><span class="content" id="sCost">0元</span></div>
         <a href="javascript:;" class="btn btn-lg" id="lastStep">立即下单</a>
+    </section>
+    <section class="order-body" id="order-success" style="display: none;">
+        <div class="order-info-box order-success">
+            <img src="../../resources/image/order-success.png" alt="">
+            <p class="order-info-title">恭喜您已下单成功！</p>
+            <p class="order-info-warning">但流程未完</p>
+            <p class="order-info-tip">您需要抵达机场后，将行李小票在行李柜台递交给工作人员</p>
+        </div>
+        <div class="fee-box"><span class="label">服务费：</span><span class="content" id="serviceCost">40元</span></div>
+        <a href="javascript:;" class="btn btn-lg" style="background: #009900;" id="payStep">微信支付</a>
     </section>
 </div>
 <div id="order-useIntro" style="display: none;">
@@ -238,6 +248,7 @@
         <a href="javascript:;" class="btn btn-lg" style="margin-bottom:.4rem;" onclick="Insert.returnOrderDeal()">返回</a>
     </section>
 </div>
+<input type="hidden" id="orderNo" name="orderNo" value="">
 <script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>
 <script src="<%=basePath%>resources/js/common.js" type="text/javascript"></script>
 <script src="<%=basePath%>resources/js/insertOrder.js" type="text/javascript"></script>

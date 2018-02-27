@@ -125,7 +125,7 @@
           $('body').append(html.join(''));
           $('.modal-footer0211>a').eq(0).click(function () {
               $('#modal').remove();
-              window.location.href = rootPath+ "v1/page/orderList"
+              window.location.href = basePath+ "v1/page/orderList"
           })
       }
   </script>

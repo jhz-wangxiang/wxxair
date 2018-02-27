@@ -213,7 +213,7 @@ var Insert = function(){
 			$('#sAddress').html(province+city+area+address);
 			
 			$('.step-three').css("display","none");
-			$('.order-body').css("display","block");
+			$('#order-info').css("display","block");
 			
 			
 			return false;
@@ -294,8 +294,10 @@ var Insert = function(){
 				data:json,
 				success:function(res){
 					if(res.resultCode=='SUCCESS'){
-//						alert(res.orderNo);
-						pay(res.orderNo);
+						$('#serviceCost').html($('#sCost').html());
+                        $('#order-info').css("display","none");
+                        $('#order-success').css("display","block");
+                        $('input[name="orderNo"]').val(res.orderNo)
 					}else{
 						Common.alter(res.msg);
 					}
@@ -308,6 +310,13 @@ var Insert = function(){
 		});
 		
 	}
+	var payStep = function () {
+        $('#payStep').bind('click',function(event){
+            event.stopPropagation();
+            pay($('input[name="orderNo"]').val());
+            return false;
+        });
+    }
 	return {
 		init:function(){
 			selXieYi();//是否阅读协议
@@ -316,6 +325,7 @@ var Insert = function(){
 			stepThree();//填写第三部
 			initArea();//初识话地址栏
 			lastStep();//最后一步
+            payStep();//支付
 		},
         gotoUseIntro: function () {
 			$('#order-deal').hide();
