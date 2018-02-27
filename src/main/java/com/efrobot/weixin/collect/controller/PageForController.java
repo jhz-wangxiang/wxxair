@@ -266,7 +266,21 @@ public class PageForController {
 		float paid = (float) ((p + (num - 1) * p * 0.1 * a) * 0.1 * c);
 		record.setTotalFee(new BigDecimal(num * p));
 		record.setPaidFee(new BigDecimal(paid));
+		if(record.getId()==null){
+			Address ad=new Address();
+			ad.setAddress(record.getAddress());
+			ad.setUserid(listuser.get(0).getId());
+			ad.setArea(record.getArea());
+			ad.setStatus(1);
+			ad.setAreafrom(record.getAreaId());
+			ad.setConsignee(record.getConsignee());
+			ad.setConsigneePhone(record.getConsigneePhone());
+			ad.setProvince(record.getProvince());
+			addressService.insertSelective(ad);
+		}
+		record.setId(null);
 		result = orderService.insertSelective(record);
+		
 		if (result == 0) {
 			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
 		} else if (result == 1) {
