@@ -203,11 +203,23 @@ public class OrderController {
 	@ResponseBody
 	public Map<String, Object> updateOrder(Order record) throws Exception {
 		int result = -1;
-		// 价格计算
 		float c = 10;
 		float a = 10;
 		int p = 100;
-		record.setOrderStatus(1);
+		if (null != record.getChannelId()) {// 渠道
+			Channel ch = new Channel();
+			ch.setId(record.getChannelId());
+			List<Channel> listch = orderService.getChannel(ch);
+			c = listch.get(0).getDiscount().longValue();
+		}
+		if (null != record.getAreaId()) {// 區域
+			Area ar = new Area();
+			ar.setId(record.getAreaId());
+			List<Area> listch = areaService.selectByParms(ar);
+			a = listch.get(0).getDiscount().longValue();
+			p = listch.get(0).getPrice();
+		}
+
 		int num = Integer.parseInt(record.getBaggageNum());
 		float paid = (float) ((p + (num - 1) * p * 0.1 * a) * 0.1 * c);
 		record.setTotalFee(new BigDecimal(num * p));
