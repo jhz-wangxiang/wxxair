@@ -64,7 +64,7 @@ public class OrderController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Order> orderList = orderService.selectByParms(record);
 		map.put("order", orderList.get(0));
-		System.out.println("++++++++++++++++"+map);
+		System.out.println("++++++++++++++++" + map);
 		return map;
 	}
 
@@ -76,7 +76,8 @@ public class OrderController {
 	 */
 	@RequestMapping(path = "/micro/getOrderList")
 	@ResponseBody
-	public Map<String, Object> getOrderList(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+	public Map<String, Object> getOrderList(HttpServletRequest request, HttpServletResponse response,
+			HttpSession session) throws Exception {
 		// log.info("微信获取订单列表");
 		String openid = (String) session.getAttribute("openid");
 		// openid = "ofWtHvxtcgT1InB4sE0AvE6eMt4c";
@@ -190,7 +191,15 @@ public class OrderController {
 	@ResponseBody
 	public Map<String, Object> updateOrder(Order record) throws Exception {
 		int result = -1;
+		// 价格计算
+		float c = 10;
+		float a = 10;
+		int p = 100;
 		record.setOrderStatus(1);
+		int num = Integer.parseInt(record.getBaggageNum());
+		float paid = (float) ((p + (num - 1) * p * 0.1 * a) * 0.1 * c);
+		record.setTotalFee(new BigDecimal(num * p));
+		record.setPaidFee(new BigDecimal(paid));
 		result = orderService.updateByPrimaryKeySelective(record);
 		if (result == 0) {
 			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
@@ -200,6 +209,7 @@ public class OrderController {
 			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
 		}
 	}
+
 	// 修改取消过程状态
 	@RequestMapping(value = "/updateOrderCancel", method = RequestMethod.POST)
 	@ResponseBody
