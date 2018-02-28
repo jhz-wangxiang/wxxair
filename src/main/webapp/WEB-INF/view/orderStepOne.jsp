@@ -131,7 +131,7 @@
             <img src="../../resources/image/order-success.png" alt="">
             <p class="order-info-title">恭喜您已下单成功！</p>
             <p class="order-info-warning">但流程未完</p>
-            <p class="order-info-tip">您需要抵达机场后，将行李小票在行李柜台递交给工作人员</p>
+            <p class="order-info-tip">下机后请前往行李送到家柜台，递交行李小票</p>
         </div>
         <div class="fee-box"><span class="label">服务费：</span><span class="content" id="serviceCost">0元</span></div>
         <a href="javascript:;" class="btn btn-lg" style="background: #009900;" id="payStep">微信支付</a>

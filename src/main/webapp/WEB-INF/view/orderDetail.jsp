@@ -47,7 +47,6 @@
     var basePath = "<%=basePath %>";
     var id = Common.GetUrlRequest()['id'];
   $(function () {
-
       $.ajax({
           url: basePath + 'v1/order/getOrderDetail',
           data: {"id":id},
@@ -55,11 +54,12 @@
           success: function (res) {
               var order = res.order;
               var html = [];
-              html.push('<section class="order-item">')
+              html.push('<section class="order-item" style="padding-bottom: .2rem;">')
               html.push('<p class="order-no0209"><span>订单编号：<em>'+order.orderNo+'</em></span></p>')
-              html.push('<p class="order-no0209"><span>订单状态：<em class="orange">'+order.describe+'</em></span></p>')
+              html.push('<p class="order-no0209"><span>订单状态：<em class="orange">'+order.button+'</em></span></p>')
+              html.push('<p class="order-no0209"><span>服务费：<em>'+order.paidFee+'元</em></span></p>')
               html.push('<div class="order-detail0209">')
-              html.push('<p class="order-detail-tip">请前往柜台处提交行李小票，办理托运业务</p>')
+              html.push('<p class="order-detail-tip">下机后请前往行李送到家柜台，递交行李小票</p>')
               html.push('<h3 class="order-deal-header">行李信息</h3>')
               html.push('<div class="order-deal-box" style="border: 0;">')
               html.push('<div class="order-deal-item"><span class="label">航班号：</span><span class="content">'+order.flightNum+'</span></div>')
@@ -67,6 +67,13 @@
               html.push('<div class="order-deal-item"><span class="label">行李数量：</span><span class="content">'+order.baggageNum+'</span></div>')
               html.push('<div class="order-deal-item"><span class="tip">行李内无贵重、易碎、违禁物品</span></div>')
               html.push('</div>')
+
+              html.push('<h3 class="order-deal-header">乘机人信息</h3>')
+              html.push('<div class="order-deal-box" style="border: 0;">')
+              html.push('<div class="order-deal-item"><span class="label">姓名：</span><span class="content">'+order.name+'</span></div>')
+              html.push('<div class="order-deal-item"><span class="label">联系方式：</span><span class="content">'+order.phone+'</span></div>')
+              html.push('</div>')
+
               html.push('<h3 class="order-deal-header">收货地址</h3>')
               html.push('<div class="order-deal-box" style="border: 0; margin-bottom: 0;">')
               html.push('<div class="order-deal-item"><span class="label">收件人：</span><span class="content">'+order.consignee+'</span></div>')
@@ -75,8 +82,9 @@
               html.push('</div>')
               html.push('</div>')
               if(order.orderStatus == 1){
-                  html.push('<a href="javascript:;" class="btn btn-lg" onclick="pay(\''+order.orderNo+'\')">支付</a>');
-                html.push('<a href="javascript:;" class="btn btn-lg" style="margin-top: .2rem;margin-bottom: .5rem;" onclick="cancelOrder('+order.id+')">取消订单</a>');
+                  html.push('<div style="display: flex; display: -webkit-flex; margin: .2rem 0;"><a href="<%=basePath %>v1/page/orderUpdate?orderId='+order.id+'" class="btn btn-lg" style="flex:1; margin-right: .2rem;">修改信息</a><a href="javascript:;" class="btn btn-lg" style="flex:1; background: #999999;" onclick="cancelOrder(\'+order.id+\')">取消订单</a></div>')
+                  html.push('<a href="javascript:;" class="btn btn-lg" style="background: #009900;" onclick="pay(\''+order.orderNo+'\')">支付</a>');
+                html.push('');
               }
               html.push('</section>')
               $('#order-detail').html(html.join(''));
@@ -174,7 +182,7 @@
     }
     function paySuccess() {
         var html = [];
-        html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">恭喜您已支付成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip">您需要抵达机场后，将行李小票在行李柜台递交给工作人员</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
+        html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">恭喜您已支付成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip">下机后请前往行李送到家柜台，递交行李小票</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
         $('body').append(html.join(''));
         $('.modal-footer0211>a').eq(0).click(function () {
             $('#modal').remove();

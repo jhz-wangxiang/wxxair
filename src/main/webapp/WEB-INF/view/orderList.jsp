@@ -40,16 +40,16 @@
                               html.push('<section class="order-item"><p class="order-no0209"><span>订单编号: <em>'+_item.orderNo+'</em></span></p><div class="order-detail0209"><div class="detail-item0209"><em>收件人:</em><em>'+_item.consignee+'</em></div><div class="detail-item0209"><em>详细地址:</em><em>'+_item.province+''+_item.city+''+_item.area+''+_item.address+'</em></div></div>')
                               switch (_item.orderStatus){
                                   case 10:
-                                      html.push('<p class="order-no0209 flex-p0209"><span>订单状态:<em class="cancel">'+_item.describe+'</em></span><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p>')
+                                      html.push('<p class="order-no0209 flex-p0209"><span>订单状态:<em class="cancel">'+_item.button+'</em></span><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p>')
                                       break;
                                   case 6:
-                                      html.push('<p class="order-no0209 flex-p0209"><span>订单状态:<em class="success">'+_item.describe+'</em></span><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p>')
+                                      html.push('<p class="order-no0209 flex-p0209"><span>订单状态:<em class="success">'+_item.button+'</em></span><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p>')
                                       break;
                                   case 1:
-                                      html.push('<p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">'+_item.describe+'</em></span><a href="javascript:;" class="btn btn-xs" style="color: #ffffff;height: .4rem;line-height: .4rem;padding: .06rem .2rem;" onclick="pay(\''+_item.orderNo+'\')">支付</a><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p>');
+                                      html.push('<p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">'+_item.button+'</em></span><a href="javascript:;" class="btn btn-xs" style="color: #ffffff;height: .4rem;line-height: .4rem;padding: .06rem .2rem;" onclick="pay(\''+_item.orderNo+'\')">支付</a><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p>');
                                       break;
                                   default:
-                                      html.push('<p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">'+_item.describe+'</em></span><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p>');
+                                      html.push('<p class="order-no0209 flex-p0209"><span>订单状态:<em class="orange">'+_item.button+'</em></span><a href="<%=basePath %>v1/page/orderDetail?id='+_item.id+'">查看详情></a></p>');
                               }
                               html.push('</section>')
                               //<div class="detail-item0209"><em>预计送达时间:</em><em>2017-02-07 10:20</em></div>
@@ -121,7 +121,7 @@
       }
       function paySuccess() {
           var html = [];
-          html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">恭喜您已支付成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip">您需要抵达机场后，将行李小票在行李柜台递交给工作人员</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
+          html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">恭喜您已支付成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip">下机后请前往行李送到家柜台，递交行李小票</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
           $('body').append(html.join(''));
           $('.modal-footer0211>a').eq(0).click(function () {
               $('#modal').remove();
