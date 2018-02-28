@@ -144,13 +144,11 @@ public class OrderController {
 																		// 小时内下单，如早下单，则提示
 		}
 		String zm = flightNum.getExp1();
-		String orderNo = zm + datestr + mmdd.format(record.getNowTime()) + record.getFlightNum()
-				+ SerialNum.getSystemManageOrder();
 		// 异常处理
 		record.setOrderStatus(1);// 支付变成2
 		record.setPayStatus("未支付");
 		record.setCreateDate(new Date());
-		record.setOrderNo(orderNo);
+//		record.setOrderNo(orderNo);
 		record.setSingleWay("微信下单");
 		record.setAbnormalStatus("否");
 		// 价格计算
@@ -176,6 +174,20 @@ public class OrderController {
 		record.setTotalFee(new BigDecimal(num * p));
 		record.setPaidFee(new BigDecimal(paid));
 		result = orderService.insertSelective(record);
+		String idStr=record.getId().toString();
+		if(idStr.length()==1){
+			idStr="000"+idStr;
+		}
+		if(idStr.length()==2){
+			idStr="00"+idStr;
+		}
+		if(idStr.length()==3){
+			idStr="0"+idStr;
+		}
+		String orderNo = zm + datestr + mmdd.format(record.getNowTime()) + record.getFlightNum()
+		+ idStr;
+		record.setOrderNo(orderNo);
+		orderService.updateByPrimaryKey(record);
 		if (result == 0) {
 			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
 		} else if (result == 1) {

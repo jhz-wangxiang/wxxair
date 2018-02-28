@@ -232,13 +232,13 @@ public class PageForController {
 //		}
 		record.setFlightNum(record.getFlightNum().toUpperCase());
 		String zm = flightNum.getExp1();
-		String orderNo = zm + datestr + mmdd.format(record.getNowTime()) + record.getFlightNum()
-				+ SerialNum.getSystemManageOrder();
+//		String orderNo = zm + datestr + mmdd.format(record.getNowTime()) + record.getFlightNum()
+//				+ SerialNum.getSystemManageOrder();
 		// 异常处理
 		record.setOrderStatus(1);// 支付变成2
 		record.setPayStatus("未支付");
 		record.setCreateDate(new Date());
-		record.setOrderNo(orderNo);
+//		record.setOrderNo(orderNo);
 		record.setSingleWay("微信下单");
 		record.setAbnormalStatus("否");
 		record.setOperator("微信下单");
@@ -280,6 +280,20 @@ public class PageForController {
 		}
 		record.setId(null);
 		result = orderService.insertSelective(record);
+		String idStr=record.getId().toString();
+		if(idStr.length()==1){
+			idStr="000"+idStr;
+		}
+		if(idStr.length()==2){
+			idStr="00"+idStr;
+		}
+		if(idStr.length()==3){
+			idStr="0"+idStr;
+		}
+		String orderNo = zm + datestr + mmdd.format(record.getNowTime()) + record.getFlightNum()
+		+ idStr;
+		record.setOrderNo(orderNo);
+		orderService.updateByPrimaryKey(record);
 		
 		if (result == 0) {
 			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
@@ -371,8 +385,8 @@ public class PageForController {
 		tpWxPay.setOrderId(orderNo);
 		tpWxPay.setSpbillCreateIp("127.0.0.1");
 		tpWxPay.setOpenId(openid);
-		tpWxPay.setTotalFee("0.01");
-//		tpWxPay.setTotalFee(orderList.get(0).getPaidFee().toString());
+//		tpWxPay.setTotalFee("0.01");
+		tpWxPay.setTotalFee(orderList.get(0).getPaidFee().toString());
 		String finaPackage = WeixinUtil.getPackage(tpWxPay, WXKeys.WX_PYA_URL);
 		PrintWriter out;
 		out = response.getWriter();
@@ -476,5 +490,10 @@ public class PageForController {
 	public String orderAddressUpdate(HttpServletRequest request) {
 		request.setAttribute("navName", "编辑地址");
 		return "orderAddressUpdate";
+	}
+	@RequestMapping(value = "/orderUpdate")
+	public String orderUpdate(HttpServletRequest request) {
+		request.setAttribute("navName", "编辑订单");
+		return "orderUpdate";
 	}
 }
