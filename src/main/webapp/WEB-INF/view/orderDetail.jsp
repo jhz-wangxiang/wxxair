@@ -82,7 +82,7 @@
               html.push('</div>')
               html.push('</div>')
               if(order.orderStatus == 1){
-                  html.push('<div style="display: flex; display: -webkit-flex; margin: .2rem 0;"><a href="<%=basePath %>v1/page/orderUpdate?orderId='+order.id+'" class="btn btn-lg" style="flex:1; margin-right: .2rem;">修改信息</a><a href="javascript:;" class="btn btn-lg" style="flex:1; background: #999999;" onclick="cancelOrder(\'+order.id+\')">取消订单</a></div>')
+                  html.push('<div style="display: flex; display: -webkit-flex; margin: .2rem 0;"><a href="<%=basePath %>v1/page/orderUpdate?orderId='+order.id+'" class="btn btn-lg" style="flex:1; margin-right: .2rem;">修改信息</a><a href="javascript:;" class="btn btn-lg" style="flex:1; background: #999999;" onclick="cancelOrder('+order.id+')">取消订单</a></div>')
                   html.push('<a href="javascript:;" class="btn btn-lg" style="background: #009900;" onclick="pay(\''+order.orderNo+'\')">支付</a>');
                 html.push('');
               }
