@@ -1082,9 +1082,11 @@ public class WeixinUtil {
 	 * 退款
 	 */
 	@SuppressWarnings("unchecked")
-	public static Map<String, String> Refund(String mch_id, String nonce_str,String out_trade_no,
-			String out_refund_no, Integer total_fee, Integer refund_fee) {
+	public static Map<String, String> Refund(String out_trade_no,Integer total_fee, Integer refund_fee) {
 		Map<String, String> XmlMap = new HashMap<String, String>();
+		// 随机字符串
+		String nonce_str = StringUtil.getNonceStr();
+		String out_refund_no = StringUtil.getNonceStr();
 		String url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 		try {
 			RefundRequestXmlBean enterprisePayRequestXmlBean = generateRefundInfo(WXKeys.WX_APPID,WXKeys.WX_PARTNERKEY, WXKeys.WX_PARTNER,  nonce_str, out_trade_no,
@@ -1093,6 +1095,7 @@ public class WeixinUtil {
 					WeixinUtil.class.getResource(WXKeys.WX_CERTPATH).getPath(), WXKeys.WX_PARTNER);
 			String xmlstr = htttpcliect.sendPost(url, enterprisePayRequestXmlBean);
 			XmlMap = XMLParser.getMapFromXML(xmlstr);
+			System.out.print(XmlMap);
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
@@ -1115,7 +1118,7 @@ public class WeixinUtil {
 			String out_refund_no, Integer total_fee, Integer refund_fee) {
 		Map<String, String> packageParams = new HashMap<String, String>();
 		packageParams.put("appid", appid);// 公众账号appid
-		packageParams.put("mchid", mch_id);// 商户号
+		packageParams.put("mch_id", mch_id);// 商户号
 		packageParams.put("nonce_str", nonce_str);// 随机字符串
 		packageParams.put("out_trade_no", out_trade_no);// 商户订单号
 		packageParams.put("out_refund_no", out_refund_no);// 用户openid
@@ -1284,6 +1287,7 @@ public class WeixinUtil {
 	}
 
 	public static void main(String[] args) {
+//		Refund("B201802250225cz3107001","wx123654987456", 1, 1);
 //		 createMenu("7_vr1ND4dsD5Eebx8a3ZItJJO-5EP3FkQSEPD5yHj2AJfosTFrj5U8WNDVfBxRr4e_HxwQi_Hs84RwetXfyDiKiZUu291dvuy3I1t9H-0WoA-i3HFpuwQMlKThQnKsmm0AE50hfzm3wAFUCUtSKNXdADAPSC");
 
 //			String msg = WeixinUtil.sendTemplate("", "7_wdQ2gG51hs7uWgHUX8OEIhAT7S-QcdQwDHr2QBeiRVvlJRWJFdtXkdMFrEpbCAXaWtfXGz7uMNYIvF3R8ztyCjenk0GdcB0Fq_8RO9WAknCuaVxxl_--Kc7OX8R-4i7OGKocdY_10m7O2q8RCVJcAJAWPD");

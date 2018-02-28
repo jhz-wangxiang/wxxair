@@ -414,7 +414,7 @@ public class PageForController {
 					Order order=orderList.get(0);
 					order.setOrderWxNo(transaction_id);
 					order.setPayStatus("已支付");
-					order.setPayType("微信支付");
+					order.setPayType("微信服务号支付");
 					order.setOrderStatus(2);
 					order.setUpdateDate(new Date());
 					orderService.updateByPrimaryKeySelective(order);
