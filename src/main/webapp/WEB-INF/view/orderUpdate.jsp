@@ -105,8 +105,8 @@ $(function () {
         type: "POST",
         success: function (res) {
             var order = res.order;
-            $('input[name="name"]').val(order.name);
-            $('input[name="phone"]').val(order.phone);
+            $('input[name="name"]').val(order.registerName);
+            $('input[name="phone"]').val(order.registerPhone);
             $('input[name="flightNum"]').val(order.flightNum);
             $('input[name="nowTimeStr"]').val(Common.getLocalDate(order.nowTime));
             $('input[name="baggageNum"]').val(order.baggageNum);
@@ -188,8 +188,8 @@ $(function () {
                 if(res.resultCode=="SUCCESS"){
                     var json = {};
                     json.id = id;
-                    json.name = name;
-                    json.phone = phone;
+                    json.registerName = name;
+                    json.registerPhone = phone;
                     json.baggageNum = baggageNum;
                     json.flightNum = flightNum;
                     json.nowTimeStr = nowTime.replace(/\-/g,'/');
