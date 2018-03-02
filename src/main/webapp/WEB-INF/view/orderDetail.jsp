@@ -85,15 +85,21 @@
                   html.push('<div style="display: flex; display: -webkit-flex; margin: .2rem 0;"><a href="<%=basePath %>v1/page/orderUpdate?orderId='+order.id+'" class="btn btn-lg" style="flex:1; margin-right: .2rem;">修改信息</a><a href="javascript:;" class="btn btn-lg" style="flex:1; background: #999999;" onclick="cancelOrder('+order.id+')">取消订单</a></div>')
                   html.push('<a href="javascript:;" class="btn btn-lg" style="background: #009900;" onclick="pay(\''+order.orderNo+'\')">支付</a>');
                 html.push('');
+              }else if(order.orderStatus == 2){
+                  html.push('<a href="javascript:;" class="btn btn-lg" style="flex:1; background: #999999;" onclick="cancelOrder('+order.id+',\''+order.paidFee+'\')">取消订单</a></div>')
               }
               html.push('</section>')
               $('#order-detail').html(html.join(''));
           }
       })
   })
-  function cancelOrder(id) {
+  function cancelOrder(id,payFee) {
       var html = [];
-      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><p style="font-size: .38rem; color: #3974bb; text-align: center;">确认取消订单</p></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm" style="width: 40%;display: inline-block; margin-right: .6rem;">确认</a><a href="JavaScript:;" class="btn btn-nm" style="width: 40%;display: inline-block; background: #999999;">取消</a></div></div></div>')
+      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><p style="font-size: .38rem; color: #3974bb; text-align: center;">确认取消订单</p>');
+      if(payFee){
+          html.push('<p>退款金额：'+payFee+'元(退款稍后退到你的微信帐号中)</p>');
+      }
+      html.push('</div><div class="modal-footer0211" style="margin-top: 0;"><a href="JavaScript:;" class="btn btn-nm" style="width: 40%;display: inline-block; margin-right: .6rem;">确认</a><a href="JavaScript:;" class="btn btn-nm" style="width: 40%;display: inline-block; background: #999999;">取消</a></div></div></div>')
       $('body').append(html.join(''));
       $('.modal-footer0211>a').eq(0).click(function () {
           $.ajax({
@@ -182,7 +188,7 @@
     }
     function paySuccess() {
         var html = [];
-        html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">恭喜您已支付成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip">下机后请前往行李送到家柜台，递交行李小票</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
+        html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">支付成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip order-info-warning">下机后请前往行李送到家柜台，递交行李小票</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
         $('body').append(html.join(''));
         $('.modal-footer0211>a').eq(0).click(function () {
             $('#modal').remove();

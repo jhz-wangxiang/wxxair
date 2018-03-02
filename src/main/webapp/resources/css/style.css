@@ -67,7 +67,7 @@ a:active{-webkit-tap-highlight-color: transparent;-webkit-touch-callout: none;-w
 .order-deal-box{ border: 1px solid #cccccc; padding: .1rem; margin-bottom: .26rem; }
 .order-deal-item{ display: flex; display: -webkit-flex; border-bottom: 1px solid #cccccc; line-height: .5rem; font-size: .3rem; padding: .2rem .1rem; }
 .order-deal-item:last-child{border-bottom: 0; }
-.order-deal-item .label{ color: #aaaaaa; flex: 3; text-align: right; }
+.order-deal-item .label{ color: #aaaaaa; flex: 4; text-align: right; }
 .order-deal-item .content{ flex: 9; }
 .order-deal-item .tip{ color: #aaaaaa; }
 .user-info-header{ color: #3974bb; font-size: .38rem; font-weight: normal; position:relative; padding-left:.4rem; background: url("../image/user-info-avator.png") left center no-repeat; background-size: contain; line-height:".5rem"}

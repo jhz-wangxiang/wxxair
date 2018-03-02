@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="wrapper">
-	<h3 style="color: #3974bb;font-size: .38rem;font-weight: normal; padding:15px;">常用收获地址</h3>
+	<h3 style="color: #3974bb;font-size: .38rem;font-weight: normal; padding:15px;">常用收货地址</h3>
     <div id="table"></div>
 </div>
 <script src="<%=basePath%>resources/js/jq.js" type="text/javascript"></script>

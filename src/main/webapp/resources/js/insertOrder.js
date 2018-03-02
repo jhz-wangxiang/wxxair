@@ -253,7 +253,7 @@ var Insert = function(){
 	}
 	function paySuccess() {
 	      var html = [];
-	      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">恭喜您已支付成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip">下机后请前往行李送到家柜台，递交行李小票</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
+	      html.push('<div id="modal"><div class="cover"></div><div class="modal"><div class="modal-cont0211"><div class="order-info-box order-success"><img src="../../resources/image/order-success.png" alt=""><p class="order-info-title">支付成功！</p><p class="order-info-warning">但流程未完</p><p class="order-info-tip order-info-warning">下机后请前往行李送到家柜台，递交行李小票</p></div></div><div class="modal-footer0211"><a href="JavaScript:;" class="btn btn-nm">确认</a></div></div></div>')
 	      $('body').append(html.join(''));
 	      $('.modal-footer0211>a').eq(0).click(function () {
 	          $('#modal').remove();
