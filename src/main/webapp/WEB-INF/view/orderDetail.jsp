@@ -59,7 +59,7 @@
               html.push('<p class="order-no0209"><span>订单状态：<em class="orange">'+order.button+'</em></span></p>')
               html.push('<p class="order-no0209"><span>服务费：<em>'+order.paidFee+'元</em></span></p>')
               html.push('<div class="order-detail0209">')
-              html.push('<p class="order-detail-tip">下机后请前往行李送到家<a href="http://www.baidu.com" style="color: #3974bb">柜台</a>，递交<a href="http://www.baidu.com" style="color: #3974bb">行李小票</a></p>')
+              html.push('<p class="order-detail-tip">下机后请前往<a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzIxNzcwMTkwNw==&hid=3&sn=688a92d3760081181b4e96e892191341#wechat_redirect" style="color: #3974bb">行李送到家柜台</a>，递交<a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzIxNzcwMTkwNw==&hid=4&sn=0c8580fcebe0b96ee422e4ba2bf43239&uin=&key=&devicetype=Windows+10&version=6206014b&lang=zh_CN&ascene=1&winzoom=1" style="color: #3974bb">行李小票</a></p>')
               html.push('<h3 class="order-deal-header">行李信息</h3>')
               html.push('<div class="order-deal-box" style="border: 0;">')
               html.push('<div class="order-deal-item"><span class="label">航班号：</span><span class="content">'+order.flightNum+'</span></div>')
