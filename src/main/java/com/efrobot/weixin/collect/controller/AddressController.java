@@ -153,7 +153,6 @@ public class AddressController {
 			map.put("addressList", "");
 			return map;
 		}
-		record.setStatus(1);
 
 		List<Address> list = addressService.getAddress(record);
 		if (list.size() != 0) {

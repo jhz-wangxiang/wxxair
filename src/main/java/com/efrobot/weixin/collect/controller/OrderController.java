@@ -15,11 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import com.alibaba.fastjson.JSONObject;
+import com.efrobot.toolkit.util.http.RestClient;
 import com.efrobot.weixin.baseapi.pojo.Area;
 import com.efrobot.weixin.baseapi.pojo.Channel;
 import com.efrobot.weixin.baseapi.pojo.FlightNum;
@@ -46,6 +52,7 @@ public class OrderController {
 
 	@Autowired
 	private FlightNumService flightNumService;
+	public static RestTemplate restTemplate = RestClient.getInstance();// 请求类
 	@Autowired
 	private UserService userService;
 	public static Map<Integer, String> status_order = new ConcurrentHashMap<Integer, String>();
@@ -243,6 +250,23 @@ public class OrderController {
 		record.setOrderStatus(10);
 		result = orderService.updateByPrimaryKeySelective(record);
 		setHistory(status_order.get("订单取消"), order2.getOrderNo(), record.getCancelReason());
+		if(order2.getOrderWxNo()!=null&&!"".equals(order2.getOrderWxNo())){
+			HttpHeaders headers = new HttpHeaders();
+			MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+			headers.setContentType(type);
+			headers.add("Accept", MediaType.APPLICATION_JSON.toString());
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("out_trade_no",order2.getOrderNo() );
+			BigDecimal bb=new BigDecimal("100");
+			BigDecimal total=bb.multiply(order2.getPaidFee());
+//			jsonObject.put("total_fee", total.intValue());
+//			jsonObject.put("refund_fee", total.intValue());
+			jsonObject.put("total_fee", 1);
+			jsonObject.put("refund_fee", 1);
+			HttpEntity<String> formEntity = new HttpEntity<String>(jsonObject.toString(), headers);
+	        restTemplate.postForObject("http://ajtservice.com/v1/area/refund", formEntity,
+					String.class);
+		}
 		if (result == 0) {
 			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
 		} else if (result == 1)

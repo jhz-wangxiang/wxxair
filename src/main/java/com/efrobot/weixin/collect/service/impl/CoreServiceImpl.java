@@ -54,7 +54,7 @@ public class CoreServiceImpl implements CoreService {
 
 		if (msgType.equals(WXKeys.REQ_MESSAGE_TYPE_TEXT)) {
 			log.info("设置回复用户文本消息");
-			 respContent = "欢迎关注行李到家！不方便携带大包小包的、着急有事儿等不了行李提取的旅客，您可以轻松离开，我们为您服务到家！同时，我们也提供您出行中有用的资讯和其它便捷服务。希望您的出行更舒适和便捷。";
+			 respContent = "请先输入您订单遇到的情况概述和您的联系方式，稍后客服会联系您请先输入您订单遇到的情况概述和您的联系方式，稍后客服会联系您";
 		} else if (msgType.equals(WXKeys.REQ_MESSAGE_TYPE_IMAGE)) {
 			log.info("设置回复用图片消息");
 			 respContent = "您发送的是图片消息！";

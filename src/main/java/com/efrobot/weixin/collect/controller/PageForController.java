@@ -122,11 +122,11 @@ public class PageForController {
 		}
 
 		FlightNum flightNum = list.get(0);
-		if (record.getNowTime().getTime() < flightNum.getEndTime().getTime()
-				&& record.getNowTime().getTime() >= flightNum.getStartTime().getTime()) {
-		} else {
-			return CommonUtil.resultMsg("FAIL", "对不起，你航班还没有开通。 ");
-		}
+//		if (record.getNowTime().getTime() < flightNum.getEndTime().getTime()
+//				&& record.getNowTime().getTime() >= flightNum.getStartTime().getTime()) {
+//		} else {
+//			return CommonUtil.resultMsg("FAIL", "对不起，你航班还没有开通。 ");
+//		}
 		// 校验航班时间
 		String endHour="";
 		if (flightNum.getEndHour().length() == 2) {
