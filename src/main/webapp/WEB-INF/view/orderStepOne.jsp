@@ -56,11 +56,11 @@
                         <p class="sub-title">为防止您的行李丢失，请检查您航班及行李信息</p>
                     </div>
                 </div>
-                <div class="input-box"><label for="registerName">航班号</label><input type="text" id="flightNum"
+                <div class="input-box"><label for="flightNum">航班号</label><input type="text" id="flightNum"
                                                                                    name="flightNum"></div>
-                <div class="input-box"><label for="registerName">日期</label><input type="date" id="nowTimeStr"
+                <div class="input-box"><label for="nowTimeStr">日期</label><input type="date" id="nowTimeStr"
                                                                                   name="nowTimeStr"></div>
-                <div class="input-box"><label for="registerName">行李数量</label><input type="text" id="baggageNum"
+                <div class="input-box"><label for="baggageNum">行李数量</label><input type="text" id="baggageNum"
                                                                                     name="baggageNum"></div>
                 <div class="baggage-box"><input type="checkbox" style="display: none;" id="baggage-checkbox"><label
                   for="baggage-checkbox"></label><span>行李内无贵重、易碎、违禁物品</span></div>
@@ -103,7 +103,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="input-box"><label for="phone">详细地址</label><input type="text" id="address" name="address"></div>
+                <div class="input-box"><label for="address">详细地址</label><input type="text" id="address" name="address"></div>
                 <div class="fee-box"><span class="label">服务费：</span><span class="content" id="free">0元</span></div>
                 <a href="javascript:;" class="btn btn-lg" id="sure">确认</a>
             </div>
