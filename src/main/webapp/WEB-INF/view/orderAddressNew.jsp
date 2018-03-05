@@ -20,8 +20,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <section class="order-body">
   <h3 class="order-deal-header">新建收货地址</h3>
-  <div class="input-box"><label for="name">收货人姓名</label><input type="text" id="consignee" name="consignee"></div>
-  <div class="input-box"><label for="phone">联系电话</label><input type="text" id="consigneePhone" name="consigneePhone"></div>
+  <div class="input-box"><label for="consignee">收货人姓名</label><input type="text" id="consignee" name="consignee"></div>
+  <div class="input-box"><label for="consigneePhone">联系电话</label><input type="text" id="consigneePhone" name="consigneePhone"></div>
   <p class="order-detail-tip">收货地址</p>
   <div class="order-address-select-box">
     <div class="order-address-select-item">
@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </ul>
     </div>
   </div>
-  <div class="input-box"><label for="phone">详细地址</label><input type="text" id="address" name="address"></div>
+  <div class="input-box"><label for="address">详细地址</label><input type="text" id="address" name="address"></div>
   <p class="order-detail-tip">注：本业务目前只支持北京地区六环以内的配送</p>
   <a href="JavaScript:addAddress();" class="btn btn-lg">确认添加</a>
 </section>
