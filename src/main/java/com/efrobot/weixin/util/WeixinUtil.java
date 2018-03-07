@@ -1251,7 +1251,7 @@ public class WeixinUtil {
 					 "{" + 
 					 "\"type\":\"view\"," + 
 					 "\"name\":\"航业知识\"," + 
-					 "\"url\":\"https://mp.weixin.qq.com/s?__biz=MzIxNzcwMTkwNw==&mid=2247483659&idx=1&sn=27793efe663dca2cfca2223367a0bd64&scene=19#wechat_redirect\"" + 
+					 "\"url\":\"http://mp.weixin.qq.com/mp/homepage?__biz=MzIxNzcwMTkwNw==&hid=2&sn=6ea6ac87303cad76511a0df28db59c51#wechat_redirect\"" + 
 					 "}" + 				
 					 "]" + 
 					 "}," + 
@@ -1288,7 +1288,7 @@ public class WeixinUtil {
 
 	public static void main(String[] args) {
 //		Refund("B201802250225cz3107001","wx123654987456", 1, 1);
-//		 createMenu("7_vr1ND4dsD5Eebx8a3ZItJJO-5EP3FkQSEPD5yHj2AJfosTFrj5U8WNDVfBxRr4e_HxwQi_Hs84RwetXfyDiKiZUu291dvuy3I1t9H-0WoA-i3HFpuwQMlKThQnKsmm0AE50hfzm3wAFUCUtSKNXdADAPSC");
+		 createMenu("7_5-hDpCA9mQh2aLhOeEtUP4GzwKimKgrTo8Q86k9wpZCi5YdJWuJTyFj_DIpZsQ_weo7LFVdz6qVj65AKV8zB4sURdQl5Ed2l4M9CYttyMzEaK86_Js7ytY7pJHTeMziO0opucIheKAAYka4WHNQhABAOUX");
 
 //			String msg = WeixinUtil.sendTemplate("", "7_wdQ2gG51hs7uWgHUX8OEIhAT7S-QcdQwDHr2QBeiRVvlJRWJFdtXkdMFrEpbCAXaWtfXGz7uMNYIvF3R8ztyCjenk0GdcB0Fq_8RO9WAknCuaVxxl_--Kc7OX8R-4i7OGKocdY_10m7O2q8RCVJcAJAWPD");
 //			System.out.println(msg);

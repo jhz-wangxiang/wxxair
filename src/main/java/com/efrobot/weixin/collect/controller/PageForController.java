@@ -193,6 +193,7 @@ public class PageForController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat mmdd = new SimpleDateFormat("MMdd");
 		String datestr = sdf.format(new Date());
+		datestr=datestr.substring(2, 8);
 		if ("".equals(record.getNowTimeStr()) || null == record.getNowTimeStr()) {
 			return CommonUtil.resultMsg("FAIL", "航班日期不能为空 ");
 		}
@@ -207,11 +208,11 @@ public class PageForController {
 		}
 
 		FlightNum flightNum = list.get(0);
-		if (record.getNowTime().getTime() <= flightNum.getEndTime().getTime()
-				&& record.getNowTime().getTime() >= flightNum.getStartTime().getTime()) {
-		} else {
-			return CommonUtil.resultMsg("FAIL", "对不起，你航班还没有开通。 ");
-		}
+//		if (record.getNowTime().getTime() <= flightNum.getEndTime().getTime()
+//				&& record.getNowTime().getTime() >= flightNum.getStartTime().getTime()) {
+//		} else {
+//			return CommonUtil.resultMsg("FAIL", "对不起，你航班还没有开通。 ");
+//		}
 		// 校验航班时间
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 
@@ -281,15 +282,15 @@ public class PageForController {
 		record.setId(null);
 		result = orderService.insertSelective(record);
 		String idStr=record.getId().toString();
-		if(idStr.length()==1){
-			idStr="000"+idStr;
-		}
-		if(idStr.length()==2){
-			idStr="00"+idStr;
-		}
-		if(idStr.length()==3){
-			idStr="0"+idStr;
-		}
+//		if(idStr.length()==1){
+//			idStr="000"+idStr;
+//		}
+//		if(idStr.length()==2){
+//			idStr="00"+idStr;
+//		}
+//		if(idStr.length()==3){
+//			idStr="0"+idStr;
+//		}
 		String orderNo = zm + datestr + mmdd.format(record.getNowTime()) + record.getFlightNum()
 		+ idStr;
 		record.setOrderNo(orderNo);
@@ -385,8 +386,8 @@ public class PageForController {
 		tpWxPay.setOrderId(orderNo);
 		tpWxPay.setSpbillCreateIp("127.0.0.1");
 		tpWxPay.setOpenId(openid);
-//		tpWxPay.setTotalFee("0.01");
-		tpWxPay.setTotalFee(orderList.get(0).getPaidFee().toString());
+		tpWxPay.setTotalFee("0.01");
+//		tpWxPay.setTotalFee(orderList.get(0).getPaidFee().toString());
 		String finaPackage = WeixinUtil.getPackage(tpWxPay, WXKeys.WX_PYA_URL);
 		PrintWriter out;
 		out = response.getWriter();
@@ -428,7 +429,7 @@ public class PageForController {
 					Order order=orderList.get(0);
 					order.setOrderWxNo(transaction_id);
 					order.setPayStatus("已支付");
-					order.setPayType("微信服务号支付");
+					order.setPayType("微信公众号支付");
 					order.setOrderStatus(2);
 					order.setUpdateDate(new Date());
 					orderService.updateByPrimaryKeySelective(order);

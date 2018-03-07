@@ -119,6 +119,7 @@ public class OrderController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat mmdd = new SimpleDateFormat("MMdd");
 		String datestr = sdf.format(new Date());
+		datestr=datestr.substring(2, 8);
 		if ("".equals(record.getNowTimeStr()) || null == record.getNowTimeStr()) {
 			return CommonUtil.resultMsg("FAIL", "航班日期不能为空 ");
 		}
@@ -182,15 +183,15 @@ public class OrderController {
 		record.setPaidFee(new BigDecimal(paid));
 		result = orderService.insertSelective(record);
 		String idStr=record.getId().toString();
-		if(idStr.length()==1){
-			idStr="000"+idStr;
-		}
-		if(idStr.length()==2){
-			idStr="00"+idStr;
-		}
-		if(idStr.length()==3){
-			idStr="0"+idStr;
-		}
+//		if(idStr.length()==1){
+//			idStr="000"+idStr;
+//		}
+//		if(idStr.length()==2){
+//			idStr="00"+idStr;
+//		}
+//		if(idStr.length()==3){
+//			idStr="0"+idStr;
+//		}
 		String orderNo = zm + datestr + mmdd.format(record.getNowTime()) + record.getFlightNum()
 		+ idStr;
 		record.setOrderNo(orderNo);
@@ -247,26 +248,23 @@ public class OrderController {
 	public Map<String, Object> updateOrderCancel(Order record) throws Exception {
 		int result = -1;
 		Order order2 = orderService.selectByPrimaryKey(record.getId());
-		record.setOrderStatus(10);
-		result = orderService.updateByPrimaryKeySelective(record);
+		if (order2.getOrderStatus() == 2) {
+			 record.setPayStatus("已退款");
+			 record.setRemark(order2.getRemark()+":"+"线下退款");
+		}
 		setHistory(status_order.get("订单取消"), order2.getOrderNo(), record.getCancelReason());
 		if(order2.getOrderWxNo()!=null&&!"".equals(order2.getOrderWxNo())){
-			HttpHeaders headers = new HttpHeaders();
-			MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
-			headers.setContentType(type);
-			headers.add("Accept", MediaType.APPLICATION_JSON.toString());
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("out_trade_no",order2.getOrderNo() );
 			BigDecimal bb=new BigDecimal("100");
 			BigDecimal total=bb.multiply(order2.getPaidFee());
-//			jsonObject.put("total_fee", total.intValue());
-//			jsonObject.put("refund_fee", total.intValue());
-			jsonObject.put("total_fee", 1);
-			jsonObject.put("refund_fee", 1);
-			HttpEntity<String> formEntity = new HttpEntity<String>(jsonObject.toString(), headers);
-	        restTemplate.postForObject("http://ajtservice.com/v1/area/refund", formEntity,
-					String.class);
+			WeixinUtil.Refund(order2.getOrderNo(),1,1);
+//			WeixinUtil.Refund(order2.getOrderNo(), total.intValue(), total.intValue());
+			record.setPayStatus("已退款");
+			record.setRemark(order2.getRemark()+":"+"公众号原路返回");
+		}else{
+			return CommonUtil.resultMsg("FAIL", "不是公众号支付,请到柜台申请退款!");
 		}
+		record.setOrderStatus(10);
+		result = orderService.updateByPrimaryKeySelective(record);
 		if (result == 0) {
 			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
 		} else if (result == 1)
