@@ -1,4 +1,5 @@
 var Insert = function(){
+	var clickFlag = false;
 	var json = {};//存储最后需要提交时的数据
 	//第一步是否阅读协议
 	var selXieYi = function(){
@@ -320,24 +321,30 @@ var Insert = function(){
 	var lastStep  =function(){
 		$('#lastStep').bind('click',function(event){
 			event.stopPropagation();
-			$.ajax({
-				type:"post",
-				url:rootPath+'v1/page/insertOrder?'+Math.random(),
-				data:json,
-				success:function(res){
-					if(res.resultCode=='SUCCESS'){
-						$('#serviceCost').html($('#sCost').html());
-                        $('#order-info').css("display","none");
-                        $('#order-success').css("display","block");
-                        $('input[name="orderNo"]').val(res.orderNo)
-					}else{
-						Common.alter(res.msg);
+			
+			if(!clickFlag){
+				clickFlag = true;
+				$.ajax({
+					type:"post",
+					url:rootPath+'v1/page/insertOrder?'+Math.random(),
+					data:json,
+					success:function(res){
+						clickFlag = false;
+						if(res.resultCode=='SUCCESS'){
+							$('#serviceCost').html($('#sCost').html());
+	                        $('#order-info').css("display","none");
+	                        $('#order-success').css("display","block");
+	                        $('input[name="orderNo"]').val(res.orderNo)
+						}else{
+							Common.alter(res.msg);
+						}
+					},
+					error:function(){
+						Common.alter('服务器异常，请稍后再试！');
 					}
-				},
-				error:function(){
-					Common.alter('服务器异常，请稍后再试！');
-				}
-			})
+				})
+			}
+			
 			return false;
 		});
 		

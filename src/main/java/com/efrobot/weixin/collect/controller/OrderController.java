@@ -157,7 +157,7 @@ public class OrderController {
 		record.setPayStatus("未支付");
 		record.setCreateDate(new Date());
 //		record.setOrderNo(orderNo);
-		record.setSingleWay("微信下单");
+		record.setSingleWay("公众号下单");
 		record.setAbnormalStatus("否");
 		// 价格计算
 		float c = 1;
