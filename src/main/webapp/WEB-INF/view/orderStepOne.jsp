@@ -142,12 +142,13 @@
         <h1>使用说明</h1>
     </section>
     <section class="text-cont0212">
+        <p>托运行李免提取直飞到家需要几个步骤？</p>
         <p>“行李到家”的标准答案是：三步</p>
     </section>
     <section class="text-cont0212">
         <p>第一步，使用“行李到家”公众号下单；</p>
-        <p>第二步，抵达行李提取厅，到“行李到家服务台”与服务人员完成身份验证；</p>
-        <p>第三步，空手任性游，安心静候托运行李飞到家；</p>
+        <p>第二步，抵达行李提取厅，到“行李送到家服务台”与服务人员完成身份验证；</p>
+        <p>第三步，空手任性游，安心静候托运行李飞到家。</p>
         <p>详细操作说明如下</p>
     </section>
     <section class="text-cont0212" style="margin-top: .2rem;">
@@ -160,7 +161,7 @@
         <p style="text-align: center;" class="text-img"><img src="<%=basePath%>resources/image/serviceIntro-img3.jpg" alt=""></p>
         <p class="text-step"><i class="text-num">4</i>输入航班号、日期及委托运输行李数量；</p>
         <p style="text-align: center;" class="text-img"><img src="<%=basePath%>resources/image/serviceIntro-img4.jpg" alt=""></p>
-        <p class="text-step"><i class="text-num">5</i>选择收货人及地址；</p>
+        <p class="text-step"><i class="text-num">5</i>输入收货人、联系电话及地址，系统自动核算费用；</p>
         <p style="text-align: center;" class="text-img"><img src="<%=basePath%>resources/image/serviceIntro-img5.jpg" alt=""></p>
         <p class="text-step"><i class="text-num">6</i>确认订单；</p>
         <p style="text-align: center;" class="text-img"><img src="<%=basePath%>resources/image/serviceIntro-img6.jpg" alt=""></p>
@@ -169,12 +170,17 @@
     </section>
     <section class="text-cont0212" style="margin-top: .2rem;">
         <p class="text-subTitle0212">第二步 抵达行李提取厅，到“行李送到家服务台”与服务人员完成身份验证；</p>
-        <p>抵达行李提取厅，将身份证和行李小票出示给扶梯下方的“行李送到家服务台”工作人员进行快速身份验证，确认无误后，工作人员将行李小票收存，身份证交还旅客，与旅客相关操作结束。</p>
+        <p>抵达行李提取厅，将身份证和行李小票出示给扶梯下方的“行李送到家”服务台工作人员进行快速身份验证，确认无误后，工作人员将行李小票收存，身份证交还旅客，与旅客相关操作结束。</p>
         <p style="text-align: center;" class="text-img"><img src="<%=basePath%>resources/image/serviceIntro-img8.jpg" alt=""></p>
+        <p style="text-align: center;" class="text-img"><img src="<%=basePath%>resources/image/serviceIntro-img9.jpg" alt=""></p>
     </section>
     <section class="text-cont0212" style="margin-top: .2rem;">
         <p class="text-subTitle0212">第三步 空手任性游，安心静候托运行李飞到家。</p>
-        <p>“行李到家”的运送小哥将在承诺时间内将您的行李快速、安全的送至指定地点。服务结束前，您可以通过“行李到家”公众号中“我的”-“我的订单”查询递送状态或修改订单。</p>
+        <p>行李送到家”的运送小哥将在承诺时间内将您的行李快速、安全的送至指定地点服务结束前，您可以通过“行李到家”公众号中“我的”-“我的订单”查询递送状态或修改订单。</p>
+    </section>
+    <section class="text-cont0212" style="margin-top: .2rem;">
+        <p>在我们的任何服务阶段您有任何疑问，请随时拨打我们的客服电话：4000429358</p>
+        <p>感谢您选择“行李送到家”。</p>
     </section>
     <section class="text-cont0212">
         <a href="javascript:;" class="btn btn-lg" style="margin-bottom:.4rem;" onclick="Insert.returnOrderDeal()">返回</a>
