@@ -250,16 +250,24 @@ public class OrderController {
 		Order order2 = orderService.selectByPrimaryKey(record.getId());
 		if (order2.getOrderStatus() == 2) {
 			 record.setPayStatus("已退款");
-			 record.setRemark(order2.getRemark()+":"+"线下退款");
+			 if(order2.getRemark()==null||"".equals(order2.getRemark())){
+				 record.setRemark("线下退款");
+		        }else{
+		        	record.setRemark(order2.getRemark()+":"+"线下退款");
+		        }
 		}
 		setHistory(status_order.get("订单取消"), order2.getOrderNo(), record.getCancelReason());
 		if(order2.getOrderWxNo()!=null&&!"".equals(order2.getOrderWxNo())){
 			BigDecimal bb=new BigDecimal("100");
 			BigDecimal total=bb.multiply(order2.getPaidFee());
-			WeixinUtil.Refund(order2.getOrderNo(),1,1);
-//			WeixinUtil.Refund(order2.getOrderNo(), total.intValue(), total.intValue());
+//			WeixinUtil.Refund(order2.getOrderNo(),1,1);
+			WeixinUtil.Refund(order2.getOrderNo(), total.intValue(), total.intValue());
 			record.setPayStatus("已退款");
-			record.setRemark(order2.getRemark()+":"+"公众号原路返回");
+			if(order2.getRemark()==null||"".equals(order2.getRemark())){
+				record.setRemark("公众号原路返回");
+	        }else{
+	        	record.setRemark(order2.getRemark()+":"+"公众号原路返回");
+	        }
 		}else{
 			return CommonUtil.resultMsg("FAIL", "不是公众号支付,请到柜台申请退款!");
 		}

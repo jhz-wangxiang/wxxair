@@ -386,8 +386,8 @@ public class PageForController {
 		tpWxPay.setOrderId(orderNo);
 		tpWxPay.setSpbillCreateIp("127.0.0.1");
 		tpWxPay.setOpenId(openid);
-		tpWxPay.setTotalFee("0.01");
-//		tpWxPay.setTotalFee(orderList.get(0).getPaidFee().toString());
+//		tpWxPay.setTotalFee("0.01");
+		tpWxPay.setTotalFee(orderList.get(0).getPaidFee().toString());
 		String finaPackage = WeixinUtil.getPackage(tpWxPay, WXKeys.WX_PYA_URL);
 		PrintWriter out;
 		out = response.getWriter();
