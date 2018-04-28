@@ -158,10 +158,10 @@ public class UserController {
 			List<User> list4=userService.selectByUser(user4);
 			if(list4.size()!=0){
 				if(list4.get(0).getOpenid()==null){
-					return CommonUtil.resultMsg("FAIL", "该手机号已经被别的微信号绑定,请先解绑在绑定");
+					return CommonUtil.resultMsg("SUCCESS", "该手机号已经在平台注册,请用新的微信号绑定");
 				}
 				if(!list4.get(0).getOpenid().equals(openid)){
-					return CommonUtil.resultMsg("FAIL", "该手机号已经被别的微信号绑定,请先解绑在绑定");
+					return CommonUtil.resultMsg("SUCCESS", "该手机号已经被别的微信号绑定");
 				}
 			}
 			record.setId(list.get(0).getId());
@@ -171,7 +171,7 @@ public class UserController {
 			user3.setPhone(record.getPhone());
 			List<User> list3=userService.selectByUser(user3);
 			if(list3.size()!=0){
-				record.setId(list.get(0).getId());
+				record.setId(list3.get(0).getId());
 				result = userService.updateByPrimaryKeySelective(record);
 			}else{
 				if(record.getName()!=null&&!"".equals(record.getName())){

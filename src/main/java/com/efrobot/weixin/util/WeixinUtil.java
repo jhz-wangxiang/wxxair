@@ -1205,7 +1205,9 @@ public class WeixinUtil {
 		client.getParams().setParameter("http.protocol.allow-circular-redirects", Boolean.valueOf(true));
 		HttpPost httpost = HttpClientConnectionManager.getPostMethod(url);
 		String menu = null;
+		String text = "您好，行李到家客服很高兴为服务！民航出行相关的，请您随便出手，姆们以15年行业专业功力为您提供满意的答案~民航出行不相关的，请您适度开撩，对待非专业应撩党手下留情~~~客服值班时间每日8点—20点；请直接在下方对话框中输入问题!";
 		try {
+			
 			//正式
 //			 String postParam = "{\"button\":[{\"name\":\"个人信息\",\"sub_button\":[{\"type\":\"view\",\"name\":\"我的订单\",\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + 
 //	    			 WXKeys.WX_APPID + "&redirect_uri=http://ajtservice.com/v1/page/orderList.htmls&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect\"" + 
@@ -1250,8 +1252,18 @@ public class WeixinUtil {
 					 "}," +
 					 "{" + 
 					 "\"type\":\"view\"," + 
-					 "\"name\":\"航业知识\"," + 
-					 "\"url\":\"http://mp.weixin.qq.com/mp/homepage?__biz=MzIxNzcwMTkwNw==&hid=2&sn=6ea6ac87303cad76511a0df28db59c51#wechat_redirect\"" + 
+					 "\"name\":\"常用电话和信息\"," + 
+					 "\"url\":\"https://mp.weixin.qq.com/mp/homepage?__biz=MzIxNzcwMTkwNw==&hid=6&sn=097ac75aba399b419a5a9efb0a1f99dc&uin=&key=&devicetype=Windows+10&version=6206021b&lang=zh_CN&ascene=1&winzoom=1\"" + 
+					 "}," +
+					 "{" + 
+					 "\"type\":\"view\"," + 
+					 "\"name\":\"旅行常见问题\"," + 
+					 "\"url\":\"https://mp.weixin.qq.com/mp/homepage?__biz=MzIxNzcwMTkwNw==&hid=7&sn=4c923a9fa266f6f8bba50ae3ad03caa7&uin=&key=&devicetype=Windows+10&version=6206021b&lang=zh_CN&ascene=1&winzoom=1\"" + 
+					 "}," +
+					 "{" + 
+					 "\"type\":\"click\"," + 
+					 "\"name\":\"在线咨询\"," + 
+					 "\"key\":\"V1001_GOOD\"" + 
 					 "}" + 				
 					 "]" + 
 					 "}," + 
@@ -1287,10 +1299,21 @@ public class WeixinUtil {
 	}
 
 	public static void main(String[] args) {
+		
+		JSONObject jsonObject = new JSONObject();
+		String url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=8_PhVj__8YIYGtwX6PB9uO28JNjXUSiwK80BDF-g-NtMkwVVr3SmgJXWTvAJr8kgVEw_FJYOtSFGfu-QBF5YbjfXiexn6fR5CI5pmeyq_LX6DnFWC78TowsV5oeTipcu4O0kdof0VVoCP0kPbkMYTcAFATFA";
+		String ticket = null;
+		String downloadTicketImg = "";
+			String postParam = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\":\"test\"}}}";
+			// ticket = HttpUtils.post(postParam, url, null);
+			ticket = restTemplate.postForObject(url, postParam, String.class);
+			jsonObject = JSONObject.parseObject(ticket);
+			downloadTicketImg = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + jsonObject.getString("ticket");
+			
 //		Refund("B201802250225cz3107001","wx123654987456", 1, 1);
-		 createMenu("7_5-hDpCA9mQh2aLhOeEtUP4GzwKimKgrTo8Q86k9wpZCi5YdJWuJTyFj_DIpZsQ_weo7LFVdz6qVj65AKV8zB4sURdQl5Ed2l4M9CYttyMzEaK86_Js7ytY7pJHTeMziO0opucIheKAAYka4WHNQhABAOUX");
+//		 createMenu("8_KEcWwS2NdXDD3MMFDeAXV1XTlVewj1dTcyzz5qwThmaEk2C9Oabo-apRIPhNJgbPG0NU4M6e_l1AkRh7YeR2pmWyoQF-zTCGmXQZfQWXSS9CQpJ8d6xJ0Yw8s-INBb0YKzmZd4Hx7dql-QR7QNDdAJAKHX");
 
 //			String msg = WeixinUtil.sendTemplate("", "7_wdQ2gG51hs7uWgHUX8OEIhAT7S-QcdQwDHr2QBeiRVvlJRWJFdtXkdMFrEpbCAXaWtfXGz7uMNYIvF3R8ztyCjenk0GdcB0Fq_8RO9WAknCuaVxxl_--Kc7OX8R-4i7OGKocdY_10m7O2q8RCVJcAJAWPD");
-//			System.out.println(msg);
+			System.out.println(downloadTicketImg);
 	}
 }

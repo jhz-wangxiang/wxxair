@@ -50,7 +50,8 @@ public class CoreServiceImpl implements CoreService {
 		textMessage.setToUserName(fromUserName);
 		textMessage.setFromUserName(toUserName);
 		textMessage.setCreateTime(new Date().getTime());
-		textMessage.setMsgType("text");
+//		textMessage.setMsgType("text");
+		textMessage.setMsgType("transfer_customer_service");
 
 		if (msgType.equals(WXKeys.REQ_MESSAGE_TYPE_TEXT)) {
 			log.info("设置回复用户文本消息");
@@ -69,7 +70,6 @@ public class CoreServiceImpl implements CoreService {
 			// respContent = "您发送的是音频消息！";
 		} else if (msgType.equals(WXKeys.REQ_MESSAGE_TYPE_VIDEO)) {
 			log.info("您发送的是音频消息！");
-			respContent = "您发送的是音频消息！";
 		} else if (msgType.equals("event")) {
 			// 事件类型
 			String eventType = (String) requestMap.get("Event");
@@ -87,8 +87,14 @@ public class CoreServiceImpl implements CoreService {
 			} else if (eventType.equals(WXKeys.EVENT_TYPE_LOCATION)) {
 				log.info("===================请求消息类型：地理位置 0（推送）");
 			} else if (eventType.equals(WXKeys.EVENT_TYPE_CLICK)) {
+				String EventKey = (String) requestMap.get("EventKey");
+				textMessage.setMsgType("text");
+				System.out.println("您发送的是音频消息！"+EventKey);
+				if("V1001_GOOD".equals(EventKey)){
+					respContent = "嗨，很高兴为您服务！民航出行相关的，请您随便出手，姆们以15年行业专业功力为您提供满意的答案~民航出行不相关的，请您适度开撩，对待非专业应撩党手下留情~~~客服值班时间每日8点—20点；请直接在下方对话框中输入问题!";
+				}
 				log.info("===================事件类型：CLICK自定义菜单点击事件");
-				respContent = "菜单点击事件";
+//				respContent = "菜单点击事件";
 			}
 		}
 		textMessage.setContent(respContent);

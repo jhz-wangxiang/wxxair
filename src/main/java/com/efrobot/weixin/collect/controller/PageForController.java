@@ -86,21 +86,51 @@ public class PageForController {
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> insertUser(User record, HttpSession session) throws Exception {
+		int result = -1;
 		String openid = (String) session.getAttribute("openid");
-		User user2 = new User();
+		User user2=new User();
 		user2.setOpenid(openid);
-		List<User> list = userService.selectByUser(user2);
+		List<User> list=userService.selectByUser(user2);
 		record.setOpenid(openid);
-		if (list.size() == 0) {
-			if (record.getName() != null && !"".equals(record.getName())) {
-				record.setExp1("是");
-			} else {
-				record.setExp1("未");
+		if(list.size()!=0){
+			return CommonUtil.resultMsg("SUCCESS", "成功");
+//			User user4=new User();
+//			user4.setPhone(record.getPhone());
+//			List<User> list4=userService.selectByUser(user4);
+//			if(list4.size()!=0){
+//				if(list4.get(0).getOpenid()==null){
+//					return CommonUtil.resultMsg("FAIL", "该手机号已经被别的微信号绑定,请先解绑在绑定");
+//				}
+//				if(!list4.get(0).getOpenid().equals(openid)){
+//					return CommonUtil.resultMsg("FAIL", "该手机号已经被别的微信号绑定,请先解绑在绑定");
+//				}
+//			}
+//			record.setId(list.get(0).getId());
+//			result = userService.updateByPrimaryKeySelective(record);
+		}else{
+			User user3=new User();
+			user3.setPhone(record.getPhone());
+			List<User> list3=userService.selectByUser(user3);
+			if(list3.size()!=0){
+				record.setId(list3.get(0).getId());
+				result = userService.updateByPrimaryKeySelective(record);
+			}else{
+				if(record.getName()!=null&&!"".equals(record.getName())){
+					record.setExp1("是");
+				}else{
+					record.setExp1("未");
+				}
+				result = userService.insertSelective(record);
 			}
-			userService.insertSelective(record);
 		}
-			return CommonUtil.resultMsg("SUCCESS", "信息插入功");
-
+		if (result == 0) {
+			return CommonUtil.resultMsg("FAIL", "未找到可编辑的信息");
+		} else if (result == 1){
+			return CommonUtil.resultMsg("SUCCESS", "信息修改成功");
+		}else {
+			return CommonUtil.resultMsg("FAIL", "更新异常: 多条数据被更新 ");
+		}
+		
 	}
 
 	@RequestMapping(value = "/checkflightNum", method = RequestMethod.POST)
